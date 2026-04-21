@@ -1,0 +1,50 @@
+{
+  "name": "zod-tag",
+  "version": "0.0.1",
+  "description": "Typesafe runtime validation for tagged template strings leveraging zod schemas",
+  "type": "module",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "private": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "zod",
+    "template-literals",
+    "tagged-templates",
+    "type-safe",
+    "validation",
+    "templating",
+    "typescript"
+  ],
+  "author": "Nícolas Berbel <nicolas.berbel@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NicolasBerbel/zod-tag.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NicolasBerbel/zod-tag/issues"
+  },
+  "homepage": "https://github.com/NicolasBerbel/zod-tag#readme",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test src/**/*.test.ts",
+    "test:watch": "node --test --watch --experimental-test-coverage src/**/*.test.ts",
+    "type-check": "tsc --noEmit",
+    "build": "rolldown -c",
+    "dev": "rolldown -c --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "rolldown": "1.0.0-rc.16",
+    "rolldown-plugin-dts": "^0.23.2",
+    "typescript": "^6.0.3",
+    "zod": "^4.0.0"
+  },
+  "peerDependencies": {
+    "zod": "^4.0.0"
+  }
+}
