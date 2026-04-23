@@ -1,7 +1,11 @@
 export { interpolate } from './core/interpolate'
+export { InterpolationError } from './core/interpolation-error'
 
 export {
     type IRenderable,
+    type IRenderableKargs,
+    type IRenderableVargs,
+    type IRenderableOutput,
     isRenderable,
     createRenderable
 } from './core/renderable'

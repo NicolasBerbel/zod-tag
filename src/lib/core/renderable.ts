@@ -1,6 +1,7 @@
 import {
     type KargsType,
 } from "../types/tag.types";
+import { withSource } from "./source";
 
 /** Type guard for renderable instances */
 export const isRenderable = (v: unknown): v is IRenderable<any, any, any> => (
@@ -18,9 +19,9 @@ export function createRenderable<
     B extends unknown[] = any,
     C extends unknown[] = any
 >(fn: (this: IRenderable<A, B, C>, args: A, vals: B) => any) {
-    const _fn = fn as any as IRenderable<A, B, C>
+    const _fn = withSource(fn) as any as IRenderable<A, B, C>
     _fn[RENDERABLE_SYMBOL] = true;
-    _fn.render = fn as any
+    _fn.render = fn.bind(_fn) as any
     return _fn
 }
 
@@ -45,8 +46,9 @@ export interface IRenderable<
      * Process input kwargs
      */
     render: (
-        k: Kargs,
-        v: Vargs extends [] ? void : Vargs
+        this: IRenderable<Kargs, Vargs, Output>,
+        karga: Kargs,
+        vargs: Vargs extends [] ? void : Vargs
     ) => [
             strs: TemplateStringsArray,
             ...vals: Output

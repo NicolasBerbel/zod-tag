@@ -3,7 +3,7 @@
  */
 
 import z from "zod"
-import { zt } from "../lib"
+import { zt } from "../../dist/main.js"
 
 
 const schemaTpl = zt.z({ name: z.string() })`
@@ -57,7 +57,9 @@ const kwArrValuesTpl2 = zt.t`
 
 
 `
-kwArrValuesTpl2.render({ name: 'asd' })
+console.log(
+    kwArrValuesTpl2.render({ name: 'asd' })
+)
 
 
 const staticValuesTpl3 = zt.t`

@@ -2,6 +2,7 @@ import z, { core } from "zod";
 import { createRenderable } from "./core/renderable";
 import { interpolate } from "./core/interpolate";
 import { TypedTag } from "./typed-tag";
+import { InterpolationError } from "../main";
 
 export const schemaTag = <
     S extends core.$ZodShape,
@@ -11,19 +12,28 @@ export const schemaTag = <
     type Input = z.input<Schema>
     type Output = z.output<Schema>
 
-    function tag(
+    function schemaTag(
         strs: TemplateStringsArray,
         ...vals: any[]
     ) {
         return createRenderable(
-            (karg, varg) => {
-                const parsedkarg = schema.decode(karg)
-                return interpolate(parsedkarg, varg, strs, ...vals)
+            function renderRenderable(karg, varg) {
+                const parsedkarg = schema.safeDecode(karg)
+                if (parsedkarg.error) throw InterpolationError.for(parsedkarg.error, {
+                    renderer: this,
+                    index: -1,
+                    varg: undefined,
+                    op: 'root-schema',
+                    strings: [...strs],
+                    value: schema,
+                    variadicIndex: -1,
+                })
+                return interpolate.call(this, parsedkarg.data, varg, strs, ...vals)
             }
         )
     }
 
-    return tag as TypedTag<
+    return schemaTag as TypedTag<
         Input,
         Output
     >;

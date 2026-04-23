@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import { throws, deepEqual } from 'node:assert/strict';
-import z, { ZodError } from 'zod';
-import { zt } from '../../dist/main.js'
+import z from 'zod';
+import { zt, InterpolationError } from '../../dist/main.js'
 
 describe('zt - Zod Tag', () => {
 
@@ -47,7 +47,7 @@ describe('zt - Zod Tag', () => {
             deepEqual(strings, ['\n                Hello: ', '\n            '], 'should not concat anything on static strings')
             deepEqual(values, ['John'], 'decodes inline object input schemas with kargs and returns encoded value')
 
-            throws(() => tpl.render(null!), ZodError, 'should throw validation error')
+            throws(() => tpl.render(null!), InterpolationError, 'should throw validation error')
         })
 
         it('should validate against zod shape definition', () => {
@@ -80,7 +80,7 @@ describe('zt - Zod Tag', () => {
             deepEqual(values2, ['John Doe', 2000], 'should calls selector functions with given kargs and returns transformed values')
 
             // @ts-expect-error
-            throws(() => userCard.render(null), ZodError, 'should throw validation error')
+            throws(() => userCard.render(null), InterpolationError, 'should throw validation error')
         })
 
 
@@ -109,12 +109,12 @@ describe('zt - Zod Tag', () => {
                 {
                     first: 'John',
                     last: 'Doe',
-                }), ZodError, 'should throw validation error for inline karg')
+                }), InterpolationError, 'should throw validation error for inline karg')
 
             throws(() => userCard.render({
                 // @ts-expect-error
                 meessage: 'Message content'
-            }), ZodError, 'should throw validation error for shape karg')
+            }), InterpolationError, 'should throw validation error for shape karg')
         })
 
     })
@@ -131,7 +131,7 @@ describe('zt - Zod Tag', () => {
             deepEqual(strings, ['\n                Hello, ', '!\n                Your email is: ', '\n            '], 'Interpolation splits strings correctly')
             deepEqual(values, ['John', 'john@email.com'], 'Interpolations values resolves to transformation values declared inside the template')
 
-            throws(() => tpl.render(void 0, ['John', 'not-a-valid-email']), ZodError, 'should throw validation error')
+            throws(() => tpl.render(void 0, ['John', 'not-a-valid-email']), InterpolationError, 'should throw validation error')
         })
 
         it('should allow mixture of both karg and vargs', () => {
@@ -145,10 +145,10 @@ describe('zt - Zod Tag', () => {
             deepEqual(strings, ['\n                Hello, ', '!\n                Your email is: ', '\n            '], 'Interpolation splits strings correctly')
             deepEqual(values, ['John', 'john@email.com'], 'Interpolations values resolves to transformation values declared inside the template')
 
-            throws(() => tpl.render({ name: 'John' }, ['not-a-valid-email']), ZodError, 'should throw validation error')
+            throws(() => tpl.render({ name: 'John' }, ['not-a-valid-email']), InterpolationError, 'should throw validation error')
 
             // @ts-expect-error
-            throws(() => tpl.render(null, null), ZodError, 'should throw validation error')
+            throws(() => tpl.render(null, null), InterpolationError, 'should throw validation error')
         })
     })
 

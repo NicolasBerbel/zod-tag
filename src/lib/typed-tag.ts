@@ -19,13 +19,8 @@ import { interpolate } from "./core/interpolate";
 export interface TypedTag<
     KargsInput extends KargsType,
     KargsOutput extends KargsType,
-    Types = TagTypes<KargsOutput>
+    Types = TagTypes<KargsOutput>,
 > {
-    (
-        s: TemplateStringsArray,
-        ...v: (keyof KargsOutput)[]
-    ): IRenderable<KargsInput, [], []>
-
     // Dynamic
     <
         /** Keyword args (obj arg) */
@@ -76,5 +71,7 @@ export function typedTag(
 
 /** typedTag implementation  */
 export function typedTag(strs: any, ...vals: any[]) {
-    return createRenderable((karg, varg) => interpolate(karg, varg, strs, ...vals))
+    return createRenderable(function renderRenderable(karg, varg) {
+        return interpolate.call(this, karg, varg, strs, ...vals)
+    })
 }

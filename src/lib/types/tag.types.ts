@@ -65,7 +65,7 @@ export type ExtractValueOutput<T> =
     // Functions that has a return type 
     T extends (args: any) => infer A ? ExtractValueOutput<A> :
     // The output of any zod type
-    T extends z.ZodType ? z.output<T> :
+    T extends z.ZodType ? ExtractValueOutput<z.output<T>> :
     // The output type
     T
 

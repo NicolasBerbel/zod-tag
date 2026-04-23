@@ -1,12 +1,19 @@
 # Zod Tag
 
-This is a experimental library that aims to provide templating composition and type/runtime safe interpolation for tagged template strings by leveraging Zod's validation ecosystem.
+## ⚠️ This library is experimental. APIs may change without notice. Use at your own risk!
 
-At dev/build time this library tries to infer the template types for a better DX.
+This is a experimental library that aims to provide templating composition and type/runtime safe interpolation for tagged template literals by leveraging Zod's validation ecosystem.
 
-At runtime this library validates your templates inputs against the zod schemas definitions.
+At compile-time this library tries to infer the template types for a better DX.
 
-My objective was to implement a api design that came to my mind and experiment with it, dont use this, or do it at your own joy and risk.
+At runtime this library validates your templates inputs against the zod schemas definitions and merges nested templates into a single interpolation.
+
+The core functionality consists in three habilities:
+- Enable composition by nesting other renderables
+- Automatically infer the type of variables your template expects
+- Validate those variables against the zod schemas
+
+> My objective was to implement a api design that came to my mind and experiment with it, dont use this, or do it at your own joy and risk.
 
 ## Getting started
 
@@ -29,6 +36,9 @@ const user = zt.z({
 `
 
 user.render({ firstName: 'John', lastName: 'Doe' })
+// -> [['\n    Hello user, your full name must be: ', '\n'], 'John Doe']
+// Now you can interpolate raw, escape the values or derive this interpolation into other format or delegate it to other tagged template literals
+
 ```
 
 ## The API
@@ -68,10 +78,14 @@ Interpolate your template with primitive values or no interpolation.
 
 Interpolate your template with primitive zod schemas, those values will account as required variadic argument.
 
+> Note variadic arguments are consumed as they are found inside the template while rendering.
+> optional() or default() would still account as required positional argument unless they are found in the end of the vargs list.
+
 ```ts
 
 // Variadic arguments are set by inline zod schemas
 const greeting = zt.t`Hello, ${z.string()}!`
+const greeting2 = zt.t`Hello, ${z.string().default('Does work if no required varg is found afterwards, otherwise its still a required varg even with .default().')}!`
 
 // greeting.render() -> type error and runtime zod validation error
 
@@ -154,6 +168,8 @@ greeting.render({
 
 Nest your templates and <s>expect</s> hope the merged kargs, vargs type and schema validations to just work.
 
+- Works better with kargs only templating via `zt.z` or `zt.p`
+
 > Due to complex recursive types used to infer the composition kargs and vargs, max depth recursion might be reached, so evicting deeply nested templates will avoid slow compilation or recursion limits errors.
 
 ```ts
@@ -194,6 +210,37 @@ const greeting = zt.t`SELECT * FROM ${zt.unsafe(tableName)}`
 greeting.render(); // -> [['SELECT * FROM i_promise_this_is_not_user_input]]
 ```
 
+## Template values
+
+Values inside the template (`TagValue`) are expected to be one of the following types:
+
+- **Renderable**
+
+Templates can be used as interpolation values, in this case they will be interpolated together and the result is merged in the rendering of the parent template
+
+- **Zod schemas**
+
+- Object input schemas:
+
+If a zod schema value is expected to receive an object as input the karg shape will be merged in the type definitions and when rendering the template the full karg object will be parsed and the schema output will be used as the actual interpolation value if its primitive, otherwise the output will be processed again.
+
+*If its a strict schema and the template has other named arguments this is probably a point of failure.*
+
+> Note the `zt.param`|`zt.p` utility is only a zod codec with an object schema with a single key, an output schema defined in the second parameter and an optional transform fn to determine
+
+- Other input type schemas:
+
+For other zod schemas the value is accounted as a variadic argument to be consumed as the schema is found when rendering. The value found in the vargs array at the same index will be parsed and the schema output will be used as the actual interpolation value if its primitive, otherwise the output will be processed again.
+
+- **Selector functions** (`(arg: Karg) => TagValue<Karg>`)
+
+A function that receives a single argument with the validated keyword args and returns a primitive or another template value that should be processed again
+
+> The whole karg object is received as argument in the selector fn, but only the values in the shape defined with the `zt.zod`|`zt.z` tag are already validated and only these are infered by the type system. Kargs defined inline by `zt.p` or inline object input shapes will be validated only as the interpolation reach the schema value.
+
+- **Primitives** (or anything else) (`string | number | boolean | null`)
+
+Primitive values are left as is, the intention is that after the .render() of a template all values are collapsed into primitives
 
 ## Main functions
 
@@ -239,29 +286,61 @@ Returns a void typed `IRenderable` interface with a single static string trusted
 
 ## Utility functions
 
+Dont use these as they blindly trust every value calling `String.raw`
+
 ### zt.raw
 
 Receives a `mapFn` to map each value, then returns a new function that:
 
-Given a interpolation tuple will return you the raw string, interpolating everything as raw with `String.raw({ raw: strings }, ...values.map(mapFn))`
+Given a interpolation tuple this will return you the raw string, interpolating everything as raw with `String.raw({ raw: strings }, ...values.map(mapFn))`
 
 ### zt.debug
 
-> This is actually just zt.raw(identity)
+> This is zt.raw(identity)
 
 Given a interpolation tuple this will return you the raw string, interpolating everything as raw with `String.raw({ raw: strings }, ...values)`
 
 ### zt.$n
+
+> This is just zt.raw((v, index) => `$${index}`)
 
 Use this to format the interpolation strings with placeholders marked as dolar sign + index.
 `$0, $1, ...$n`
 
 ### zt.atIndex
 
-> Same as `zt.$n`  with `@` instead of `$`
+> Same as `zt.$n`  with `@` instead of `$` - zt.raw((v, index) => `@${index}`)
 
 Use this to format the interpolation strings with placeholders marked as @ sign + index.
 `@0, @1, ...@n`
+
+## SQL Safety: Values vs. Structure
+
+`zod-tag` does not perform any escaping. Like `sql-template-strings` and similar libraries, it produces an interpolation tuple [strings, ...values] that you pass to your database driver. The driver sends values separately over the wire using the parameterized query protocol, preventing injection at the protocol level, not the string level.
+
+The library enforces a clear boundary:
+
+Values (z.string(), zt.p('id', z.uuid()), primitives) -> go into the values array, always parameterized, always safe.
+
+Structure (zt.unsafe('column_name'), zt.unsafe('ASC')) -> concatenated directly into the query string. Only use with hardcoded strings or Zod-validated input (e.g., z.enum(['id', 'name'])).
+
+```ts
+// Safe: values are parameterized
+const query = zt.t`SELECT * FROM users WHERE id = ${z.uuid()}`
+query.render({}, ['a1b2c3d4-...'])
+// → [['SELECT * FROM users WHERE id = '], 'a1b2c3d4-...']
+
+// Safe: validated identifiers via zt.unsafe
+const column = z.enum(['id', 'name', 'created_at']).parse(userInput)
+const ordered = zt.t`SELECT * FROM users ORDER BY ${zt.unsafe(column)}`
+
+// Unsafe!!! raw concatenation
+zt.debug(result)  // bypasses parameterization entirely
+```
+
+Rule of thumb: 
+> use zt.$n (PostgreSQL) or .join('?') (MySQL) to produce placeholders, keep the values array separate, and validate anything that touches zt.unsafe.
+
 
 ## Gotchas to be aware of (AI gen)
 
@@ -289,10 +368,6 @@ While zod-tag is a fun experiment, its design pushes TypeScript’s type system 
 - The internal expectsObject helper makes a best‑effort guess at whether a Zod schema expects an object argument. It handles unions, intersections, and pipes, but complex schemas (e.g., deeply nested ZodEffects, custom refinements) may be misidentified.
 
 - If a schema that should receive the full keyword argument object is mistakenly treated as a variadic schema, runtime errors will occur. Test any non‑trivial schemas thoroughly.
-
-### Error Messages Lack Context
-
-- When Zod validation fails, the error object tells you what went wrong but not where in the template it occurred. Debugging a large composed template with multiple inline schemas can become a treasure hunt.
 
 ### No Caching or Pre‑compilation
 - Every call to .render() re‑evaluates the entire interpolation logic, including re‑decoding all Zod schemas and re‑executing selector functions. This is fine for occasional use but not suitable for high‑throughput scenarios (e.g., server‑side rendering on every request).
