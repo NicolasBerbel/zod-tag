@@ -2,10 +2,16 @@
   "name": "zod-tag",
   "version": "0.0.1",
   "description": "Typesafe runtime validation for tagged template strings leveraging zod schemas",
+  "private": false,
   "type": "module",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
-  "private": false,
+  "exports": {
+    ".": {
+      "import": "./dist/main.js",
+      "types": "./dist/main.d.ts"
+    }
+  },
   "files": [
     "dist",
     "README.md",
@@ -18,7 +24,21 @@
     "type-safe",
     "validation",
     "templating",
-    "typescript"
+    "typescript",
+    "sql-builder",
+    "query-builder",
+    "parameterized-queries",
+    "string-interpolation",
+    "composable-templates",
+    "runtime-validation",
+    "type-inference",
+    "dsl",
+    "email-templates",
+    "graphql",
+    "prompt-engineering",
+    "llm",
+    "dynamic-sql",
+    "prepared-statements"
   ],
   "author": "Nícolas Berbel <nicolas.berbel@gmail.com>",
   "repository": {
@@ -30,6 +50,10 @@
   },
   "homepage": "https://github.com/NicolasBerbel/zod-tag#readme",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "sideEffects": false,
   "scripts": {
     "test": "node --test src/**/*.test.ts",
     "test:watch": "node --test --watch --experimental-test-coverage src/**/*.test.ts",
@@ -38,9 +62,12 @@
     "dev": "rolldown -c --watch"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^25.6.0",
+    "better-sqlite3": "^12.9.0",
     "rolldown": "1.0.0-rc.16",
     "rolldown-plugin-dts": "^0.23.2",
+    "sqlite3": "^6.0.1",
     "typescript": "^6.0.3",
     "zod": "^4.0.0"
   },

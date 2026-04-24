@@ -12,10 +12,10 @@ const params = {
         z.array(
             z.string().trim().regex(/^\w+$/)
         ).min(1).default(['*']),
-        e => zt.unsafe(e.map(e => `${e}`).join(', '))
+        e => zt.unsafe(z.string(), e.join(', '))
     ),
 
-    orderBy: zt.param(
+    orderBy: zt.p(
         'orderBy',
         z.object({
             column: z.string().optional(),
@@ -23,10 +23,10 @@ const params = {
         }).optional(),
         (q => {
             if (!q?.column) return zt.t``;
-            return zt.t`ORDER BY ${q.column} ${zt.unsafe(q.order)}`
+            return zt.t`ORDER BY ${q.column} ${zt.unsafe(z.enum(['ASC', 'DESC']), q.order)}`
         })),
 
-    limit: zt.param(
+    limit: zt.p(
         'limit',
         z.number().min(1).max(1000).default(1),
         limit => zt.t`LIMIT ${limit}`
@@ -79,12 +79,12 @@ class Repository {
     getById = this.sql({
         id: z.uuid()
     })`
-        SELECT ${params.select}
-        FROM ${() => zt.unsafe(this.table)}
-        ${params.orderBy}
-        WHERE (id = ${e => e.id})
-        ${params.limit}
-    `
+            SELECT ${params.select}
+            FROM ${() => zt.unsafe(z.string().regex(/^\w+$/), this.table)}
+            ${params.orderBy}
+            WHERE (id = ${e => e.id})
+            ${params.limit}
+        `
 }
 
 
@@ -103,8 +103,8 @@ describe('Repository', () => {
             })
 
             deepEqual({ ...result }, {
-                sql: '\n        SELECT id, name\n        FROM Users\n        ORDER BY ? DESC\n        WHERE (id = ?)\n        LIMIT ?\n    ',
-                text: '\n        SELECT id, name\n        FROM Users\n        ORDER BY $0 DESC\n        WHERE (id = $1)\n        LIMIT $2\n    ',
+                sql: '\n            SELECT id, name\n            FROM Users\n            ORDER BY ? DESC\n            WHERE (id = ?)\n            LIMIT ?\n        ',
+                text: '\n            SELECT id, name\n            FROM Users\n            ORDER BY $0 DESC\n            WHERE (id = $1)\n            LIMIT $2\n        ',
                 args: ['created_at', '653de00a-9708-4655-94ff-2e604934f3b6', 50]
             }, 'test not implemented')
         })

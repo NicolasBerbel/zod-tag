@@ -215,7 +215,7 @@ describe('zt - Zod Tag', () => {
 
     describe('utilities', () => {
         const tpl = zt.t`
-            SELECT * FROM ${zt.unsafe('TableName')}
+            SELECT * FROM ${zt.unsafe(z.string().regex(/^\w+$/), 'TableName')}
 
             ${zt.p('orderBy', z.string().optional(), (orderBy => orderBy ? zt.t`ORDER BY ${orderBy} ASC` : zt.t``))}
             

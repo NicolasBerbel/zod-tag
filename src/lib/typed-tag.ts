@@ -67,7 +67,7 @@ export function typedTag<
 export function typedTag(
     s: TemplateStringsArray,
     ...v: any[]
-): IRenderable<void, void, []>
+): IRenderable<void, [], []>
 
 /** typedTag implementation  */
 export function typedTag(strs: any, ...vals: any[]) {

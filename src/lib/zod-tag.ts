@@ -3,6 +3,8 @@ import { schemaTag } from "./schema-tag";
 import { stringRaw, type StringRawTransformer } from "./zt/string-raw";
 import { typedParam } from "./zt/typed-param";
 import { unsafeStatic } from "./zt/unsafe-static";
+import { joinParams } from "./zt/join-params";
+import { ifCondition } from "./zt/if-condition";
 
 /**
  * Zod Tag
@@ -20,7 +22,6 @@ export const zt = typedTag as (typeof typedTag) & {
      * ```
      **/
     z: typeof schemaTag,
-    zod: typeof schemaTag,
 
     /**
      *  Typed Tag - assign a karg schema shape and it will be enhanced with the template interpolation values
@@ -46,7 +47,6 @@ export const zt = typedTag as (typeof typedTag) & {
      * ```
      **/
     t: typeof typedTag,
-    template: typeof typedTag,
 
     /**
      * Defines a named keyword argument for a inline schema
@@ -76,16 +76,41 @@ export const zt = typedTag as (typeof typedTag) & {
      * 
      */
     p: typeof typedParam,
-    param: typeof typedParam,
+
+
+    /**
+     * Joins a list of parameterized values using a structural renderable as separator 
+     * 
+     * @param list The list of parameterized values
+     * @param separator The template with structure to be rendered between parameters
+     * 
+     * @example
+     * zt.t`start
+     *      ${zt.p('items', zt.array(zt.number()), items => zt.join(items, zt.t` separator `))}
+     * end`.render({ items: [1, 2, 3]});
+     * [['start\n     ', ' separator ', ' separator ', '\nend'], 1, 2, 3]
+     */
+    join: typeof joinParams,
+
+    /**
+     * Conditional rendering of a template
+     * 
+     * @param condition true if the template should be rendered; false if (empty) template/no-op
+     * @param template the template to be conditionally rendered
+     */
+    if: typeof ifCondition,
 
     /**
      * Escape hatch for unsafe concatenating strings.
      * 
      * This generates a static renderable template with that string as a single static and no interpolation values.
      * 
+     * The output of the schema passed as first argument is expected to return a primitive value to be casted into string
+     * 
      * @danger RISK OF CONCATENATING USER INPUT! 
      * 
-     * @param str The string that will be trusted and blindly concatenated by parent templates
+     * @param schema Only sanity check between the value argument and itself being injected into your template, be aware!
+     * @param value The input for that schema whose output should be a primitive and will be trusted and blindly concatenated by parent templates
      * @returns a renderable that treats this string as a trusted static value
      */
     unsafe: typeof unsafeStatic,
@@ -134,13 +159,10 @@ export const zt = typedTag as (typeof typedTag) & {
 };
 
 zt.z = schemaTag
-zt.zod = schemaTag
-
 zt.t = typedTag
-zt.template = typedTag
-
 zt.p = typedParam
-zt.param = typedParam
+zt.join = joinParams
+zt.if = ifCondition
 
 zt.unsafe = unsafeStatic;
 zt.raw = stringRaw

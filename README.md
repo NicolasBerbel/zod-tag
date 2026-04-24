@@ -8,12 +8,92 @@ At compile-time this library tries to infer the template types for a better DX.
 
 At runtime this library validates your templates inputs against the zod schemas definitions and merges nested templates into a single interpolation.
 
-The core functionality consists in three habilities:
+The core functionality consists in three abilities:
 - Enable composition by nesting other renderables
 - Automatically infer the type of variables your template expects
 - Validate those variables against the zod schemas
 
 > My objective was to implement a api design that came to my mind and experiment with it, dont use this, or do it at your own joy and risk.
+
+# Meet Zod Tag!
+
+How do you write multi-purpose prompts, database queries, GraphQL mutations and complex templated structures that are simultaneously composable, type-safe AND give you explicit control over what gets parameterized?
+
+Zod Tag provides a seriously good pattern for a real problem: safe template parameterization. By letting selector functions encode architectural decisions in a natural templating flow that clearly distinguishes what is protocol structure from parameterized value right on your code.
+
+## What Problem Does This Solve?
+
+When you generate code from templates (SQL queries, GraphQL, LLM prompts) you constantly face a decision:
+
+- **Structure**: what's part of the query/prompt itself?
+- **Values**: what's user input that should be parameterized?
+
+Most tools force you into one extreme:
+
+| Approach | Structure control | Injection safety |
+|----------|-------------------|------------------|
+| String concatenation | Full control | ❌ None |
+| Simple tagged templates | ❌ Everything's a value | ✅ Full |
+| ORMs / query builders | Hidden behind API | ✅ Full |
+
+**zod-tag** gives you both: explicit, visible control over what's structure and what's a value, with types enforcing the distinction.
+
+The library separates concerns at the point of use:
+
+- Renderables in selectors = template structure (protocol, language specific, syntax keywords, hardcoded/trusted data)
+- Schemas or primitives in selectors = parameterized values (user input, IDs, dates, other values)
+
+**Example: Conditional SQL Structure**
+
+```ts
+const createUserAndProfile = zt.z({
+  userId: z.uuid(),
+  bio: z.string().optional(),
+})`
+  INSERT INTO users (id) VALUES (${e => e.userId});
+
+  ${e => e.bio
+    ? zt.t`INSERT INTO profiles (user_id, bio) VALUES (${e => e.userId}, ${e => e.bio})`
+    : zt.t``
+  }
+`
+createUserAndProfile.render({ userId: crypto.randomUUID(), bio: 'user profile bio' })
+// bio provided:
+// → INSERT INTO users (id) VALUES ($1);
+//   INSERT INTO profiles (user_id, bio) VALUES ($2, $3)
+// args: [userId, userId, bio]
+
+createUserAndProfile.render({ userId: crypto.randomUUID() })
+// bio omitted:
+// → INSERT INTO users (id) VALUES ($1);
+// args: [userId]
+```
+
+The selector for bio doesn't return the bio text, it returns an entire INSERT or an empty template. The bio itself stays a runtime validated parameterized value. The conditional structure is visible, auditable, and type-checked.
+
+Zod Tag actually returns a interpolation tuple with `[strings: string[], ...values: unknown[]]`, this means it's agnostic in terms of database, client, syntax or anything, the only dependency is Zod v4.
+
+
+## The Core Idea
+
+Every `${}` in your template receives the validated arguments. **Its return type decides how it's treated:**
+
+| Return type | Treatment | Example |
+|-------------|-----------|---------|
+| Primitive (`string`, `number`) | Keyword/named parameterized value `e` | `${e => e.userId}` |
+| `z.string()`, `z.number()` | Variadic/positional validated parameterized value | `${z.email()}` |
+| `zt.t` / `zt.z` renderable | Merged into template **structure** | <code>${zt.t\`structure ${z.number()}\`}</code> |
+| `zt.unsafe(schema, str)` | Trusted template **structure** (be sure to use a well suited validation schema for your use case) | `${e => zt.unsafe(z.enum(['ASC', 'DESC']), e.sortOrder)}` |
+| `zt.t`` ` (empty) | Omitted entirely | `${e => e.something ? ... : zt.t``}` |
+
+> The selector function `e => ...` isn't just transforming data - it's classifying what becomes structure and what becomes a parameterized value.
+
+This means you **see the structure/value boundary in your code**. Types enforce that you don't accidentally parameterize keywords or inline user input.
+
+
+-----
+
+> The rest of this document covers the full API and advanced patterns, but the above illustrates the central design decision: **selectors classify structure vs. values**.
 
 ## Getting started
 
@@ -37,13 +117,14 @@ const user = zt.z({
 
 user.render({ firstName: 'John', lastName: 'Doe' })
 // -> [['\n    Hello user, your full name must be: ', '\n'], 'John Doe']
-// Now you can interpolate raw, escape the values or derive this interpolation into other format or delegate it to other tagged template literals
+
+// Now you can interpolate raw, escape the values, derive this interpolation into other format or delegate it to other tagged template literals
 
 ```
 
 ## The API
 
-Either use the `zt.t`|`zt.template` tag or the schema shape `zt.z`|`zt.zod` tag to declaratively define you templates, those functions returns a `IRenderable` interface.
+Either use the `zt.t` (zod tag template) tag or the schema shape `zt.z` (zod tag shape) tag to declaratively define you templates, those functions returns a `IRenderable` interface.
 
 The `IRenderable` interface provides a `render()` method that will receive:
 - Keyword Arguments (Kargs) in the first parameter as `Record<string, unknown> | void` (void if no kargs exists for a given template)
@@ -133,7 +214,7 @@ const rendered = greeting.render({
 
 ### Keyword arguments (inline with zt.p [or other zod shape])
 
-Use `zt.param` or `zt.p` to inline named parameters definitions
+Use `zt.p` to inline named parameters definitions, zod types with object inputs also account.
 
 ```ts
 const greeting = zt.t`Hello, ${zt.p('name', z.string())}!`
@@ -204,10 +285,12 @@ userCard.render({
 
 Sometimes we may need to be unsafe just for the sake of sanity (or insanity)
 
+The output of the schema passed as first argument is expected to return a primitive value to be casted into string
+
 ```ts
 const tableName = 'i_promise_this_is_not_user_input';
-const greeting = zt.t`SELECT * FROM ${zt.unsafe(tableName)}`
-greeting.render(); // -> [['SELECT * FROM i_promise_this_is_not_user_input]]
+const greeting = zt.t`SELECT * FROM ${zt.unsafe(z.string().regex(/^\w+$/), tableName)}`
+greeting.render(); // -> [['SELECT * FROM i_promise_this_is_not_user_input']]
 ```
 
 ## Template values
@@ -260,31 +343,85 @@ graph
     IRenderable --> render("<code>render(kargs, vargs)=>[strings, ...values]</code>")
 ```
 
-### (zt.template | zt.t)`` - tagged template
+### zt.t`` - tagged template
 
 Used to declare typed templates without a base shape for keyword argument validation
 
 Returns a typed `IRenderable` interface
 
-### (zt.zod | zt.z)`` - tagged template
+> Note the `zt` namespace is `zt.t` so <code>zt\`content\`</code> is interchangeable with <code>zt.t\`content\`</code>
+
+### zt.z(shape: ZodRawShape)`` - tagged template
 
 Used to declare typed templates with a base shape for keyword argument validation
 
 Returns a typed `IRenderable` interface
 
-### (zt.param | zt.p)(name, ZodType, transformFn)
+### zt.p(name: string, schema: ZodType, transformFn: TagSelector)
 
 Used to declare named parameter (keyword argument) inline/embedded into the template
 
 Returns a `ZodCodec` schema
 
-### zt.unsafe(str: string)
+### zt.unsafe(schema: ZodType, str: string)
 
 Used as a escape hatch for dynamic values that should be treated as safe and thus statically concatenated.
 
 Returns a void typed `IRenderable` interface with a single static string trusted as safe non user input
 
+Schema is enforced by the first argument but it's left to userspace to decide what to check. 
+
 ## Utility functions
+
+### Template utilities
+
+### zt.if(condition: any, template: IRenderable)
+
+Conditional rendering utility, no much better then <code>${e => e.something ? template : zt\`\`}</code>
+
+```ts
+
+const tpl = zt.z({ name: z.string().optional() })`
+    ${e => zt.if(e.name, zt.t`Your name is ${e.name}`)}
+`
+// same as ${e => e.name ? zt.t`Your name is ${e.name}`) : zt.t`` }
+```
+
+### zt.join(list: unknown[], separator: IRenderable<void, [], []>)
+
+The `zt.join` utility provides a seamless way to apply the `e => e.listData.reduce()` pattern.
+
+Use it when you have a list of parameterized values that should be joined together with a structural separator.
+
+It returns another `IRenderable` that joins together every item on that list with the structural content of the separator template on the second argument.
+
+```ts
+// The reducer pattern arises when you need to compose a parameterized value list with some structure in the between, e.g,:
+const template1 = zt.z({
+    ids: z.array(z.string())
+})`before - ${e => e.ids.reduce((acc, id) => {
+    /**
+     * Types get ugly here - as any, null!, etc - but there are some facts in the ternary below:
+     * - each id is a parameterized value
+     * - if there is only one id we want it to behave the same as a ${id} 'hole' in the template interpolation
+     * - but if there is more than one we want structural data between them as separator without treating the id as structure
+     * We avoid zt.unsafe by using the params.reduce() pattern
+     */
+    return acc ? zt.t`${acc}, ${id}` : zt.t`${id}`;
+}, null)} - after`;
+
+// the usage of zt.join does exactly the above with shorter syntax:
+const template2 = zt.z({
+    ids: z.array(z.string())
+})`before - ${e => zt.join(e.ids, zt.t`, `)} - after`
+
+const result1 = template1.render({ ids: ['1', '2', '3']})
+// -> [['before - ', ' - structure - ', ' - structure - ', ' - after'], '1', '2', '3']
+const result2 = template2.render({ ids: ['1', '2', '3']})
+// -> [['before - ', ' - structure - ', ' - structure - ', ' - after'], '1', '2', '3']
+```
+
+### Unsafe utilities
 
 Dont use these as they blindly trust every value calling `String.raw`
 
@@ -322,7 +459,7 @@ The library enforces a clear boundary:
 
 Values (z.string(), zt.p('id', z.uuid()), primitives) -> go into the values array, always parameterized, always safe.
 
-Structure (zt.unsafe('column_name'), zt.unsafe('ASC')) -> concatenated directly into the query string. Only use with hardcoded strings or Zod-validated input (e.g., z.enum(['id', 'name'])).
+Structure (zt.unsafe(z.enum(['id', 'column_name']), 'column_name'), zt.unsafe(z.enum(['ASC', 'DESC']),'ASC')) -> concatenated directly into the query string. Only use with hardcoded strings or Zod-validated input (e.g., z.enum(['id', 'name'])).
 
 ```ts
 // Safe: values are parameterized
@@ -331,8 +468,8 @@ query.render({}, ['a1b2c3d4-...'])
 // → [['SELECT * FROM users WHERE id = '], 'a1b2c3d4-...']
 
 // Safe: validated identifiers via zt.unsafe
-const column = z.enum(['id', 'name', 'created_at']).parse(userInput)
-const ordered = zt.t`SELECT * FROM users ORDER BY ${zt.unsafe(column)}`
+const column = z.enum(['id', 'name', 'created_at'])
+const ordered = zt.t`SELECT * FROM users ORDER BY ${zt.unsafe(column, userInput)}`
 
 // Unsafe!!! raw concatenation
 zt.debug(result)  // bypasses parameterization entirely
