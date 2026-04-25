@@ -31,7 +31,7 @@ Dear ${(ctx) => `${ctx.firstName} ${ctx.lastName}`},
 `;
 
 // ----------------------------------------------------------------------
-// 3. Order items list – uses variadic arguments for line items
+// 3. Order items list
 // ----------------------------------------------------------------------
 const itemSchema = z.object({
     name: z.string(),
@@ -39,21 +39,11 @@ const itemSchema = z.object({
     price: z.number().positive(),
 });
 
-const orderItems = zt.t`
-Your order contains:
-${itemSchema.array().min(1).describe('items')}
-`;
-
 // Inside the template we use a function that receives the validated array
 // and formats each line. The function returns a string, but it could also
-// return another renderable.
+// return another renderable if we wanted to append structural content.
 
-// Wait – the above won't work because `itemSchema.array()` is a Zod schema,
-// so it will be treated as a variadic argument expecting an array.
-// Let's refine:
-
-const orderItemsList = zt.t`
-${zt.p(
+const itemsParam = zt.p(
     'items',
     z.array(itemSchema).min(1),
     (items) => {
@@ -63,7 +53,12 @@ ${zt.p(
         );
         return lines.join('\n');
     }
-)}
+)
+
+type ItemsOutput = z.output<typeof itemsParam>
+
+const orderItemsList = zt.t`
+${itemsParam}
 
 `;
 
@@ -74,10 +69,21 @@ ${zt.p(
 // ----------------------------------------------------------------------
 const addressSchema = z.object({
     street: z.string(),
-    city: z.string(),
+    city: z.string().transform(e => e.toUpperCase()),
     zip: z.string(),
     country: z.string(),
 });
+
+// ----------------------------------------------------------------------
+// 5. Aditional note – demonstrates zt.p and inner selectors
+// ----------------------------------------------------------------------
+const additionalNote = zt.t`
+    ${zt.p('note', z.string(), note => zt.if(note, zt.t`Note: ${note}`))}
+    ${zt.p('note2', z.string(), note => zt.if(note, zt.t`Note2: ${note}`))}
+    ${zt.p('additionalNotes', z.array(z.string()))}
+    ${() => () => () => zt.z({ returnedProp: z.string().optional() })`asd ${e => e.returnedProp || zt.t``}`}
+    ${() => zt.t`Void`}
+`;
 
 const shippingInfo = zt.z({
     address: addressSchema,
@@ -91,18 +97,9 @@ Shipping Address:
   ${(ctx) => ctx.address.city}, ${(ctx) => ctx.address.zip}
   ${(ctx) => ctx.address.country}
 
-
-${() => additionalNote}
+    ${zt.p('extra', additionalNote)}
 `;
 
-// ----------------------------------------------------------------------
-// 5. Aditional note – demonstrates variadic argument
-// ----------------------------------------------------------------------
-const additionalNote = zt.t`
-Note: ${z.string()}
-Note2: ${z.string()}
-
-`;
 
 // ----------------------------------------------------------------------
 // 6. Compose the full email template
@@ -116,7 +113,9 @@ Thank you for your order!
 
 ${orderItemsList}
 
+${(e: IRenderableKargs<typeof shippingInfo>) => e.address ? zt.t`[shipping address] ${e.address.city} < warning e.address.city is not validated yet` : zt.t``}
 ${shippingInfo}
+${(e: IRenderableKargs<typeof shippingInfo>) => e.address ? zt.t`[shipping address] ${e.address.city} < after shippingInfo e.address.city is still not validated yet` : zt.t``}
 
 ${footer}
 `;
@@ -130,6 +129,13 @@ const emailData = {
     // For greeting
     firstName: 'Jane',
     lastName: 'Smith',
+    
+    extra: {
+        additionalNotes: [],
+        note: '',
+        note2: '',
+        returnedProp: 'returnedProp'
+    },
 
     // For order items
     items: [
@@ -150,7 +156,7 @@ const emailData = {
 
 function renderEmail() {
     // const rendered = orderConfirmationEmail.render(emailData, ['Additional note'])
-    const rendered = orderConfirmationEmail.render(emailData, ['Additional note content', 'Second note content'])
+    const rendered = orderConfirmationEmail.render(emailData)
 
     const finalTemplate = zt.debug(rendered)
 
@@ -161,6 +167,6 @@ function renderEmail() {
 try {
 
     renderEmail()
-} catch(e) {
+} catch (e) {
     console.log(e)
 }

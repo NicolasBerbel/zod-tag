@@ -37,13 +37,6 @@ export const zt = typedTag as (typeof typedTag) & {
      * 
      * tpl.render() // type error and runtime error
      * tpl.render({ name: 'John Doe' }) // valid -> [['Hello', ''], 'John Doe']
-     * 
-     * 
-     * // Variadic
-     * const tpl = zt.t`Hello, ${z.string()}`
-     * 
-     * tpl.render() // type error and runtime error
-     * tpl.render(void 0, ['John Doe']) // valid -> [['Hello', ''], 'John Doe']
      * ```
      **/
     t: typeof typedTag,

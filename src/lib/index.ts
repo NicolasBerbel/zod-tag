@@ -4,13 +4,22 @@ export { InterpolationError } from './core/interpolation-error'
 export {
     type IRenderable,
     type IRenderableKargs,
-    type IRenderableVargs,
     type IRenderableOutput,
     isRenderable,
     createRenderable
 } from './core/renderable'
 
-export * from './types/tag.types'
+export {
+    type ExtractKargs,
+    type ExtractOutput,
+    type KargsType,
+    type TagBehavior,
+    type TagChildren,
+    type TagPrimitive,
+    type TagSelector,
+    type TagTypes,
+    type TagValue
+} from './types/tag.types'
 
 export {
     type TypedTag,

@@ -78,7 +78,7 @@ const fragments = {
 // ============================================================================
 
 class Repository {
-    protected table: IRenderable<void, [], []>;
+    protected table: IRenderable<void, []>;
     protected name: string;
 
     constructor(name: string) {
@@ -104,7 +104,7 @@ class Repository {
 
             // Return the actual repository method
             return (params: Params): QueryResult => {
-                const [queryStrings, ...queryArgs] = renderable.render(params as any, undefined);
+                const [queryStrings, ...queryArgs] = renderable.render(params as any);
 
                 return {
                     sql: queryStrings.join('?'),
@@ -262,7 +262,7 @@ class UserRepository extends Repository {
 // WHERE id IN (
 //     ${e => (e.ids.reduce((acc, id) => {
 //     return (acc ? zt.t`${acc},${id}` : zt`${id}`) as any
-// }, null as any as IRenderable<void, [], []>))}
+// }, null as any as IRenderable<void, []>))}
 // 
 
 // ============================================================================

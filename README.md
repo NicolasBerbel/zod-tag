@@ -80,9 +80,12 @@ Every `${}` in your template receives the validated arguments. **Its return type
 
 | Return type | Treatment | Example |
 |-------------|-----------|---------|
-| Primitive (`string`, `number`) | Keyword/named parameterized value `e` | `${e => e.userId}` |
-| `z.string()`, `z.number()` | Variadic/positional validated parameterized value | `${z.email()}` |
-| `zt.t` / `zt.z` renderable | Merged into template **structure** | <code>${zt.t\`structure ${z.number()}\`}</code> |
+| Constant primitive (`string`, `number`, what else) | any constant not processed by zod tag | `123`, `'value'`, `[1, 2, 3]`, `{ a: 1 }` |
+| Selector primitive (`string`, `number`, what else) | Keyword/named parameterized value `e` | `${e => e.userId}` |
+| `z.codec()`, `z.object().transform()` | Schemas with object input register named parameterized values | `${z.codec(...).transform(e => ...)}` |
+| `zt.p('name', z.string())` | Inlined keyword named validated parameterized value | `${zt.p('email', z.email())}` |
+| `zt.p('scoped', IRenderable)` | Scoped | `${zt.p('cta', renderableButton)}` |
+| `zt.t` / `zt.z()` renderable | Merged into template **structure** | <code>${zt.t\`structure ${'value'}\`}</code> |
 | `zt.unsafe(schema, str)` | Trusted template **structure** (be sure to use a well suited validation schema for your use case) | `${e => zt.unsafe(z.enum(['ASC', 'DESC']), e.sortOrder)}` |
 | `zt.t`` ` (empty) | Omitted entirely | `${e => e.something ? ... : zt.t``}` |
 
@@ -126,21 +129,19 @@ user.render({ firstName: 'John', lastName: 'Doe' })
 
 Either use the `zt.t` (zod tag template) tag or the schema shape `zt.z` (zod tag shape) tag to declaratively define you templates, those functions returns a `IRenderable` interface.
 
-The `IRenderable` interface provides a `render()` method that will receive:
-- Keyword Arguments (Kargs) in the first parameter as `Record<string, unknown> | void` (void if no kargs exists for a given template)
-- Variadic Arguments (Vargs) in the second parameter as `unknown[] | void` (void if no vargs exists for a given template)
+The `IRenderable` interface provides a `render()` method that will receive the keyword arguments (Kargs) in the first parameter as `Record<string, unknown> | void` (void if no kargs exists for a given template)
 
 When possible `unknown` will be infered from nested templates, zod schemas input/output or primitives interpolated in the tagged template call.
 
 ## Example usage:
 
-### Static templates
+### Static and constants templates
 
 Interpolate your template with primitive values or no interpolation.
 
 ```ts
     const greeting = zt.t`Hello`
-    // -> IRenderable<void, [], []>
+    // -> IRenderable<void, []>
 
     const rendered = greeting.render();
     // -> [['Hello']]
@@ -152,44 +153,6 @@ Interpolate your template with primitive values or no interpolation.
     const greeting2 = zt.t`Hello ${123}!`.render();
     // strings -> ['Hello ', '!]
     // values -> [123]
-```
-
-
-### Variadic arguments (inline non object input schemas)
-
-Interpolate your template with primitive zod schemas, those values will account as required variadic argument.
-
-> Note variadic arguments are consumed as they are found inside the template while rendering.
-> optional() or default() would still account as required positional argument unless they are found in the end of the vargs list.
-
-```ts
-
-// Variadic arguments are set by inline zod schemas
-const greeting = zt.t`Hello, ${z.string()}!`
-const greeting2 = zt.t`Hello, ${z.string().default('Does work if no required varg is found afterwards, otherwise its still a required varg even with .default().')}!`
-
-// greeting.render() -> type error and runtime zod validation error
-
-const rendered = greeting.render(
-    // no keyword arguments
-    void 0,
-    // variadic arguments
-    ['John']
-)
-// interpolation [strs, ...vals] -> [['Hello, ', '!'], 'John']
-const [strings, ...values] = rendered;
-
-// Some utilities:
-
-zt.debug(rendered)
-// unsafe raw -> "Hello, John!"
-
-zt.raw((val, i) => `(${i}=[${value}])`)(rendered)
-// custom transform raw -> 'Hello, (0=[John])!'
-
-zt.$n(rendered)
-// transformed template -> "Hello, $0!"
-
 ```
 
 ### Keyword arguments (object shape with zt.z)
@@ -214,7 +177,7 @@ const rendered = greeting.render({
 
 ### Keyword arguments (inline with zt.p [or other zod shape])
 
-Use `zt.p` to inline named parameters definitions, zod types with object inputs also account.
+Use `zt.p` to inline named parameters definitions, zod types with object inputs and other renderables also account.
 
 ```ts
 const greeting = zt.t`Hello, ${zt.p('name', z.string())}!`
@@ -222,11 +185,16 @@ const greeting = zt.t`Hello, ${zt.p('name', z.string())}!`
 const rendered = greeting.render({ name: 'John Doe' })
 // -> [['Hello, ', '!'], 'John Doe']
 
+const template = zt.t`
+    Template heading
+    ${zt.p('greeting', greeting)}
+`
+template.render({ greeting: { name: 'John Doe' }})
+// -> [['Template heading\n    Hello, ', '!'], 'John Doe']
+
 ```
 
-Or mix `zt.zod` with `zt.param` and variadic arguments:
-
-> Note that variadic arguments inside a conditionally rendered nested template may cause problems, we can mix them but probably shouldn't.
+Or mix `zt.z` with `zt.p`:
 
 ```ts
 const greeting = zt.z({
@@ -234,24 +202,23 @@ const greeting = zt.z({
 })`
     The user ${zt.p('user', z.string())} joined today, ${v => v.date.toLocaleDateString()}}!
 
-    Some variadic message: ${z.string()}
 `
 
 greeting.render({
     user: 'John Doe',
     date: '01/01/2026', // <- override zod schema w/ .optional()
-}, ['Hello new user!']);
-// or greetings.render({ user: 'John' }, ['Hello new user!']) given date is optional
+});
+// or greetings.render({ user: 'John' }) given date is optional
 
 ```
 
 ### Nested templates
 
-Nest your templates and <s>expect</s> hope the merged kargs, vargs type and schema validations to just work.
+Nest your templates and <s>expect</s> hope the merged kargs, output values and schema validations to just work.
 
-- Works better with kargs only templating via `zt.z` or `zt.p`
+- Works both with namespaced kargs with `zt.p` or parent scope via `zt.z`
 
-> Due to complex recursive types used to infer the composition kargs and vargs, max depth recursion might be reached, so evicting deeply nested templates will avoid slow compilation or recursion limits errors.
+> Due to complex recursive types used to infer the composition kargs, max depth recursion might be reached, so evicting deeply nested templates will avoid slow compilation or recursion limits errors.
 
 ```ts
 const userHeading = zt.z({ first: z.string(), last: z.string() })`
@@ -279,6 +246,36 @@ userCard.render({
     role: 'Full-Stack',
 })
 
+```
+
+### Scoped composition with `zt.p`
+
+When the second argument to `zt.p` is a Zod schema, it creates a validated named parameter.
+
+When it's a renderable, it creates a scoped wrapper, the parent passes { scopeName: { ...childKargs } } and `zt.p` extracts the nested object before calling the child's .render(). This works recursively, so deeply nested fragments compose cleanly.
+
+```ts
+const button = zt.t`<button>${zt.p('label', z.string())}</button>`
+const addressBlock = zt.z({
+  street: z.string(),
+  city: z.string(),
+})`${e => e.street}, ${e => e.city}`
+
+const form = zt.z({ title: z.string() })`
+  <h1>${e => e.title}</h1>
+  ${zt.p('saveBtn', button)}
+  ${zt.p('cancelBtn', button)}
+  Shipping: ${zt.p('shipping', addressBlock)}
+  Billing: ${zt.p('billing', addressBlock)}
+`
+
+form.render({
+  title: 'Checkout',
+  saveBtn: { label: 'Place Order' },
+  cancelBtn: { label: 'Go Back' },
+  shipping: { street: '123 Main', city: 'NYC' },
+  billing: { street: '456 Oak', city: 'NYC' },
+})
 ```
 
 ### Escape hatch (zt.unsafe)
@@ -309,17 +306,13 @@ If a zod schema value is expected to receive an object as input the karg shape w
 
 *If its a strict schema and the template has other named arguments this is probably a point of failure.*
 
-> Note the `zt.param`|`zt.p` utility is only a zod codec with an object schema with a single key, an output schema defined in the second parameter and an optional transform fn to determine
-
-- Other input type schemas:
-
-For other zod schemas the value is accounted as a variadic argument to be consumed as the schema is found when rendering. The value found in the vargs array at the same index will be parsed and the schema output will be used as the actual interpolation value if its primitive, otherwise the output will be processed again.
+> Note that for zod schemas the `zt.p`|`zt.p` utility is only a zod codec with an object schema with a single key, an output schema defined in the second parameter and an optional transform fn to determine its output, for nested templates it just scope the parents kargs schema with a namespace key.
 
 - **Selector functions** (`(arg: Karg) => TagValue<Karg>`)
 
 A function that receives a single argument with the validated keyword args and returns a primitive or another template value that should be processed again
 
-> The whole karg object is received as argument in the selector fn, but only the values in the shape defined with the `zt.zod`|`zt.z` tag are already validated and only these are infered by the type system. Kargs defined inline by `zt.p` or inline object input shapes will be validated only as the interpolation reach the schema value.
+> The whole karg object is received as argument in the selector fn, but only the values in the shape defined with the `zt.z` tag are already validated and only these are infered by the type system. Kargs defined inline by `zt.p` or inline object input shapes will be validated only as the interpolation reach the schema value.
 
 - **Primitives** (or anything else) (`string | number | boolean | null`)
 
@@ -340,7 +333,7 @@ graph
     zt.p -- inline keyword argument definition --> typedParam --> ZodCodec
 
     createRenderable --> IRenderable
-    IRenderable --> render("<code>render(kargs, vargs)=>[strings, ...values]</code>")
+    IRenderable --> render("<code>render(kargs)=>[strings, ...values]</code>")
 ```
 
 ### zt.t`` - tagged template
@@ -357,11 +350,21 @@ Used to declare typed templates with a base shape for keyword argument validatio
 
 Returns a typed `IRenderable` interface
 
-### zt.p(name: string, schema: ZodType, transformFn: TagSelector)
+### zt.p
+
+Use to declare a scoped parameter or scoped nested renderable
+
+#### zt.p(name: string, schema: ZodType, transformFn: TagSelector)
 
 Used to declare named parameter (keyword argument) inline/embedded into the template
 
 Returns a `ZodCodec` schema
+
+#### zt.p(name: string, template: IRenderable)
+
+Used to declare a scoped nested rendered inline/embedded into the template kargs requirements under the `name` argument key.
+
+Returns a `IRenderable`
 
 ### zt.unsafe(schema: ZodType, str: string)
 
@@ -387,7 +390,7 @@ const tpl = zt.z({ name: z.string().optional() })`
 // same as ${e => e.name ? zt.t`Your name is ${e.name}`) : zt.t`` }
 ```
 
-### zt.join(list: unknown[], separator: IRenderable<void, [], []>)
+### zt.join(list: unknown[], separator: IRenderable<void, []>)
 
 The `zt.join` utility provides a seamless way to apply the `e => e.listData.reduce()` pattern.
 
@@ -457,14 +460,14 @@ Use this to format the interpolation strings with placeholders marked as @ sign 
 
 The library enforces a clear boundary:
 
-Values (z.string(), zt.p('id', z.uuid()), primitives) -> go into the values array, always parameterized, always safe.
+Values (() => 'value', zt.p('id', z.uuid()), primitives) -> go into the values array, always parameterized, always safe.
 
 Structure (zt.unsafe(z.enum(['id', 'column_name']), 'column_name'), zt.unsafe(z.enum(['ASC', 'DESC']),'ASC')) -> concatenated directly into the query string. Only use with hardcoded strings or Zod-validated input (e.g., z.enum(['id', 'name'])).
 
 ```ts
 // Safe: values are parameterized
-const query = zt.t`SELECT * FROM users WHERE id = ${z.uuid()}`
-query.render({}, ['a1b2c3d4-...'])
+const query = zt.t`SELECT * FROM users WHERE id = ${zt.p('id', z.uuid())}`
+query.render({ id: 'a1b2c3d4-...' }, [])
 // → [['SELECT * FROM users WHERE id = '], 'a1b2c3d4-...']
 
 // Safe: validated identifiers via zt.unsafe
@@ -484,14 +487,7 @@ Rule of thumb:
 While zod-tag is a fun experiment, its design pushes TypeScript’s type system and runtime validation to their limits. Be aware of these sharp edges before using it in anything serious.
 
 ### TypeScript Performance & Inference Limits
-- Deeply nested templates can cause the TypeScript compiler to slow down or fail with Type instantiation is excessively deep errors. The recursive utility types (MergeKargs, TupleFlatten, etc.) were not built for complex, real‑world component trees.
-
-- Mixing many keyword and variadic arguments in a single template may result in the inferred render() signature degrading to any or unknown. When in doubt, keep templates small and focused.
-
-### Variadic Argument Ordering
-- Variadic arguments (z.string(), z.number()) are consumed in the order they appear during template interpolation. If you nest a template that itself expects variadic arguments, it will shift the position of subsequent variadic arguments in the parent template.
-
-- Rule of thumb: Avoid mixing named (zt.p) and variadic arguments in the same template unless you fully control the nesting and can guarantee the order. Prefer keyword arguments for composable components.
+- Deeply nested templates can cause the TypeScript compiler to slow down or fail with Type instantiation is excessively deep errors. The recursive utility types (MergeKargs, tuples traversing, etc.) were not built for complex, real‑world component trees.
 
 ### Schema Shape Validation is Loose by Default
 - zt.z({ ... }) creates a schema using z.object(shape).loose(). This means extra properties are allowed in the keyword arguments object without throwing a validation error.
@@ -500,11 +496,6 @@ While zod-tag is a fun experiment, its design pushes TypeScript’s type system 
 
 ### Raw Utilities Bypass All Safety
 - zt.debug, zt.$n, and zt.raw blindly concatenate values into a string. They do not escape content for SQL, HTML, or any other context. These functions exist only for debugging or introspection. Never use their output in production queries, HTML responses, or shell commands.
-
-### expectsObject Edge Cases
-- The internal expectsObject helper makes a best‑effort guess at whether a Zod schema expects an object argument. It handles unions, intersections, and pipes, but complex schemas (e.g., deeply nested ZodEffects, custom refinements) may be misidentified.
-
-- If a schema that should receive the full keyword argument object is mistakenly treated as a variadic schema, runtime errors will occur. Test any non‑trivial schemas thoroughly.
 
 ### No Caching or Pre‑compilation
 - Every call to .render() re‑evaluates the entire interpolation logic, including re‑decoding all Zod schemas and re‑executing selector functions. This is fine for occasional use but not suitable for high‑throughput scenarios (e.g., server‑side rendering on every request).

@@ -207,7 +207,7 @@ FROM users
 WHERE id = ANY(
   ${e => e.userIds.reduce((acc, id, i) => {
     return i ? zt.t`${acc}, ${id}` : zt.t`${id}` as any;
-}, zt.t``) as any as IRenderable<void, [], [...unknown[]]>}
+}, zt.t``) as any as IRenderable<void, [...unknown[]]>}
 )
 ORDER BY created_at DESC
 `;

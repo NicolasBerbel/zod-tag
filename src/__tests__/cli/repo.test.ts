@@ -54,8 +54,8 @@ class Repository {
                 const i = t(str, ...vals)
 
                 return (...args: Parameters<typeof i.render>) => {
-                    const [karg, varg] = args
-                    const [queryStrings, ...queryArgs] = i.render(karg, varg);
+                    const [karg] = args
+                    const [queryStrings, ...queryArgs] = i.render(karg);
 
                     return {
                         get sql() {

@@ -1,16 +1,14 @@
 import {
-    type ExtractVargs,
     type ExtractKargs,
     type ExtractOutput,
     type KargsType,
     type TagTypes,
-    type TagSelector,
 } from "./types/tag.types"
 import {
     createRenderable,
     type IRenderable
 } from "./core/renderable";
-import { type IntersectNonVoid, type TupleExclude } from "./types/util.types";
+import { type IntersectNonVoid } from "./types/util.types";
 import { interpolate } from "./core/interpolate";
 
 /**
@@ -24,9 +22,7 @@ export interface TypedTag<
     // Dynamic
     <
         /** Keyword args (obj arg) */
-        Kargs extends ExtractKargs<TupleExclude<V, TagSelector<KargsOutput, any>>>,
-        /** Variadic args (...rest args */
-        Vargs extends ExtractVargs<V>,
+        Kargs extends ExtractKargs<V>,
         /** Output result */
         Output extends ExtractOutput<V>,
         /** Tuple of input values */
@@ -39,7 +35,9 @@ export interface TypedTag<
         (
             s: TemplateStringsArray,
             ...v: V
-        ): IRenderable<IntersectNonVoid<KargsInput, Kargs>, Vargs, Output>
+        ): IRenderable<{
+            [K in keyof IntersectNonVoid<KargsInput, Kargs>]: IntersectNonVoid<KargsInput, Kargs>[K]
+        }, Output>
 }
 
 /**
@@ -48,8 +46,6 @@ export interface TypedTag<
 export function typedTag<
     /** Keyword args (obj arg) */
     Kargs extends ExtractKargs<V>,
-    /** Variadic args (...rest args */
-    Vargs extends ExtractVargs<V>,
     /** Output result */
     Output extends ExtractOutput<V>,
     /** Tuple of input values */
@@ -61,17 +57,17 @@ export function typedTag<
 >(
     s: TemplateStringsArray,
     ...v: V
-): IRenderable<Kargs, Vargs, Output>
+): IRenderable<{ [K in keyof Kargs]: Kargs[K] }, Output>
 
 /** Static template */
 export function typedTag(
     s: TemplateStringsArray,
     ...v: any[]
-): IRenderable<void, [], []>
+): IRenderable<void, []>
 
 /** typedTag implementation  */
 export function typedTag(strs: any, ...vals: any[]) {
-    return createRenderable(function renderRenderable(karg, varg) {
-        return interpolate.call(this, karg, varg, strs, ...vals)
+    return createRenderable(function renderRenderable(karg) {
+        return interpolate.call(this, karg, strs, ...vals)
     })
 }

@@ -118,58 +118,24 @@ describe('zt - Zod Tag', () => {
         })
 
     })
-
-    describe('variadic argument templates', () => {
-        it('should validate variadic zod schemas inlined in the template', () => {
-            const tpl = zt.t`
-                Hello, ${z.string()}!
-                Your email is: ${z.email()}
-            `
-            const result = tpl.render(void 0, ['John', 'john@email.com'])
-            const [strings, ...values] = result;
-
-            deepEqual(strings, ['\n                Hello, ', '!\n                Your email is: ', '\n            '], 'Interpolation splits strings correctly')
-            deepEqual(values, ['John', 'john@email.com'], 'Interpolations values resolves to transformation values declared inside the template')
-
-            throws(() => tpl.render(void 0, ['John', 'not-a-valid-email']), InterpolationError, 'should throw validation error')
-        })
-
-        it('should allow mixture of both karg and vargs', () => {
-            const tpl = zt.z({ name: z.string() })`
-                Hello, ${(e) => e.name}!
-                Your email is: ${z.email()}
-            `
-            const result = tpl.render({ name: 'John' }, ['john@email.com'])
-            const [strings, ...values] = result;
-
-            deepEqual(strings, ['\n                Hello, ', '!\n                Your email is: ', '\n            '], 'Interpolation splits strings correctly')
-            deepEqual(values, ['John', 'john@email.com'], 'Interpolations values resolves to transformation values declared inside the template')
-
-            throws(() => tpl.render({ name: 'John' }, ['not-a-valid-email']), InterpolationError, 'should throw validation error')
-
-            // @ts-expect-error
-            throws(() => tpl.render(null, null), InterpolationError, 'should throw validation error')
-        })
-    })
-
     describe('nested templates', () => {
         it('should merge nested templates', () => {
             const staticTpl = zt.t`Static text`
-            const button = zt.t`<button>${z.string()}</button>`
+            const button = zt.t`<button>${zt.p('title', z.string())}</button>`
             const panel = zt.z({
                 title: z.string(),
             })`
                 <div>
                     <h3>${e => e.title}</h3>
-                    <div>Button1: ${button}</div>
-                    <div>Button2: ${button}</div>
+                    <div>Button1: ${zt.p('button1', button)}</div>
+                    <div>Button2: ${zt.p('button2', button)}</div>
                 </div>
             `
 
             const nested1 = zt.t`
                 ${staticTpl}
                 Nested panel: ${panel}
-                Nested button ${button}
+                Nested button ${zt.p('nestedButton', button)}
             `
 
             const parentTemplate = zt.z({
@@ -187,8 +153,17 @@ describe('zt - Zod Tag', () => {
             const result = parentTemplate.render({
                 id: '30a1a449-4041-4c2b-89cf-8d386c4467b5',
                 name: 'Name value',
-                title: 'Panel title'
-            }, ['panel button1', 'panel button2', 'nested button'])
+                title: 'Panel title',
+                button1: {
+                    title: 'panel button1',
+                },
+                button2: {
+                    title: 'panel button2',
+                },
+                nestedButton: {
+                    title: 'nested button',
+                },
+            })
             const [strings, ...values] = result;
 
 

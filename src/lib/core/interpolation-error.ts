@@ -4,7 +4,7 @@ import { filterStackTrace, getTemplateSource } from "./source";
 
 const join = (str: unknown[]) => str.join('\n')
 
-export type InterpolationOperation = 'root-schema' | 'variadic-schema' | 'karg-schema' | 'renderable' | 'selector'
+export type InterpolationOperation = 'root-schema' | 'karg-schema' | 'renderable' | 'selector'
 
 type InterpolationErrorCause = {
     error: unknown,
@@ -29,19 +29,15 @@ export class InterpolationError extends Error {
     static for(exception: unknown, context: {
         value: any,
         index: number,
-        variadicIndex: number,
         strings: string[],
-        renderer: IRenderable<any, any, any>,
+        renderer: IRenderable<any, any>,
         op: InterpolationOperation,
-        varg: any,
     }) {
         const _e = exception as any
         const {
             op,
             index: i,
             value: _value,
-            varg,
-            variadicIndex,
             strings,
             renderer
         } = context;
@@ -55,9 +51,6 @@ export class InterpolationError extends Error {
                 break;
             case 'karg-schema':
                 operationMessage += `Keyword error`
-                break;
-            case 'variadic-schema':
-                operationMessage += `Variadic value error at index ${variadicIndex} [vargs[${i}]=${varg}]`
                 break;
             case 'renderable':
                 operationMessage += `Renderable error`

@@ -15,8 +15,8 @@ const userCard = zt.z({
 })`
     Hello: ${e => `${e.first} ${e.last}`}
     Age: ${e => e.birtdate ? new Date().getFullYear() - new Date(e.birtdate).getFullYear() : 'unknown age'}
-    val: ${z.string().default('aaa')}
-    val2: ${z.string().default('aaa')}
+    val: ${zt.p('val', z.string().default('aaa'))}
+    val2: ${zt.p('val2', z.string().default('aaa'))}
 `
 
 const renderedUserCard = userCard.render({
@@ -27,11 +27,8 @@ const renderedUserCard = userCard.render({
 
 const userTitle = zt.t`
     A new user in the application
-    ${z.string().meta({ title: 'User message' })}
-    ${z.string().meta({ title: 'Variadic argument' }).default('Ok default works if variadic arguments are the last ones')}
+    ${zt.p('user_message', z.string().meta({ title: 'User message' }))}
 `
-
-// const renderedUserTitle = userTitle.render(void 0, ['Say welcome!'])
 
 const userHeading = zt.z({
     date: z.date().optional().default(() => new Date())
@@ -50,7 +47,9 @@ const renderedUserHeading = userHeading.render({
     birtdate: new Date('05/06/2007'),
     first: 'John',
     last: 'Doe',
-}, ['Developer', 'Something', 'Lorem ipsum dolor'])
+    user_message: 'Say hello!',
+    val2: 'Content of val2'
+})
 
 console.log(renderedUserHeading, zt.raw(e => e)(renderedUserHeading))
 // console.log(renderRaw(renderedUserTitle))

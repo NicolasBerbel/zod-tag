@@ -17,18 +17,16 @@ export const schemaTag = <
         ...vals: any[]
     ) {
         return createRenderable(
-            function renderRenderable(karg, varg) {
+            function renderRenderable(karg) {
                 const parsedkarg = schema.safeDecode(karg)
                 if (parsedkarg.error) throw InterpolationError.for(parsedkarg.error, {
                     renderer: this,
                     index: -1,
-                    varg: undefined,
                     op: 'root-schema',
                     strings: [...strs],
                     value: schema,
-                    variadicIndex: -1,
                 })
-                return interpolate.call(this, parsedkarg.data, varg, strs, ...vals)
+                return interpolate.call(this, parsedkarg.data,  strs, ...vals)
             }
         )
     }
