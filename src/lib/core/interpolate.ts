@@ -1,6 +1,16 @@
 import z from "zod"
-import { isRenderable } from "./renderable"
-import { InterpolationError, InterpolationOperation } from "./interpolation-error"
+import { type KargsType } from "../types/tag.types";
+import {
+    type IZodTagRenderable,
+    type IRenderable,
+    isRenderable,
+    scopedKargs,
+} from "./renderable"
+import {
+    type InterpolationOperation,
+    InterpolationError,
+} from "./interpolation-error"
+import { spliceInterpolation } from "./splice";
 
 /**
  * Transforms the interpolation strings and values:
@@ -12,38 +22,53 @@ import { InterpolationError, InterpolationOperation } from "./interpolation-erro
  * @param strs Interpolation strings array
  * @param vals Interpolation values tuple
  */
-export function interpolate<K, V, T>(this: any, kargs: K, strs: TemplateStringsArray, ...vals: T[]) {
+export function interpolate<K extends KargsType>(renderable: IRenderable<K, any>, karg: K) {
+    const { strs, vals, schema } = renderable as any as IZodTagRenderable;
+
+    let kargs: K = karg;
+    if (schema) {
+        const parsed = schema.safeDecode(karg)
+        if (parsed.error) {
+            throw InterpolationError.for(parsed.error, {
+                renderer: renderable,
+                index: -1,
+                op: 'root-schema',
+                strings: strs,
+                value: schema,
+            });
+        }
+        kargs = parsed.data as K
+    }
+
     const _values = vals.slice()
     const _strings = strs.slice()
 
-    let i = 0;
+    let i = -1;
     let value;
     let op: InterpolationOperation = null!;
     try {
         for (; i < _values.length; i++) {
-            value = _values[i]
-            while (value = _values[i], true) {
-                // Zod Schema
-                if ((value as any)?._zod) {
+            while (true) {
+                value = _values[i]
+
+                if (isRenderable(value)) {
+                    /** Transform nested renderables: recursively merges inner renderables */
+                    op = 'renderable'
+                    if (!(value as any).__compiled) throw InterpolationError.for(new Error('uncompiled renderer violation!'), {
+                        index: i,
+                        op,
+                        renderer: renderable,
+                        strings: _strings,
+                        value,
+                    })
+
+                    const [_s, ..._v] = value.render(kargs)
+                    spliceInterpolation(i, _strings, _values, _s, _v)
+                } else if ((value as any)?._zod) {
                     const schema = value as z.ZodType;
                     // Object types decodes kargs
                     op = 'karg-schema'
-                    _values[i] = schema.decode(kargs) as any
-                } else if (isRenderable(value)) {
-                    /** Transform nested renderables: recursively merges inner renderables */
-                    op = 'renderable'
-                    const [_s, ..._v] = value.render(kargs)
-
-                    _strings[i] += _s[0]
-                    _values.splice(i, 1)
-                    if (_s.length > 1) {
-                        _strings[i + 1] = _s.at(-1) + _strings[i + 1]
-                        _values.splice(i, 0, ..._v)
-                        _strings.splice(i + 1, 0, ..._s.slice(1, -1))
-                    } else if (_s.length === 1) {
-                        _strings[i] += _strings[i + 1]
-                        _strings.splice(i + 1, 1)
-                    }
+                    _values[i] = schema.decode(scopedKargs(value, kargs)) as any
                 } else if (typeof value === 'function') {
                     /** Transform function values: if value is a function its called with karg object to determine the actual interpolation value */
                     op = 'selector'
@@ -57,16 +82,11 @@ export function interpolate<K, V, T>(this: any, kargs: K, strs: TemplateStringsA
         throw InterpolationError.for(e, {
             index: i,
             op: op as InterpolationOperation,
-            renderer: this,
+            renderer: renderable,
             strings: _strings,
             value,
         });
     }
 
-    // console.assert(_strings.length === _values.length + 1, 'invalid interpolation length', {
-    //     s: _strings.length, v: _values.length
-    // })
-
     return [_strings, ..._values] as const
-
 }

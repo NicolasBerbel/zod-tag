@@ -3,7 +3,7 @@ import {
     type IRenderable,
     type IRenderableKargs,
     type IRenderableOutput,
-    createRenderable
+    scopedRenderable
 } from '../core/renderable'
 
 export function typedParam<
@@ -22,27 +22,14 @@ export function typedParam<
     argName: P,
     schema: T,
     decode?: (v: z.output<T>) => R,
-): z.ZodPipe<z.ZodCodec<z.ZodObject<{ [K in P]: T }>, T>, z.ZodTransform<R, z.output<T>>>;
+): z.ZodPipe<z.ZodObject<{ [K in P]: T }>, z.ZodTransform<R, z.output<T>>>;
 
 
 export function typedParam(
-    argName: any,
-    schemaOrTemplate: any,
+    scope: any,
+    child: any,
     decode: any = ((e: any) => e) as any,
 ) {
-    if (schemaOrTemplate?._zod) {
-        const schema = schemaOrTemplate;
-        return z.codec(
-            z.object({ [argName]: schema }),
-            schema,
-            {
-                encode: v => ({ [argName]: v } as any),
-                decode: v => (v as any)[argName],
-            }).transform(decode)
-    }
-
-    const template = schemaOrTemplate;
-    return createRenderable(function renderScopedTemplate(karg) {
-        return template.render(karg[argName])
-    })
+    if (child?._zod) return z.object({ [scope]: child }).transform(v => decode(v[scope]))
+    return scopedRenderable(child, scope);
 }

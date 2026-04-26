@@ -25,6 +25,6 @@ export function withSource<T extends object>(
 
 export function getTemplateSource(renderable: any) {
     let src = null;
-    if (typeof renderable === 'function') src = (renderable as any)?.__templateSource || null
+    if (typeof renderable === 'object' && !!renderable) src = (renderable as any)?.__templateSource || null
     return src as TemplateSource | null;
 }

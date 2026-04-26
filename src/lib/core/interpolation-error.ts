@@ -1,5 +1,5 @@
 import { ZodType } from "zod";
-import { type IRenderable } from "./renderable";
+import { type IZodTagRenderable, type IRenderable } from "./renderable";
 import { filterStackTrace, getTemplateSource } from "./source";
 
 const join = (str: unknown[]) => str.join('\n')
@@ -38,9 +38,9 @@ export class InterpolationError extends Error {
             op,
             index: i,
             value: _value,
-            strings,
-            renderer
+            strings
         } = context;
+        const renderer = context.renderer as any as IZodTagRenderable
         const schemaType = (_value as ZodType)?._zod?.def?.type;
 
         let valueType = schemaType ? `${op}(${schemaType})` : op;
@@ -60,6 +60,8 @@ export class InterpolationError extends Error {
                 valueType = _value.name ? `${op}(${_value?.name})` : 'anonymous-fn';
                 break;
         }
+        const scope = _value?.__ztScope || renderer.scope;
+        if (scope) operationMessage += ` at scope "${scope}"`
         const operation = `${valueType}[${i}]`
 
         const before = InterpolationError.format(strings.slice(0, i + 1), 0);

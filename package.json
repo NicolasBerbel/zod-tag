@@ -1,6 +1,6 @@
 {
   "name": "zod-tag",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Typesafe runtime validation for tagged template strings leveraging zod schemas",
   "private": false,
   "type": "module",
@@ -8,8 +8,8 @@
   "types": "dist/main.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/main.js",
-      "types": "./dist/main.d.ts"
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js"
     }
   },
   "files": [
@@ -44,7 +44,7 @@
   "author": "Nícolas Berbel <nicolas.berbel@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NicolasBerbel/zod-tag.git"
+    "url": "git+https://github.com/NicolasBerbel/zod-tag.git"
   },
   "bugs": {
     "url": "https://github.com/NicolasBerbel/zod-tag/issues"

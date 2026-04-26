@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.3] - 2026-04-25
+
+### Added
+
+- Static flattening/precompilation of known nested renderable structures as definition time
+- Few immutability guards, now IRenderable itself and its strs, vals private attributes are frozen at creation
+- Scope context added to InterpolationError traces
+- Simple black box suite for slop tests
+
+### Changes
+
+- Foundamental internal changes on renderable interface and implementation design
+
+
 ## [0.0.2] - 2026-04-24
 
 ### Added

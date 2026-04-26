@@ -9,5 +9,7 @@ const primitives = z.union([
   z.bigint(),
 ]);
 
-export const unsafeStatic = <T extends z.input<S>, S extends ZodType>(schema: S, value: T) =>
-  createRenderable<void, []>(() => [[String(primitives.decode(schema.decode(value) as any))]])
+export const unsafeStatic = <T extends z.input<S>, S extends ZodType>(schema: S, value: T) => {
+  const parsed = String(primitives.decode(schema.decode(value) as any));
+  return createRenderable<void, []>([parsed], [])
+}

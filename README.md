@@ -4,7 +4,7 @@
 
 This is a experimental library that aims to provide templating composition and type/runtime safe interpolation for tagged template literals by leveraging Zod's validation ecosystem.
 
-At compile-time this library tries to infer the template types for a better DX.
+At definition time this library pre-flattens nested renderable structures and tries to infer the template types for a better DX.
 
 At runtime this library validates your templates inputs against the zod schemas definitions and merges nested templates into a single interpolation.
 
@@ -325,12 +325,13 @@ graph
     zt("Zod Tag (zt)") --> zt.t
     zt --> zt.z
     zt --> zt.p
-    zt -- unsafe escape hatch -->  zt.unsafe
+    zt -->  zt.unsafe
 
+    zt.p -- inline keyword argument definition --> schema --> ZodCodec
+    zt.p -- scoped nested template --> renderable --> createRenderable
     zt.t -- typed renderable --> typedTag -- validates nested values --> createRenderable
     zt.z -- object shape renderable --> schemaTag -- validates shape and nested values --> createRenderable
-    zt.unsafe --> createRenderable
-    zt.p -- inline keyword argument definition --> typedParam --> ZodCodec
+    zt.unsafe  -- unsafe escape hatch --> createRenderable
 
     createRenderable --> IRenderable
     IRenderable --> render("<code>render(kargs)=>[strings, ...values]</code>")
@@ -358,7 +359,7 @@ Use to declare a scoped parameter or scoped nested renderable
 
 Used to declare named parameter (keyword argument) inline/embedded into the template
 
-Returns a `ZodCodec` schema
+Returns a `ZodPipe` with `ZodObject` schema and `ZodTransform`
 
 #### zt.p(name: string, template: IRenderable)
 
@@ -467,7 +468,7 @@ Structure (zt.unsafe(z.enum(['id', 'column_name']), 'column_name'), zt.unsafe(z.
 ```ts
 // Safe: values are parameterized
 const query = zt.t`SELECT * FROM users WHERE id = ${zt.p('id', z.uuid())}`
-query.render({ id: 'a1b2c3d4-...' }, [])
+query.render({ id: 'a1b2c3d4-...' })
 // → [['SELECT * FROM users WHERE id = '], 'a1b2c3d4-...']
 
 // Safe: validated identifiers via zt.unsafe
@@ -497,8 +498,8 @@ While zod-tag is a fun experiment, its design pushes TypeScript’s type system 
 ### Raw Utilities Bypass All Safety
 - zt.debug, zt.$n, and zt.raw blindly concatenate values into a string. They do not escape content for SQL, HTML, or any other context. These functions exist only for debugging or introspection. Never use their output in production queries, HTML responses, or shell commands.
 
-### No Caching or Pre‑compilation
-- Every call to .render() re‑evaluates the entire interpolation logic, including re‑decoding all Zod schemas and re‑executing selector functions. This is fine for occasional use but not suitable for high‑throughput scenarios (e.g., server‑side rendering on every request).
+### No Caching
+- Every call to .render() re‑evaluates the entire dynamic interpolation logic, including re‑decoding all Zod schemas and re‑executing selector functions. This is fine for occasional use but not suitable for high‑throughput scenarios (e.g., server‑side rendering on every request).
 
 ### The API is Not Frozen
 - This is an experimental library. Method names, type signatures, and internal behavior may change without notice. Do not depend on it for production systems unless you vendor the code and pin the exact version.

@@ -8,7 +8,7 @@ import Database from 'better-sqlite3';
 const WORD_REGEX = z.string().regex(/^\w+$/)
 
 
-const db = new Database(':memory:');
+const db = new Database(':memory:', { verbose: console.log });
 
 // Initialize schema
 db.exec(`
@@ -61,7 +61,6 @@ const fragments = {
         if (!q?.column) return zt.t``;
         return zt.t`ORDER BY ${q.column} ${zt.unsafe(z.enum(['ASC', 'DESC']), q.order)}`;
     }),
-
     // Pagination limit
     limit: z.number().min(1).max(100).default(10).transform(
         (limit) => zt.t`LIMIT ${limit}`

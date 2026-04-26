@@ -9,7 +9,6 @@ import {
     type IRenderable
 } from "./core/renderable";
 import { type IntersectNonVoid } from "./types/util.types";
-import { interpolate } from "./core/interpolate";
 
 /**
  * TypedTag utility type
@@ -67,7 +66,5 @@ export function typedTag(
 
 /** typedTag implementation  */
 export function typedTag(strs: any, ...vals: any[]) {
-    return createRenderable(function renderRenderable(karg) {
-        return interpolate.call(this, karg, strs, ...vals)
-    })
+    return createRenderable(strs, vals)
 }

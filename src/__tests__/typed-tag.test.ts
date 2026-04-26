@@ -36,18 +36,32 @@ describe('zt - Zod Tag', () => {
 
     describe('keyword argument templates', () => {
         it('should allow inline object/codec schemas as karg params', () => {
-            const tpl = zt.t`
+            const tpl1 = zt.t`
                 Hello: ${z.codec(z.object({ name: z.string() }), z.string(), { encode: v => ({ name: v }), decode: v => v.name })}
             `
-            const result = tpl.render({
+            const tpl2 = zt.t`
+                Hello: ${z.object({ name: z.string() }).transform(v => v.name)}
+            `
+            const result1 = tpl1.render({
                 name: 'John'
             })
-            const [strings, ...values] = result;
+            const result2 = tpl2.render({
+                name: 'John'
+            })
+            const [strings1, ...values1] = result1;
+            const [strings2, ...values2] = result2;
 
-            deepEqual(strings, ['\n                Hello: ', '\n            '], 'should not concat anything on static strings')
-            deepEqual(values, ['John'], 'decodes inline object input schemas with kargs and returns encoded value')
+            deepEqual(strings1, ['\n                Hello: ', '\n            '], 'namespaced z.codec should not concat anything on static strings')
+            deepEqual(values1, ['John'], 'namespaced z.codec decodes inline object input schemas with kargs and returns encoded value')
 
-            throws(() => tpl.render(null!), InterpolationError, 'should throw validation error')
+            deepEqual(strings2, ['\n                Hello: ', '\n            '], 'namespaced z.object should not concat anything on static strings')
+            deepEqual(values2, ['John'], 'namespaced z.object decodes inline object input schemas with kargs and returns encoded value')
+
+            deepEqual(strings1, strings2, 'namespaced z.codec / z.object().transform')
+            deepEqual(values1, values2, 'namespaced z.codec / z.object().transform')
+
+            throws(() => tpl1.render(null!), InterpolationError, 'should throw validation error')
+            throws(() => tpl2.render(null!), InterpolationError, 'should throw validation error')
         })
 
         it('should validate against zod shape definition', () => {

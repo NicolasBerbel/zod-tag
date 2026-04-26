@@ -165,8 +165,8 @@ function renderEmail() {
 
 
 try {
-
     renderEmail()
 } catch (e) {
     console.log(e)
+    throw e;
 }
