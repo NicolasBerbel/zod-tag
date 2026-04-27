@@ -3,7 +3,7 @@
  */
 
 import z from 'zod'
-import { zt } from '../../dist/main.js'
+import { zt, type IRenderableKargs } from '../../dist/main.js'
 
 const hello = zt`Hello ${1} World`
 console.log(zt.debug(hello.render()), hello.render().slice(1))
@@ -56,3 +56,76 @@ console.log(renderedUserHeading, zt.raw(e => e)(renderedUserHeading))
 
 
 // const schemaTpl = zt.$n(zt`Hi!`.render())
+
+
+// ============================================================================
+// zt.match — discriminated union pattern matching
+// ============================================================================
+
+const createUser = zt.z({ name: z.string(), email: z.email() })`
+INSERT INTO users (name, email) VALUES (${e => e.name}, ${e => e.email})
+`
+const updateUser = zt.z({ id: z.uuid(), name: z.string() })`
+UPDATE users SET name = ${e => e.name} WHERE id = ${e => e.id}
+`
+const deleteUser = zt.z({ id: z.uuid() })`
+DELETE FROM users WHERE id = ${e => e.id}
+`
+
+// zt.match solves the discriminated union pattern:
+
+// Discriminated union: the discriminator value determines which kargs are needed
+// const commandSchema = z.discriminatedUnion('action', [
+//     z.object({ action: z.literal('create'), name: z.string(), email: z.email() }),
+//     z.object({ action: z.literal('update'), id: z.uuid(), name: z.string() }),
+//     z.object({ action: z.literal('delete'), id: z.uuid() }),
+// ])
+
+/**
+ *  this pattern is solved with zt.match, you can optin to 'command' scope wrapping `zt.match` with `zt.p`
+ */
+// const commandTemplate = zt.z({
+//     command: z.discriminatedUnion('action', [
+//         z.object({ action: z.literal('create'), name: z.string(), email: z.email() }),
+//         z.object({ action: z.literal('update'), id: z.uuid(), name: z.string() }),
+//         z.object({ action: z.literal('delete'), id: z.uuid() }),
+//     ])
+// })`
+// ${e => zt.bind({
+//     create: createUser,
+//     update: updateUser,
+//     delete: deleteUser,
+// }[e.command.action], e.command)}
+// `
+
+const commandTemplate = zt.match('action', {
+    create: createUser,
+    update: updateUser,
+    delete: deleteUser,
+})
+
+// TypeScript narrows: e.action is 'create' → only name + email needed
+console.log('CREATE:', zt.$n(commandTemplate.render({
+    action: 'create',
+    name: 'Alice',
+    email: 'alice@test.com',
+    // @ts-expect-error
+    id: ''
+    // id is NOT required here — discriminated union narrowed it away
+})))
+
+console.log('UPDATE:', zt.$n(commandTemplate.render({
+    action: 'update',
+    id: '550e8400-e29b-41d4-a716-446655440000',
+    name: 'Bob',
+
+    // @ts-expect-error
+    email: '',
+    // email is NOT required here
+})))
+
+console.log('DELETE:', zt.$n(commandTemplate.render({
+    action: 'delete',
+    id: '550e8400-e29b-41d4-a716-446655440000',
+    // name + email NOT required
+})))

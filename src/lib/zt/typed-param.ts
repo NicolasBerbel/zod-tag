@@ -3,8 +3,8 @@ import {
     type IRenderable,
     type IRenderableKargs,
     type IRenderableOutput,
-    scopedRenderable
 } from '../core/renderable'
+import { scopedRenderable } from "../core/scope";
 
 export function typedParam<
     P extends string,

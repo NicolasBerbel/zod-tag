@@ -1,6 +1,6 @@
 {
   "name": "zod-tag",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Typesafe runtime validation for tagged template strings leveraging zod schemas",
   "private": false,
   "type": "module",
@@ -56,7 +56,8 @@
   },
   "sideEffects": false,
   "scripts": {
-    "test": "node --test src/**/*.test.ts",
+    "test": "node --test --experimental-test-coverage src/**/*.test.ts",
+    "test:o": "node src/__tests__/snapshot.ts",
     "test:watch": "node --test --watch --experimental-test-coverage src/**/*.test.ts",
     "type-check": "tsc --noEmit",
     "build": "rolldown -c",

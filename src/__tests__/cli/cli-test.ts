@@ -7,7 +7,7 @@ const user = zt.t`@${zt.p('user', z.string(), d => d.toLowerCase().split(' ').jo
 
 const nested1 = zt.z({ nested1: z.string().optional().default(() => crypto.randomUUID()) })`
     nested1 id = (${e => e.nested1})
-    Nested1 template child: ${zt.p('optional', z.string().default('Nested default evaluation'))}
+    Nested1 template child: ${zt.p('optional', z.string().optional().default('Nested default evaluation'))}
     ${() => 'hello from template 1'}
 `
 const nested2 = zt.z({ nested2: z.string().optional().default(() => crypto.randomUUID()) })`
@@ -54,8 +54,8 @@ const panel = zt.t`
 ----------- Title: ${zt.p('title', z.string())}
 ----------- Date: ${date}
 ----------- User: ${user}
------------ Dir: ${process.cwd()}
------------ File: ${process.argv[1].replace(process.cwd(), '')}
+----------- Dir: ${'~/zod-tag'}
+----------- File: ${'index.ts'}
 ----------- Frame: ${zt.p('frame', z.function({ output: z.number() }), e => e().toFixed(4) + 'ms')}
 ----------- Delta: ${zt.p('delta', z.function({ output: z.number() }), e => e().toFixed(4) + 'ms')}
 ----------- Count: ${zt.p('count', z.number())}
@@ -116,7 +116,7 @@ const interval = setInterval(() => {
     }
     // if (count === 1) clearInterval(interval)
     // console.clear()
-    console.log(content)
+    // console.log(content)
     // console.log(content)
     // console.timeEnd('panel.render()')
     // console.log((performance.now() - start))

@@ -5,6 +5,11 @@ import { typedParam } from "./zt/typed-param";
 import { unsafeStatic } from "./zt/unsafe-static";
 import { joinParams } from "./zt/join-params";
 import { ifCondition } from "./zt/if-condition";
+import { bindKargs } from "./zt/bind-kargs";
+import { mapKargs } from "./zt/map-kargs";
+import { tagIdentity } from "./zt/identity";
+import { opaque } from "./zt/opaque";
+import { patternMatch } from "./zt/pattern-match";
 
 /**
  * Zod Tag
@@ -42,13 +47,13 @@ export const zt = typedTag as (typeof typedTag) & {
     t: typeof typedTag,
 
     /**
-     * Defines a named keyword argument for a inline schema
+     * Defines a named keyword argument for a inline schema or renderable
      * 
-     * Its actually just a zod codec
+     * Its actually just a zod object with transform for schemas
      * 
      * @param name The keyword argument name for this schema
-     * @param schema the zod schema
-     * @param decode a transform fn for the resulting interpolation value
+     * @param schemaOrRenderable the zod schema or renderable
+     * @param transform a transform fn for the resulting interpolation value
      * 
      * @example
      * ```ts
@@ -70,6 +75,50 @@ export const zt = typedTag as (typeof typedTag) & {
      */
     p: typeof typedParam,
 
+    /**
+     * The identity (empty) tag is semanticaly the same as zt'' | zt.t''
+     *  
+     * This means a empty structural string
+     * 
+     * It is the foundation of everything
+     */
+    empty: typeof tagIdentity,
+
+    /**
+     * Bind kargs to a renderable
+     * 
+     * @example
+     * ```ts
+     * const greetings = zt.z({ name: z.string()})`Hello, ${e => e.name}!`;
+     * const greetingsToJohn = zt.bind(greetings, { name: 'John' })
+     * boundToJohn.render();// <- void call, no kargs needed, already rendered as john
+     * 
+     * // Now greetingsToJohn doesn't require any karg
+     * const johnProfile = zt.t`
+     *      ${greetingsToJohn}
+     * `
+     * johnProfile.render(); // <- clean
+     * ```
+     */
+    bind: typeof bindKargs,
+
+    /**
+     * Lifts an array of raw data into a single composed `IRenderable`.
+     * 
+     * Each element is transformed via `mapFn` into the kargs expected by renderable,
+     * bound to it, and joined with the optional separator.
+     * 
+     * ```ts
+     * const itemTpl = zt.z({ name: z.string(), price: z.number() })`${e => e.name}: $${e => e.price}`
+     * const items = [
+     *   { product: 'Sword', cost: 50 },
+     *   { product: 'Shield', cost: 75 },
+     * ]
+     * const list = zt.map(items, itemTpl, item => ({ name: item.product, price: item.cost }), zt.t`, `)
+     * list.render() // → [['', ': $', ', ', ': $', ''], 'Sword', 50, 'Shield', 75]
+     * ```
+     */
+    map: typeof mapKargs,
 
     /**
      * Joins a list of parameterized values using a structural renderable as separator 
@@ -92,6 +141,40 @@ export const zt = typedTag as (typeof typedTag) & {
      * @param template the template to be conditionally rendered
      */
     if: typeof ifCondition,
+
+    /**
+     * Pattern matching / discriminated union
+     * 
+     * Creates a renderable that validates kargs against a discriminated union
+     * derived from the branch renderables, then routes to the matched branch.
+     *
+     * @param discriminator - the property name that distinguishes branches (e.g. 'action')
+     * @param cases - record mapping discriminator values to their renderable templates
+     */
+    match: typeof patternMatch,
+
+    /**
+     * Escape hatch for TS compiler complexity, use this to eliminate Output[] tuple from a IRenderable
+     * 
+     * @example
+     * ```ts
+     * // If you reached ts errors with complex nesting
+     * zt.t`
+     *      ${zt.p('a', complexNestedTemplate)}
+     *      ${zt.p('b', complexNestedTemplate)}
+     *      ${zt.p('c', complexNestedTemplate)}
+     * `
+     * 
+     * // Bail out of Output[] inference to relieve pressure over the ts compiler
+     * zt.t`
+     *      ${zt.p('a', zt.opaque(complexNestedTemplate))}
+     *      ${zt.p('b', zt.opaque(complexNestedTemplate))}
+     *      ${zt.p('c', zt.opaque(complexNestedTemplate))}
+     * `
+     * 
+     * ```
+     */
+    opaque: typeof opaque,
 
     /**
      * Escape hatch for unsafe concatenating strings.
@@ -151,13 +234,24 @@ export const zt = typedTag as (typeof typedTag) & {
     debug: StringRawTransformer,
 };
 
+// Core
 zt.z = schemaTag
 zt.t = typedTag
 zt.p = typedParam
+
+// Functional core
+zt.empty = tagIdentity
+zt.match = patternMatch
+zt.bind = bindKargs
+zt.map = mapKargs
 zt.join = joinParams
 zt.if = ifCondition
 
+// Core utils
+zt.opaque = opaque;
 zt.unsafe = unsafeStatic;
+
+// Debug utils (should be namespaced / exported out)
 zt.raw = stringRaw
 zt.$n = zt.raw((_, i) => `$${i}`)
 zt.atIndex = zt.raw((_, i) => `@${i}`)

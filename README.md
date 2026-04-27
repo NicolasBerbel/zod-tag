@@ -2,6 +2,8 @@
 
 ## ⚠️ This library is experimental. APIs may change without notice. Use at your own risk!
 
+> The fact is that I've put a loop inside another as they tell us not to do and the resulting is becoming surprisingly fun to experiment with!
+
 This is a experimental library that aims to provide templating composition and type/runtime safe interpolation for tagged template literals by leveraging Zod's validation ecosystem.
 
 At definition time this library pre-flattens nested renderable structures and tries to infer the template types for a better DX.
@@ -17,13 +19,15 @@ The core functionality consists in three abilities:
 
 # Meet Zod Tag!
 
+**Typed, validated, composable interpolation trees for TypeScript.**
+
 How do you write multi-purpose prompts, database queries, GraphQL mutations and complex templated structures that are simultaneously composable, type-safe AND give you explicit control over what gets parameterized?
 
-Zod Tag provides a seriously good pattern for a real problem: safe template parameterization. By letting selector functions encode architectural decisions in a natural templating flow that clearly distinguishes what is protocol structure from parameterized value right on your code.
+**Zod Tag** provides a seriously good pattern for a real problem: safe template parameterization. By letting selector functions encode architectural decisions in a natural templating flow that clearly distinguishes what is protocol structure from parameterized value right on your code.
 
 ## What Problem Does This Solve?
 
-When you generate code from templates (SQL queries, GraphQL, LLM prompts) you constantly face a decision:
+When you generate code from templates (SQL queries, GraphQL, LLM prompts, [or concatenate strings]) you constantly face a decision:
 
 - **Structure**: what's part of the query/prompt itself?
 - **Values**: what's user input that should be parameterized?
@@ -73,10 +77,63 @@ The selector for bio doesn't return the bio text, it returns an entire INSERT or
 
 Zod Tag actually returns a interpolation tuple with `[strings: string[], ...values: unknown[]]`, this means it's agnostic in terms of database, client, syntax or anything, the only dependency is Zod v4.
 
+## Quick Slop (Examples)
+
+### SQL Query Builder
+[Slop Test - repository pattern from repo.slop-test.ts](./src/__tests__/slop/repo.slop-test.ts)
+
+```ts
+class UserRepository extends Repository {
+    constructor() {
+        super('users');
+    }
+
+    // Create a new user
+    create = this.sql({
+        id: z.uuid().optional().default(() => crypto.randomUUID()),
+        name: z.string().min(1).max(255),
+        email: z.email(),
+        role: z.enum(['admin', 'user', 'guest']).default('user'),
+    })`
+    INSERT INTO ${this.table} 
+      (id, name, email, role)
+    VALUES (
+      ${e => e.id},
+      ${e => e.name}, 
+      ${e => e.email}, 
+      ${e => e.role}
+    )
+    RETURNING *
+  `;
+
+    // Find user by ID
+    findById = this.sql({
+        id: z.uuid(),
+    })`
+    SELECT * FROM ${this.table}
+    WHERE id = ${e => e.id}
+  `;
+}
+```
+
+### LLM Prompt Composition
+
+[Slop Test - persona/format/severity block composition from prompt-2.slop-test.ts](./src/__tests__/slop/prompt-2.slop-test.ts)
+
+### Pattern-Matched Function Dispatch
+
+[Slop Test - math calculator from pattern-matching-function-definitions.slop-test.ts](./src/__tests__/slop/pattern-matching-function-definitions.slop-test.ts)
+
+### NPC Dialog State Machine
+
+[Slop Test - npc dialog state machine npc-dialog-state-machine.slop-test](./src/__tests__/slop/npc-dialog-state-machine.slop-test.ts)
+
 
 ## The Core Idea
 
-Every `${}` in your template receives the validated arguments. **Its return type decides how it's treated:**
+A `IRenderable<K, V>` is a pure function from validated input to a structural tuple `[strings, ...values]`. Compose them like algebraic operations.
+
+Every `${}` in your template is a hole and receives the validated arguments. **Its return type decides how it's treated:**
 
 | Return type | Treatment | Example |
 |-------------|-----------|---------|
@@ -93,8 +150,103 @@ Every `${}` in your template receives the validated arguments. **Its return type
 
 This means you **see the structure/value boundary in your code**. Types enforce that you don't accidentally parameterize keywords or inline user input.
 
-
 -----
+
+## The functional approach
+
+### Zod Tag call your selectors inside a validated computation context that supports:
+
+| **Operation** | **What It Does** | **The Intuition** |
+|-------------|-----------|---------|
+| `zt.z(shape)` | Wrap a value in validation context | "I have data, but trust nothing" |
+| `zt.t'${e => f(e)}'` | Transform validated data | "Once validated, derive new values" |
+| `zt.bind(t, k)` | Close over known values | "I know some answers already" |
+| `zt.map(list, t, f)` | Lift a list into validation context | "Validate each item separately" |
+| `zt.join(items, sep)` | Concatenate validated outputs | "Combine fragments structurally" |
+| `zt.if(cond, t)` | Conditionally include validated output | "Only include this if needed" |
+| `zt.match(disc, cases)` | Branch on validated discriminator | "Choose the right validated fragment" |
+| `zt.empty` | Empty validated output | "Nothing to validate here" |
+| `zt.unsafe(schema, v)` | Trust a value after checking |"I've verified this is safe" |
+
+Each of these is a mathematically well-behaved operation - they compose predictably and follow laws:
+
+- `zt.empty + anything = anything` (identity)
+- `(a + b) + c = a + (b + c)` (associativity)
+- `zt.map(list, t, id) = zt.map(list, t, id)` (map with identity is identity)
+- `zt.bind(t, k).render() = t.render(k)` (bind then render = render with bound kargs)
+
+## API
+
+### Core Constructors
+- <code>zt.t`...`</code>: Create a renderable from a tagged template literal
+- <code>zt.z({ shape })`...`</code>: Create a renderable with a Zod shape for loose object schema with keyword arguments
+- <code>zt.p(name, renderable)`...`</code>: Create a renderable with kargs scoped at key name of parent keyword arguments
+- `zt.empty`: The identity renderable (monoidal identity)
+
+### Combinators
+- `zt.match(discriminator, cases)`: Pattern-matched dispatch
+- `zt.bind(renderable, kargs)`: Partial application
+- `zt.map(list, renderable, mapFn, separator?)`: Functorial lift
+- `zt.join(list, separator)`: Monoidal concatenation
+- `zt.if(condition, renderable)`: Conditional rendering
+
+### Parameters & Constants
+- `zt.p(name, schema, transform?)`: Named keyword parameter
+- `zt.unsafe(schema, value)`: Validated structural constant
+
+## The Sharper Intuition
+
+When you write:
+
+```ts
+const user = zt.z({ name: z.string() })`Hello ${e => e.name}`
+const bound = zt.bind(user, { name: 'Alice' })
+const mapped = zt.map(['Alice', 'Bob'], user, name => ({ name }), zt.t` - `)
+```
+
+You're doing following things:
+
+#### 1. You're wrapping values in a context (`zt.z(shape)`)
+
+**"Functor"** (a context that holds a value):
+
+The context is "this value needs validation"
+
+#### 2. You're applying functions inside that context (`e => e.name`)
+
+**"Map"** (apply a function without leaving the context)
+
+You're transforming the value while keeping the validation requirement
+
+#### 3. You're flattening nested contexts (`zt.bind()`)
+
+**"Monad"** (when a wrapped thing produces another wrapped thing, flatten them)
+
+The expression `zt.bind(user, { name: 'Alice' })` takes a renderable and returns a renderable (not a renderable of a renderable)
+
+#### 4. You're combining independent wrapped values (multiple `${}` holes)
+
+**"Applicative"** (combine wrapped values where the wrappers are independent)
+
+Each `${}` hole in a template is independent, they all get the same kargs but don't depend on each other's outputs
+
+#### 5. You're choosing between wrapped values (`zt.if`, `zt.match`)
+
+**"Sum type"**
+
+Depending on runtime data, you pick one wrapped value or another
+
+#### 6. You have an empty wrapped value (`zt.empty`)
+
+**"Identity element" or "Monoid identity"**
+
+It composes with anything and leaves it unchanged
+
+#### 7. You're concatenating wrapped values (`zt.join`)
+
+- **"Monoid"** (a way to combine two things of the same type with an identity)
+
+The expression `zt.join(items, sep)` combines renderables with a separator
 
 > The rest of this document covers the full API and advanced patterns, but the above illustrates the central design decision: **selectors classify structure vs. values**.
 
@@ -127,9 +279,293 @@ user.render({ firstName: 'John', lastName: 'Doe' })
 
 ## The API
 
+#### `zt` (default export)
+
+The main namespace. All functionality is accessed through `zt`:
+
+```ts
+import { zt } from 'zod-tag'
+```
+
+#### <code>zt.t`...`</code>
+
+Creates a `IRenderable` from a tagged template literal with no base schema. The type of expected keyword arguments is inferred entirely from interpolated values (inline schemas, `zt.p`, nested renderables).
+
+```ts
+// Static — no interpolation values, no kargs
+const static = zt.t`Hello World`
+static.render() // → [['Hello World']]
+
+// With inline schema — kargs inferred from `zt.p`
+const greet = zt.t`Hello, ${zt.p('name', z.string())}!`
+greet.render({ name: 'Alice' }) // → [['Hello, ', '!'], 'Alice']
+```
+
+`zt` alone is an alias for `zt.t`:
+
+```ts
+const same = zt`Hello ${'World'}`
+```
+
+#### <code>zt.z(shape)`...`</code>
+
+Creates a `IRenderable` with a Zod object shape that validates all keyword arguments at render time. The shape is passed to `z.object(shape).loose()`, allowing extra properties for nested composition.
+
+```ts
+function z<S extends ZodRawShape>(
+  shape: S
+): TypedTag<input<S>, output<S>>
+```
+
+The returned TypedTag is a tagged template function whose kargs type is the intersection of the shape input and any inline schemas/nested renderables.
+
+```ts
+const user = zt.z({
+  firstName: z.string(),
+  lastName: z.string(),
+})`Hello, ${e => `${e.firstName} ${e.lastName}`}!`
+
+user.render({ firstName: 'John', lastName: 'Doe' })
+// → [['Hello, ', '!'], 'John Doe']
+```
+
+The usage of `zt.z({})` without a `${}` (hole) is a type violation, if you dont have a shape you dont have a hole!
+Use `zt.t` for static structure instead, as they mean "collapsed" renderable in the sense it consumes `void` kargs.
+
+#### `zt.p(name, schema, transform?)`
+
+Declares a named keyword argument inline that:
+- Wraps the schema in a single-key `z.object({ [name]: schema })`.
+- Decodes the parent kargs to extract `kargs[name]`.
+- Applies the optional transform function to produce the final interpolation value.
+
+```ts
+const tpl = zt.t`Email: ${zt.p('email', z.email(), e => `mailto:${e}`)}`
+tpl.render({ email: 'user@test.com' }) // → [['Email: ', ''], 'mailto:user@test.com']
+```
+
+#### `zt.p(name, renderable)`
+
+Declares a new `IRenderable` scoped by the name argument
+
+```ts
+const button = zt.t`<button>${zt.p('label', z.string())}</button>`
+const form = zt.t`Save: ${zt.p('saveBtn', button)} Cancel: ${zt.p('cancelBtn', button)}`
+form.render({
+  saveBtn: { label: 'Save' },
+  cancelBtn: { label: 'Cancel' },
+})
+```
+
+#### `zt.empty`
+
+The identity `IRenderable`. Represents a semantically empty structural string. Composes with any `IRenderable` and leaves it unchanged.
+
+`Type: IRenderable<void, []>`
+
+```ts
+const result = zt.t`before ${zt.empty} after`
+result.render() // → [['before  after']]
+```
+
+### Combinators
+
+#### `zt.bind(renderable, kargs)`
+
+Applies the keyword arguments to a `IRenderable` returning a new collapsed one.
+Returns a new `IRenderable` that requires no kargs — the provided kargs are validated at bind time and baked in.
+
+```ts
+const greet = zt.z({ name: z.string() })`Hello, ${e => e.name}!`
+const greetAlice = zt.bind(greet, { name: 'Alice' })
+greetAlice.render() // → [['Hello, ', '!'], 'Alice']
+```
+
+#### `zt.map(list, renderable, mapFn, separator?)`
+
+Lifts an array of raw data into a single composed `IRenderable`. Each element is transformed via `mapFn` into the kargs expected by renderable, bound to it, and joined with the optional separator.
+
+```ts
+const itemTpl = zt.z({ name: z.string(), price: z.number() })`${e => e.name}: $${e => e.price}`
+const items = [
+  { product: 'Sword', cost: 50 },
+  { product: 'Shield', cost: 75 },
+]
+const list = zt.map(items, itemTpl, item => ({ name: item.product, price: item.cost }), zt.t`, `)
+list.render() // → [['', ': $', ', ', ': $', ''], 'Sword', 50, 'Shield', 75]
+```
+
+#### `zt.join(list, separator)`
+
+Joins an array of parameterized values with a structural separator. The functional equivalent of the `reduce` pattern for building lists of values with structural separators.
+
+```ts
+const tpl = zt.z({ ids: z.array(z.string()) })`WHERE id IN (${e => zt.join(e.ids, zt.t`, `)})`
+tpl.render({ ids: ['a', 'b', 'c'] })
+// → [['WHERE id IN (', ', ', ', ', ')'], 'a', 'b', 'c']
+```
+
+#### `zt.if(condition, renderable)`
+
+Conditionally renders a template. Returns the renderable if the condition is truthy, otherwise returns `zt.empty`.
+
+```ts
+const tpl = zt.z({ name: z.string().optional() })`
+  ${e => zt.if(e.name, zt.t`Your name is ${e.name}`)}
+`
+tpl.render({})          // → [['\n  \n'], ...]
+tpl.render({ name: 'A' }) // → [['\n  Your name is ', '\n'], 'A']
+```
+
+#### `zt.match(discriminator, cases)`
+
+Pattern-matching / discriminated union dispatch. Each case is a `IRenderable` whose shape is extracted, wrapped with a `z.literal()` discriminator, and combined into a `z.discriminatedUnion`. At render time, the union validates and routes to the correct branch.
+
+```ts
+const math = zt.match('op', {
+  add: zt.z({ a: z.number(), b: z.number() })`${e => e.a + e.b}`,
+  sub: zt.z({ a: z.number(), b: z.number() })`${e => e.a - e.b}`,
+  neg: zt.z({ x: z.number() })`${e => -e.x}`,
+})
+
+math.render({ op: 'add', a: 10, b: 32 }) // → [['', ''], 42]
+math.render({ op: 'neg', x: 5 })          // → [['', ''], -5]
+// math.render({ op: 'mul' }) — rejected: 'mul' is not a valid discriminator
+```
+
+### Escape Hatches
+
+#### `zt.unsafe(schema, value)
+
+Treats a validated value as trusted structure. The value is validated against schema at definition time, then stringified and concatenated directly into the template strings. It never appears in the values array.
+
+Use for identifiers, keywords, or other protocol-level strings that MUST be validated before structural use (column names, sort directions, enum-constrained identifiers).
+
+```ts
+const table = 'users' // trusted, not user input
+const query = zt.t`SELECT * FROM ${zt.unsafe(z.string().regex(/^\w+$/), table)}`
+query.render() // → [['SELECT * FROM users']]
+
+// With validated user-facing enum
+const column = z.enum(['id', 'name', 'created_at'])
+const tpl = zt.z({ sortCol: column, dir: z.enum(['ASC', 'DESC']) })`
+  ORDER BY ${e => zt.unsafe(column, e.sortCol)} ${e => zt.unsafe(z.enum(['ASC', 'DESC']), e.dir)}
+`
+```
+
+⚠️ Warning: `zt.unsafe` concatenates directly into the structure strings. Only use with Zod-validated inputs or hardcoded literals. Never pass raw user input.
+
+#### `zt.opaque(renderable)`
+
+Opts a `IRenderable` out of output tuple type inference. The output is typed as [] (empty), reducing TypeScript compiler pressure for deeply nested or complex compositions.
+
+```ts
+const complex = zt.z({ ... })`... deeply nested ...`
+const safe = zt.opaque(complex)
+// safe.render(kargs) → IRenderable<..., []> (output tuple hidden from type system)
+```
+
+### Format Utilities
+
+These utilities transform a rendered interpolation tuple `[string[], ...values[]]` into a formatted string. They operate on the already-rendered tuple and do not affect the `IRenderable` itself.
+
+#### `zt.raw(mapFn)([strings, ...values])`
+
+Creates a custom formatter by applying `mapFn` to each value before calling `String.raw`. Returns a function that accepts a rendered tuple.
+
+```ts
+const rendered = zt.z({ x: z.number() })`Value: ${e => e.x}`.render({ x: 42 })
+const custom = zt.raw((v, i) => `<${i}>${v}</${i}>`)
+custom(rendered) // → 'Value: <0>42</0>'
+```
+
+#### `zt.$n([strings, ...values])`
+
+Formats the interpolation with PostgreSQL-style numbered placeholders ($0, $1, ... $n).
+
+Type: `([string[], ...unknown[]]) => string`
+
+```ts
+const tpl = zt.z({ a: z.string(), b: z.number() })`${e => e.a} = ${e => e.b}`
+zt.$n(tpl.render({ a: 'x', b: 1 })) // → '$0 = $1'
+```
+
+#### `zt.atIndex([strings, ...values])`
+
+Formats the interpolation with @n placeholders (@0, @1, ... @n).
+
+Type: `([string[], ...unknown[]]) => string`
+
+```ts
+zt.atIndex(tpl.render({ a: 'x', b: 1 })) // → '@0 = @1'
+```
+
+#### `zt.debug([strings, ...values])`
+
+Concatenates the interpolation as a raw string for debugging. Equivalent to `zt.raw(v => v)`. Never use in production queries, HTML, or shell commands — this bypasses all parameterization.
+
+Type: `([string[], ...unknown[]]) => string`
+
+```ts
+zt.debug(tpl.render({ a: 'x', b: 1 })) // → 'x = 1'
+```
+#### `isRenderable(v)`
+
+Type guard. Returns true if v is an IRenderable instance.
+
+```ts
+if(isRenderable(v)) v.render()
+```
+
+### Types
+
+#### `IRenderable<Kargs, Output>`
+
+The core interface. A `IRenderable` is an object with a render method and a `RENDERABLE_SYMBOL` brand.
+
+#### `IRenderableKargs<T>`
+
+Extracts the keyword arguments type from a Renderable:
+
+#### `IRenderableOutput<T>`
+
+Extracts the output values tuple type from a Renderable:
+
+#### `ExtractKargs<T>`
+
+Recursively extracts the merged keyword arguments type from a tuple of tagged template interpolation values.
+
+#### `ExtractOutput<T>`
+
+Recursively extracts the merged output values tuple type from a tuple of tagged template interpolation values.
+
+### Error Handling
+
+#### `InterpolationError`
+
+Thrown when validation fails at any level of the interpolation tree. The error includes:
+**Operation type**: `'root-schema'` | `'karg-schema'` | `'renderable'` | `'selector'`
+**Index**: which interpolation hole caused the error
+**Preview**: a truncated view of the template around the error site
+**Trace**: the chain of nested template calls leading to the error
+
+```ts
+try {
+  myTemplate.render(invalidKargs)
+} catch (e) {
+  if (e instanceof InterpolationError) {
+    console.log(e.message) // Formatted error with preview and trace
+    console.log(e.error)   // The original Zod error
+  }
+}
+```
+
+
+## More on the API and the usage
+
 Either use the `zt.t` (zod tag template) tag or the schema shape `zt.z` (zod tag shape) tag to declaratively define you templates, those functions returns a `IRenderable` interface.
 
-The `IRenderable` interface provides a `render()` method that will receive the keyword arguments (Kargs) in the first parameter as `Record<string, unknown> | void` (void if no kargs exists for a given template)
+The `IRenderable` interface provides a `render(kargs)` method that will receive the keyword arguments (Kargs) in the first parameter as `Record<string, unknown> | void` (void if no kargs exists for a given template)
 
 When possible `unknown` will be infered from nested templates, zod schemas input/output or primitives interpolated in the tagged template call.
 
@@ -218,7 +654,7 @@ Nest your templates and <s>expect</s> hope the merged kargs, output values and s
 
 - Works both with namespaced kargs with `zt.p` or parent scope via `zt.z`
 
-> Due to complex recursive types used to infer the composition kargs, max depth recursion might be reached, so evicting deeply nested templates will avoid slow compilation or recursion limits errors.
+> Due to complex recursive types used to infer the composition kargs, max depth recursion might be reached, so evicting deeply nested templates will avoid slow compilation or recursion limits errors. use zt.opaque(renderable) to complex templates to optout of [...values: Output]  tuple inference.
 
 ```ts
 const userHeading = zt.z({ first: z.string(), last: z.string() })`
@@ -294,7 +730,7 @@ greeting.render(); // -> [['SELECT * FROM i_promise_this_is_not_user_input']]
 
 Values inside the template (`TagValue`) are expected to be one of the following types:
 
-- **Renderable**
+- **IRenderable**
 
 Templates can be used as interpolation values, in this case they will be interpolated together and the result is merged in the rendering of the parent template
 
@@ -306,7 +742,7 @@ If a zod schema value is expected to receive an object as input the karg shape w
 
 *If its a strict schema and the template has other named arguments this is probably a point of failure.*
 
-> Note that for zod schemas the `zt.p`|`zt.p` utility is only a zod codec with an object schema with a single key, an output schema defined in the second parameter and an optional transform fn to determine its output, for nested templates it just scope the parents kargs schema with a namespace key.
+> Note that for zod schemas the `zt.p` utility is only a an object schema with a single key, an output schema defined in the second parameter and an optional transform fn to determine its output, for nested templates it just scope the parents kargs schema with a namespace key.
 
 - **Selector functions** (`(arg: Karg) => TagValue<Karg>`)
 
@@ -314,7 +750,7 @@ A function that receives a single argument with the validated keyword args and r
 
 > The whole karg object is received as argument in the selector fn, but only the values in the shape defined with the `zt.z` tag are already validated and only these are infered by the type system. Kargs defined inline by `zt.p` or inline object input shapes will be validated only as the interpolation reach the schema value.
 
-- **Primitives** (or anything else) (`string | number | boolean | null`)
+- **Primitives** (or anything else) (`string | number | boolean | null | any[] | Record, Date, etc`)
 
 Primitive values are left as is, the intention is that after the .render() of a template all values are collapsed into primitives
 

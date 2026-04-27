@@ -1,7 +1,8 @@
+import z from "zod"
 import { type IRenderable, isRenderable, IZodTagRenderable } from "./renderable"
 import { type InterpolationOperation, InterpolationError } from "./interpolation-error"
 import { spliceInterpolation } from "./splice"
-import z from "zod"
+import { mergeKeyStrategies } from "./schema"
 
 /**
  * What is precompilable?
@@ -40,13 +41,15 @@ export function compile<T extends IRenderable<any, any>>(_renderable: T) {
                         const nestedScope = (value as any)?.scope;
                         const schemaShape = schema?.shape
                         const scopedShape = nestedScope ? { [nestedScope]: schema } : schemaShape;
-                        // TODO: find better shape merge and similar logic has to run in interpolation phasis to have proper scoping after selection
-                        const newShape = {
-                            ...((renderable.schema as z.ZodObject)?.shape ?? {}),
-                            ...(scopedShape ?? {}),
-                        }
+                        const newShape = mergeKeyStrategies['intersect'](
+                            (renderable.schema as z.ZodObject)?.shape,
+                            scopedShape
+                        )
 
                         if (Object.keys(newShape).length > 0) {
+                            // TODO2:
+                            // mutation bad! could improve by collecting shape before compile.
+                            // collectSchema -> compile -> interpolate
                             renderable.schema = z.looseObject(newShape)
                         }
                     }

@@ -1,0 +1,1968 @@
+
+> zod-tag@0.0.4 test
+> node --test --experimental-test-coverage src/**/*.test.ts
+
+TAP version 13
+# Subtest: Repository
+    # Subtest: Users
+        # Subtest: getById
+        ok 1 - getById
+          ---
+          duration_ms: 5.8554
+          type: 'test'
+          ...
+        1..1
+    ok 1 - Users
+      ---
+      duration_ms: 6.6632
+      type: 'suite'
+      ...
+    1..1
+ok 1 - Repository
+  ---
+  duration_ms: 7.1667
+  type: 'suite'
+  ...
+# {
+#   scope: [Getter],
+#   schema: [Getter/Setter],
+#   strs: [Getter],
+#   vals: [Getter],
+#   __compiled: [Getter],
+#   __templateSource: {
+#     stack: '    at file:///./zod-tag/src/__tests__/typed-tag.type-test.ts:32:15'
+#   },
+#   render: [Function (anonymous)],
+#   [Symbol(IRenderable)]: true
+# }
+# [
+#   [ '\\n    [static]: ', ' ', '\\n\\n    ', '\\n\\n    ', '\\n\\n\\n' ],
+#   2,
+#   'string value',
+#   'asd',
+#   [ 1, 2, [Function (anonymous)], 4 ]
+# ]
+# Hello 1 World [ 1 ]
+# [
+#   [
+#     '\\n    Date: ',
+#     '\\n    Timestamp: ',
+#     '\\n    Date: ',
+#     '\\n\\n    ----- USER CARD -----\\n    \\n    Hello: ',
+#     '\\n    Age: ',
+#     '\\n    val: ',
+#     '\\n    val2: ',
+#     '\\n\\n    ---- TITLE ----\\n    \\n    A new user in the application\\n    ',
+#     '\\n\\n'
+#   ],
+#   '27/04/2026',
+#   1777265280010,
+#   27,
+#   'John Doe',
+#   19,
+#   'aaa',
+#   'Content of val2',
+#   'Say hello!'
+# ] 
+#     Date: 27/04/2026
+#     Timestamp: 1777265280010
+#     Date: 27
+#     ----- USER CARD -----
+#     
+#     Hello: John Doe
+#     Age: 19
+#     val: aaa
+#     val2: Content of val2
+#     ---- TITLE ----
+#     
+#     A new user in the application
+#     Say hello!
+# CREATE: 
+# INSERT INTO users (name, email) VALUES ($0, $1)
+# UPDATE: 
+# UPDATE users SET name = $0 WHERE id = $1
+# DELETE: 
+# DELETE FROM users WHERE id = $0
+# ═══════════════════════════════════
+#   CONDITIONAL SQL COMMAND BUILDER
+# ═══════════════════════════════════
+#     SQL: INSERT INTO users (name, email, role)
+# VALUES ($0, $1, $2)
+#   ✓ CREATE with 3 columns, 3 values
+#     SQL: UPDATE users
+# SET name = $0, role = $1
+# WHERE id = $2
+#   ✓ UPDATE with 2 set clauses
+#     SQL: DELETE FROM users
+# WHERE id = $0
+#   ✓ DELETE by id
+#     SQL: SELECT 1
+#   ✓ RAW trusted SQL has zero parameterized values
+#     OK
+#   ✓ Re-render same template with different action types
+#   ✓ Validation: rejects invalid table name
+#   ✓ Validation: rejects missing fields for action type
+#   ✓ Validation: rejects empty columns
+#     SQL: INSERT INTO users (name, email)
+# VALUES ($0) (2 cols, 1 val — not library's job)
+#   ✓ Column/value length mismatch is userspace concern
+#     Args: ["Alice",{"role":"admin"}]
+#   ✓ Nested objects stay in values array
+# ─── TRANSACTION COMPOSITION ───
+#     SQL:
+# BEGIN;
+# INSERT INTO orders (user_id, total)
+# VALUES ($0, $1)
+# UPDATE inventory
+# SET stock = $2
+# WHERE product_id = $3
+# DELETE FROM cart
+# WHERE user_id = $4
+# ;
+# COMMIT;
+#     Args: ["uuid-1",99.99,99,"sku-123","uuid-1"]
+#   ✓ Transaction with 3 commands via zt.p scoping
+#     SQL:
+# BEGIN;
+# SET CONSTRAINTS ALL DEFERRED
+# INSERT INTO logs (msg)
+# VALUES (started)
+# SET CONSTRAINTS ALL IMMEDIATE
+# ;
+# COMMIT;
+#     Values: ["started"]
+#   ✓ Transaction with mixed commands including RAW
+# ═══════════════════════════════════
+#   RESULTS: 12 passed, 0 failed
+# ═══════════════════════════════════
+# ========================================
+#    ACME STORE - ORDER CONFIRMATION
+# ========================================
+# Dear Jane Smith,
+# Thank you for your order!
+# 1. Wireless Mouse - 1 x $29.99
+# 2. Mechanical Keyboard - 1 x $89.99
+# 3. USB-C Hub - 2 x $45.50
+# [shipping address] SPRINGFIELD < warning e.address.city is not validated yet
+# ---- SHIPING ----
+# Shipping Method: Express
+# Shipping Address:
+#   123 Main St
+#   SPRINGFIELD, 62701
+#   USA
+#     
+#     
+#     
+#     
+#     asd 
+#     Void
+# [shipping address] SPRINGFIELD < after shippingInfo e.address.city is still not validated yet
+# ========================================
+#  Thank you for shopping with us!
+#  Questions? Reply to support@acme.test
+# ========================================
+# ═══════════════════════════════════════════
+#   Feature Flag Manifest via zod-tag
+# ═══════════════════════════════════════════
+# ▶ STRUCTURE (YAML syntax, flag names, keys):
+#   [0] "\\n\# ============================================================================\\n\# Feature Flags Mani…"
+#   [1] "\\n\# Version: "
+#   [2] "\\n\# Generated: "
+#   [3] "\\n\# ============================================================================\\n\\n\# "
+#   [4] "\\n\\n\\n\# development environment\\n\\ndark-mode:\\n  type: "
+#   [5] "\\n  value: "
+#   [6] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [7] "\\n    strategy: "
+#   [8] "\\n\\n\\nnew-checkout-flow:\\n  type: "
+#   [9] "\\n  value: "
+#   [10] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [11] "\\n    strategy: "
+#   [12] "\\n\\n\\nai-recommendations:\\n  type: "
+#   [13] "\\n  value: "
+#   [14] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [15] "\\n    strategy: "
+#   [16] "\\n\\n\\nbeta-analytics-dashboard:\\n  type: "
+#   [17] "\\n  value: "
+#   [18] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [19] "\\n    strategy: "
+#   [20] "\\n\\n\\n\\n\# staging environment\\n\\ndark-mode:\\n  type: "
+#   [21] "\\n  value: "
+#   [22] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [23] "\\n    strategy: "
+#   [24] "\\n\\n\\nnew-checkout-flow:\\n  type: "
+#   [25] "\\n  value: "
+#   [26] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [27] "\\n    strategy: "
+#   [28] "\\n\\n\\nai-recommendations:\\n  type: "
+#   [29] "\\n  value: "
+#   [30] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [31] "\\n    strategy: "
+#   [32] "\\n\\n\\nbeta-analytics-dashboard:\\n  type: "
+#   [33] "\\n  value: "
+#   [34] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [35] "\\n    strategy: "
+#   [36] "\\n\\n\\n\\n\# production environment\\n\\ndark-mode:\\n  type: "
+#   [37] "\\n  value: "
+#   [38] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [39] "\\n    strategy: "
+#   [40] "\\n\\n\\nnew-checkout-flow:\\n  type: "
+#   [41] "\\n  value: "
+#   [42] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [43] "\\n    strategy: "
+#   [44] "\\n    scheduled_at: "
+#   [45] "\\n\\n\\nai-recommendations:\\n  type: "
+#   [46] "\\n  value: "
+#   [47] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [48] "\\n    strategy: "
+#   [49] "\\n    scheduled_at: "
+#   [50] "\\n\\n\\nbeta-analytics-dashboard:\\n  type: "
+#   [51] "\\n  value: "
+#   [52] "\\n  description: \\n  rollout:\\n    percentage: "
+#   [53] "\\n    strategy: "
+#   [54] "\\n\\n\\n"
+# ▶ VALUES (flag values, percentages, dates):
+#   [0] my-saas-platform
+#   [1] 2.4.1
+#   [2] 2026-04-27T04:48:00.084Z
+#   [3] Feature flags for Q3 2026 release
+#   [4] boolean
+#   [5] true
+#   [6] 100
+#   [7] instant
+#   [8] boolean
+#   [9] true
+#   [10] 100
+#   [11] instant
+#   [12] boolean
+#   [13] true
+#   [14] 50
+#   [15] gradual
+#   [16] boolean
+#   [17] true
+#   [18] 100
+#   [19] instant
+#   [20] boolean
+#   [21] true
+#   [22] 100
+#   [23] instant
+#   [24] boolean
+#   [25] true
+#   [26] 75
+#   [27] gradual
+#   [28] boolean
+#   [29] true
+#   [30] 25
+#   [31] gradual
+#   [32] boolean
+#   [33] false
+#   [34] 0
+#   [35] instant
+#   [36] boolean
+#   [37] true
+#   [38] 100
+#   [39] instant
+#   [40] boolean
+#   [41] false
+#   [42] 0
+#   [43] scheduled
+#   [44] "2026-07-15T09:00:00.000Z"
+#   [45] boolean
+#   [46] false
+#   [47] 0
+#   [48] scheduled
+#   [49] "2026-08-01T00:00:00.000Z"
+#   [50] boolean
+#   [51] false
+#   [52] 0
+#   [53] instant
+# ▶ Full Manifest (zt.debug):
+# \# ============================================================================
+# \# Feature Flags Manifest
+# \# Project: my-saas-platform
+# \# Version: 2.4.1
+# \# Generated: 2026-04-27T04:48:00.084Z
+# \# ============================================================================
+# \# Feature flags for Q3 2026 release
+# \# development environment
+# dark-mode:
+#   type: boolean
+#   value: true
+#   description: 
+#   rollout:
+#     percentage: 100
+#     strategy: instant
+# new-checkout-flow:
+#   type: boolean
+#   value: true
+#   description: 
+#   rollout:
+#     percentage: 100
+#     strategy: instant
+# ai-recommendations:
+#   type: boolean
+#   value: true
+#   description: 
+#   rollout:
+#     percentage: 50
+#     strategy: gradual
+# beta-analytics-dashboard:
+#   type: boolean
+#   value: true
+#   description: 
+#   rollout:
+#     percentage: 100
+#     strategy: instant
+# \# staging environment
+# dark-mode:
+#   type: boolean
+#   value: true
+#   description: 
+#   rollout:
+#     percentage: 100
+#     strategy: instant
+# new-checkout-flow:
+#   type: boolean
+#   value: true
+#   description: 
+#   rollout:
+#     percentage: 75
+#     strategy: gradual
+# ai-recommendations:
+#   type: boolean
+#   value: true
+#   description: 
+#   rollout:
+#     percentage: 25
+#     strategy: gradual
+# beta-analytics-dashboard:
+#   type: boolean
+#   value: false
+#   description: 
+#   rollout:
+#     percentage: 0
+#     strategy: instant
+# \# production environment
+# dark-mode:
+#   type: boolean
+#   value: true
+#   description: 
+#   rollout:
+#     percentage: 100
+#     strategy: instant
+# new-checkout-flow:
+#   type: boolean
+#   value: false
+#   description: 
+#   rollout:
+#     percentage: 0
+#     strategy: scheduled
+#     scheduled_at: Wed Jul 15 2026 06:00:00 GMT-0300 (Horário Padrão de Brasília)
+# ai-recommendations:
+#   type: boolean
+#   value: false
+#   description: 
+#   rollout:
+#     percentage: 0
+#     strategy: scheduled
+#     scheduled_at: Fri Jul 31 2026 21:00:00 GMT-0300 (Horário Padrão de Brasília)
+# beta-analytics-dashboard:
+#   type: boolean
+#   value: false
+#   description: 
+#   rollout:
+#     percentage: 0
+#     strategy: instant
+# ▶ Parameterized only (zt.$n):
+# \# ============================================================================
+# \# Feature Flags Manifest
+# \# Project: $0
+# \# Version: $1
+# \# Generated: $2
+# \# ============================================================================
+# \# $3
+# \# development environment
+# dark-mode:
+#   type: $4
+#   value: $5
+#   description: 
+#   rollout:
+#     percentage: $6
+#     strategy: $7
+# new-checkout-flow:
+#   type: $8
+#   value: $9
+#   description: 
+#   rollout:
+#     percentage: $10
+#     strategy: $11
+# ai-recommendations:
+#   type: $12
+#   value: $13
+#   description: 
+#   rollout:
+#     percentage: $14
+#     strategy: $15
+# beta-analytics-dashboard:
+#   type: $16
+#   value: $17
+#   description: 
+#   rollout:
+#     percentage: $18
+#     strategy: $19
+# \# staging environment
+# dark-mode:
+#   type: $20
+#   value: $21
+#   description: 
+#   rollout:
+#     percentage: $22
+#     strategy: $23
+# new-checkout-flow:
+#   type: $24
+#   value: $25
+#   description: 
+#   rollout:
+#     percentage: $26
+#     strategy: $27
+# ai-recommendations:
+#   type: $28
+#   value: $29
+#   description: 
+#   rollout:
+#     percentage: $30
+#     strategy: $31
+# beta-analytics-dashboard:
+#   type: $32
+#   value: $33
+#   description: 
+#   rollout:
+#     percentage: $34
+#     strategy: $35
+# \# production environment
+# dark-mode:
+#   type: $36
+#   value: $37
+#   description: 
+#   rollout:
+#     percentage: $38
+#     strategy: $39
+# new-checkout-flow:
+#   type: $40
+#   value: $41
+#   description: 
+#   rollout:
+#     percentage: $42
+#     strategy: $43
+#     scheduled_at: $44
+# ai-recommendations:
+#   type: $45
+#   value: $46
+#   description: 
+#   rollout:
+#     percentage: $47
+#     strategy: $48
+#     scheduled_at: $49
+# beta-analytics-dashboard:
+#   type: $50
+#   value: $51
+#   description: 
+#   rollout:
+#     percentage: $52
+#     strategy: $53
+# ═══════════════════════════════════════════
+#   SAFETY PROPERTIES DEMONSTRATED
+# ═══════════════════════════════════════════
+# ✓ Invalid environment name "prod" rejected by z.enum()
+# ✓ Invalid flag name "Dark-Mode" rejected by /^[a-z][a-z0-9-]*$/
+# ✓ Flag names are STRUCTURE, never leak into VALUES array
+# ✓ Scheduled rollout dates appear as parameterized VALUES
+# ═══════════════════════════════════════════
+#   WHY ZOD-TAG FOR CONFIG GENERATION
+# ═══════════════════════════════════════════
+# 1. Flag names are code structure → zt.unsafe after regex validation
+# 2. Flag values are deployment data → parameterized VALUES
+# 3. Environment names are enum-validated → rejected at render time
+# 4. Conditional YAML blocks use zt.if/zt.t`` pattern
+# 5. zt.map lifts flag arrays into composed YAML blocks
+# 6. The output tuple is ready for YAML.stringify() or direct file write
+# 7. No template injection possible: values never become YAML syntax
+# ═══════════════════════════════════════
+#   FUNCTIONAL COMPOSITION PROPERTIES
+# ═══════════════════════════════════════
+#   ✓ identity: empty · template === template
+#   ✓ identity: template · empty === template
+#   ✓ identity: empty renders to nothing
+#   ✓ bind: fully bound renderable requires no kargs
+#   ✓ bind: bound renderables compose without kargs leakage
+#   ✓ bind: validates at bind time, not render time
+#   ✓ map: lifts list into concatenated renderable (identity separator)
+#   ✓ map: with custom separator (4th parameter)
+#   ✓ map: with newline separator
+#   ✓ map: empty list produces identity
+#   ✓ map: empty list with separator still produces identity
+#   ✓ associativity: (a · b) · c === a · (b · c)
+#   ✓ conditional: zt.if(false, t) yields identity
+#   ✓ conditional: zt.if(true, t) yields t
+#     Output:
+#     Team status:
+#     
+#     Hello, Alice! You seem happy today!
+#     
+#     
+#     Hello, Bob! I hope things get better.
+#     
+#     
+#     Hello, Charlie!
+#     
+#   ✓ complex: bind + map + mood selection with separator
+#   ✓ classification: mapFn transforms raw data to validated kargs
+# ═══════════════════════════════════
+#   16 passed, 0 failed
+# ═══════════════════════════════════
+# ========== GraphQL Query Examples ==========
+# 1. GET USER:
+# query GetUser($id: ID!) {
+#   user(id: $id) {
+#     ...UserProfile
+#   }
+# }
+# fragment UserProfile on User {
+#   ...UserBase
+#   role
+#   avatar
+#   bio
+#   website
+# }
+# fragment UserBase on User {
+#   id
+#   name
+#   email
+#   createdAt
+# }
+# ---
+# 2. LIST USERS (Admin only):
+# query ListUsers($first: Int!, $offset: Int!, $role: Role) {
+#   users(first: $first, offset: $offset, role: $role) {
+#     edges {
+#       node {
+#         ...UserBase
+#         role
+#       }
+#     }
+#     pageInfo {
+#       hasNextPage
+#       hasPreviousPage
+#       totalCount
+#     }
+#   }
+# }
+# fragment UserBase on User {
+#   id
+#   name
+#   email
+#   createdAt
+# }
+# ---
+# 3. CREATE USER:
+# mutation CreateUser($name: String!, $email: String!, $password: String!, $role: Role!) {
+#   createUser(input: {name: $name, email: $email, password: $password, role: $role}) {
+#     user {
+#       ...UserProfile
+#     }
+#     token
+#     errors {
+#       field
+#       message
+#     }
+#   }
+# }
+# fragment UserProfile on User {
+#   ...UserBase
+#   role
+#   avatar
+#   bio
+#   website
+# }
+# fragment UserBase on User {
+#   id
+#   name
+#   email
+#   createdAt
+# }
+# ---
+# 4. GET USER TIMELINE (with posts & comments):
+# query GetUserTimeline($userId: ID!, $postLimit: Int!, $commentLimit: Int!) {
+#   user(id: $userId) {
+#     ...UserProfile
+#     posts(first: $postLimit) {
+#       edges {
+#         node {
+#           id
+#           title
+#           slug
+#           publishedAt
+#           comments(first: $commentLimit) {
+#             ...CommentFields
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
+# fragment UserProfile on User {
+#   ...UserBase
+#   role
+#   avatar
+#   bio
+#   website
+# }
+# fragment CommentFields on Comment {
+#   id
+#   body
+#   createdAt
+#   author {
+#     id
+#     name
+#     avatar
+#   }
+# }
+# fragment UserBase on User {
+#   id
+#   name
+#   email
+#   createdAt
+# }
+# ---
+# 5. UPDATE USER PROFILE:
+# mutation UpdateUser($id: ID!, $name: String, $bio: String, $avatar: String) {
+#   updateUser(id: $id, input: {name: $name, bio: $bio, avatar: $avatar}) {
+#     user {
+#       ...UserProfile
+#     }
+#   }
+# }
+# fragment UserProfile on User {
+#   ...UserBase
+#   role
+#   avatar
+#   bio
+#   website
+# }
+# fragment UserBase on User {
+#   id
+#   name
+#   email
+#   createdAt
+# }
+# ---
+# 6. GET USER (Dynamic Fields):
+# query GetUser($id: ID!) {
+#   user(id: 550e8400-e29b-41d4-a716-446655440000) {
+#     id
+#     name
+#     email
+#     avatar
+#   }
+# }
+# ---
+# 7. SEARCH (Posts & Users):
+# query Search($searchQuery: String!, $postFirst: Int!, $userFirst: Int!) {
+#   searchPosts(query: $searchQuery, first: $postFirst) {
+#     edges {
+#       node {
+#         ...PostFields
+#       }
+#     }
+#   }
+#   searchUsers(query: $searchQuery, first: $userFirst) {
+#     edges {
+#       node {
+#         ...UserBase
+#       }
+#     }
+#   }
+# }
+# fragment PostFields on Post {
+#   id
+#   title
+#   content
+#   slug
+#   publishedAt
+#   updatedAt
+#   author {
+#     ...UserBase
+#   }
+# }
+# fragment UserBase on User {
+#   id
+#   name
+#   email
+#   createdAt
+# }
+# ---
+# 8. PUBLISH POST:
+# mutation PublishPost($title: String!, $content: String!, $slug: String!, $draft: Boolean) {
+#   createPost(input: {title: $title, content: $content, slug: $slug, draft: $draft}) {
+#     post {
+#       ...PostFields
+#     }
+#     errors {
+#       field
+#       message
+#     }
+#   }
+# }
+# fragment PostFields on Post {
+#   id
+#   title
+#   content
+#   slug
+#   publishedAt
+#   updatedAt
+#   author {
+#     ...UserBase
+#   }
+# }
+# fragment UserBase on User {
+#   id
+#   name
+#   email
+#   createdAt
+# }
+# ---
+# ========== VALIDATION EXAMPLES ==========
+# ✓ Valid user creation renders successfully
+# ✓ Invalid email caught at validation time
+# ✓ Invalid slug format caught at validation time
+# ✓ Invalid UUID caught at validation time
+# ✓ Invalid role caught at validation time
+# ========== TYPE SAFETY EXAMPLES ==========
+# ✓ GetUserParams correctly typed
+# ✓ GetUserTimelineParams correctly typed
+# ✓ SearchPostsAndUsersParams correctly typed
+# ========== BEST PRACTICES ==========
+# 1. FRAGMENT REUSE:
+#    - Define fragments for commonly selected fields
+#    - Compose complex queries from fragments
+#    - Reduces duplication and improves maintainability
+# 2. SCHEMA VALIDATION:
+#    - Use Zod schemas to validate query parameters
+#    - Catch invalid inputs before sending queries
+#    - Enable IDE autocomplete for parameters
+# 3. TYPE INFERENCE:
+#    - Leverage IRenderableKargs for type safety
+#    - Extract parameter types for reuse
+#    - Avoid casting with `as any`
+# 4. DYNAMIC FIELD SELECTION:
+#    - Use zt.p() for flexible field selection
+#    - Validate field names against Zod enums
+#    - Keep selections within reason (1-10 fields)
+# 5. CONDITIONAL FIELDS:
+#    - Use selector functions for conditional rendering
+#    - Example: ${(ctx) => ctx.includeComments ? comments : ""}
+#    - Keeps queries clean and readable
+# ========== KEY TAKEAWAYS ==========
+# ✓ Fragment composition reduces duplication
+# ✓ Zod schemas validate all query parameters
+# ✓ Type inference enables IDE support
+# ✓ Conditional rendering keeps queries flexible
+# ✓ Dynamic field selection for advanced use cases
+# ═══════════════════════════════════════
+#   NPC DIALOG STATE MACHINE
+#   Full Library Stress Test
+# ═══════════════════════════════════════
+# ─── Greeting Variations ───
+# "Ah, my dear friend! Elara welcomes you with open arms!"
+#   ✓ friendly + high reputation
+# "Thorne eyes you warily. 'State your business.'"
+#   ✓ neutral + low reputation
+# "Brick reaches for their weapon. 'You dare show your face here?!'"
+#   ✓ hostile + very low reputation
+# "Whisper looks nervously around. 'Is it safe to talk?'"
+#   ✓ fearful + moderate reputation
+# ─── Weather System ───
+# The sunrise paints the sky in brilliant hues. "Beautiful morning, isn't it?"
+# "The tempest rages! No sane soul travels on a night like this."
+# "Shadows in the mist... keep your wits about you."
+# "Silent snow under moonlight. The world feels... peaceful."
+#   ✓ stormy night (worst weather)
+#   ✓ every weather + time combination renders
+# ─── Shop System ───
+# ═══════════════════════════════════════
+#   Grumble's blacksmith Shop
+# ═══════════════════════════════════════
+#   *** 15% DISCOUNT TODAY! ***
+# --- Weapons ---
+#   common | Iron Sword | 50 gold | Stock: 10
+#   uncommon | Steel Axe | 120 gold | Stock: 5
+#   legendary | Dragon Slayer | 9999 gold | Stock: 1
+#     "Forged in dragonfire"
+# --- Armor ---
+#   common | Leather Cap | 25 gold | Stock: 20
+#   rare | Plate Mail | 500 gold | Stock: 2
+# ═══════════════════════════════════════
+#   ✓ full vendor shop with multiple categories
+# ═══════════════════════════════════════
+#   Elara's alchemist Shop
+# ═══════════════════════════════════════
+# --- Potions ---
+#   common | Health Potion | 10 gold | Stock: 50
+# ═══════════════════════════════════════
+#   ✓ shop with no discount hides discount line
+#   ✓ shop items are parameterized values
+# ─── Quest System ───
+# [QUEST: Slay the Wolf]
+#   Type: kill
+#   Difficulty: ★★★☆☆☆☆☆☆☆
+#   Reward: 200 gold
+#   A wolf is terrorizing the village. Kill it.
+# [QUEST: Herb Collection]
+#   Type: fetch
+#   Difficulty: ★☆☆☆☆☆☆☆☆☆
+#   Reward: 50 gold
+#   Collect 5 healing herbs from the forest.
+# [QUEST: Dark Cave]
+#   Type: explore
+#   Difficulty: ★★★★★★★★☆☆
+#   Reward: 1000 gold
+#   Explore the cave of whispers and report back.
+#   ✓ quest board with multiple quests
+# [No quests available right now. Check back later.]
+#   ✓ empty quest board shows message
+# ─── Dialog State Machine ───
+# "Greetings, honored traveler. I am Elara. How may I serve you?"
+# "Hey there! Name's Elara. What can I do for ya?"
+# "Elara... yes, that is what they call me. I see questions in your eyes."
+# "Elara. Remember it. Now, what do you want?"
+# "Oh! A visitor! How delightful! I'm Elara, at your service~"
+#   ✓ state: greet (various tones)
+# "Word is, the old king wasn't killed by illness. Thorne leans closer. 'Poison, they say.'"
+# "Thorne glances around. 'The eastern trade routes have been plagued by bandits. Be careful.'"
+# "'Have you heard? The mage's tower was seen glowing at midnight. Something stirs up there.'"
+# "'A dragon was spotted near the northern peaks. Thorne shudders. No one's confirmed it yet.'"
+# "Thorne whispers: 'The rebels are planning something big. Mark my words.'"
+#   ✓ state: gossip (all rumor indices)
+# "Whisper settles into a storytelling posture. 'In the beginning, the World-Tree grew from a single seed of starlight...' They trail off, lost in thought.
+# "Whisper's expression darkens. 'The Great War... I lost family to it. The scars still run deep in this land.'"
+# "'Magic flows through all things,' Whisper explains, conjuring a small flame in their palm. 'But it demands respect.'"
+# "Whisper points skyward. 'The old gods sleep, they say. But I've seen things that make me doubt they're truly gone.'"
+# "'There's an ancient prophecy,' Whisper murmurs. 'When the twin moons align, a champion will rise. Or fall.'"
+#   ✓ state: lore (all topics)
+# "Grumble considers. 'For you? I could part with it for 400 gold. That's a steal!'"
+# "Grumble shakes their head. 'You don't have enough gold for this. Come back when you do.'"
+#   ✓ state: barter (can/cannot afford)
+# "Brick immediately backs down. 'P-please! I meant no offense! Take what you want!'"
+# "Brick laughs coldly. 'You're not strong enough to threaten me, little one.'"
+#   ✓ state: threaten (level comparison)
+# "Brick scoffs at your offering. 'Is this supposed to impress me? Pathetic.'"
+# "Elara's eyes widen. 'This... this is too generous! I am in your debt.'"
+#   ✓ state: gift (hostile vs friendly npc)
+# "Thorne raises an eyebrow. 'Charming.'"
+# "Brick's face contorts with rage. 'HOW DARE YOU! GUARDS!'"
+#   ✓ state: insult (severity levels)
+# "Elara blushes slightly. 'Oh! Well, that's kind of you to say.'"
+# "Elara puffs up with pride. 'Years of practice, my friend. Years of practice.'"
+# "Elara nods solemnly. 'A reputation is hard-earned and easily lost.'"
+#   ✓ state: compliment (types)
+# "Whisper nods approvingly. 'I can train you in Fire Magic for 300 gold. Shall we begin?'"
+# "Whisper sighs. 'Training in Fire Magic costs 300 gold. You're short.'"
+#   ✓ state: train (can/cannot afford)
+# "Brick yields after a brief exchange. 'You've surpassed me. I have nothing more to teach.'"
+# "Brick grunts, blocking your strikes. 'Good! But your footwork needs improvement.'"
+# "Brick easily parries your attacks. 'Keep practicing. You'll get there.'"
+# "Brick disarms you effortlessly. 'Perhaps start with the training dummies first.'"
+#   ✓ state: spar (strength comparison)
+# "I wasn't always a blacksmith. Grumble pauses. 'Once, I was a soldier. The war changed everything.'"
+# "Grumble continues: 'After the Siege of Ironhold, I laid down my sword and picked up a hammer. Building, not destroying.'"
+# "Grumble finishes quietly: 'My captain died in my arms that day. I promised him I'd never take another life. This forge is my penance.'"
+# "Elara gazes at her potions. 'I discovered alchemy by accident. An explosion that should have killed me instead... awakened something.'"
+# "'The ingredients spoke to me,' Elara whispers. 'Rose petals for healing, nightshade for... other purposes. The world is full of secrets.'"
+# "Elara reveals: 'They called me a witch. Drove me from my village. But here, people appreciate my talents. Most of the time.'"
+# "Thorne leans on the bar. 'An innkeeper hears many stories. But my own? That's a tale I rarely tell.'"
+# "'I was a thief,' Thorne admits. 'Best in the city. Until the night I tried to rob the wrong person — the head of the Thieves' Guild himself.'"
+# "'They let me live, but took my right hand,' Thorne shows a wooden prosthetic. 'Now I pour drinks and listen. It's an honest living.'"
+# "Whisper speaks so softly you strain to hear. 'I wasn't born with a voice. The spirits gave it to me as a gift. Or a curse.'"
+# "'Every word I speak costs me,' Whisper explains. 'A day of my life, perhaps. I've learned to choose my words carefully.'"
+# "'One day, I'll have spoken my last word,' Whisper smiles sadly. 'Until then, I teach those who will listen.'"
+# "Brick cracks his knuckles. 'Started fighting in the pits at age twelve. You learn fast when it's your life on the line.'"
+# "'Got my nickname from my first kill,' Brick says. 'Smashed a man's skull with a brick. They cheered. I was sick for a week.'"
+# "'Now I fight for coin, not survival,' Brick concludes. 'It's not an honorable life, but it's mine.'"
+#   ✓ state: backstory (all NPCs, all chapters)
+# "Whisper's eyes glow. 'I see it now, Aldric... a warrior bathed in fire, standing against an endless darkness. You will break... or be remade.'"
+# "'The threads of fate weave around you, Aldric,' Whisper intones. 'Your magic will either save this world or doom it. The choice is yours.'"
+# "Whisper chuckles darkly. 'A shadow among shadows... Aldric, you will steal something the gods themselves wish to keep hidden.'"
+# "'Blessed one,' Whisper kneels. 'Aldric, I have seen you in my visions. You will heal a wound that has bled for a thousand years.'"
+# "'The wild speaks through me,' Whisper says. 'Aldric, nature's champion. When the World-Tree weeps, you will answer.'"
+#   ✓ state: prophecy (all classes)
+# "Brick laughs bitterly. 'Join you? After everything? Not for all the gold in the kingdom.'"
+# "Brick considers the generous offer. '...Very well. I'll join your cause. But I'm no servant.'"
+# "Brick nods firmly. 'I've heard good things about you. I'd be honored to fight alongside you.'"
+# "Brick shakes their head. 'I'm not ready to leave this place. Perhaps someday.'"
+#   ✓ state: recruit (reputation + gold combos)
+# "Elara whispers: 'The king's sword? I didn't forge it. It's a fake. The real one is hidden in the old temple.'"
+# "Elara shows you a hidden compartment. 'Legendary ores. Mined from a fallen star. I've never told anyone.'"
+# "'The rebellion buys their weapons from me,' Elara admits. 'Don't tell the guards.'"
+# "'I found these plans in an old chest,' Elara reveals blueprints. 'A weapon that could level a city.'"
+# "'That plague last year?' Elara looks guilty. 'One of my experiments escaped. I've been trying to make amends ever since.'"
+# "Elara holds up a vial. 'Essence of phoenix. One drop can raise the recently dead. I have three.'"
+# "'The water supply has been tainted for months,' Elara confesses. 'Someone wants the town weakened. I don't know who.'"
+# "'I can brew a potion of eternal youth,' Elara says gravely. 'But the final ingredient is... a willing soul.'"
+# "Elara slides a key across the bar. 'Room 13. It doesn't exist on any ledger. Useful for... private meetings.'"
+# "'The captain of the guard stays here every Tenday,' Elara whispers. 'With someone who isn't his wife.'"
+# "'There's a tunnel under the cellar,' Elara reveals. 'Leads outside the walls. Smugglers' route.'"
+# "'I'm not just an innkeeper,' Elara shows a hidden dagger. 'I'm an information broker. And I have news about you.'"
+# "Elara traces runes in the air. 'The magical barrier around the city? It's failing. I give it three months.'"
+# "'I've been to other planes,' Elara says matter-of-factly. 'Some are beautiful. Most are... hungry.'"
+# "'The archmage isn't dead,' Elara states. 'He's trapped in a pocket dimension. I've been trying to free him.'"
+# "'I know the true name of a demon prince,' Elara shudders. 'It's the most dangerous knowledge I possess.'"
+# "Elara polishes their blade. 'I was hired to kill you once. Turned it down. The pay wasn't good enough.'"
+# "'The war is a lie,' Elara states flatly. 'Both sides are funded by the same person. I've seen the contracts.'"
+# "'I know where the lost prince is,' Elara says quietly. 'And why he can never return.'"
+# "'My company was hired for a massacre,' Elara confesses. 'I was the only one who refused. They killed the rest.'"
+#   ✓ state: secret (all roles, all indices)
+# "Whisper applauds! 'Correct! You're sharper than you look, friend.'
+# "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?""
+# "Whisper shakes their head. 'Not quite. Try again sometime.'
+# "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?""
+# "Whisper grins. 'Let's see how clever you are... "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?""
+#   ✓ state: riddle (correct/wrong/no answer)
+# "Thorne groans as you win. 'Fine, take your 200 gold. Beginner's luck!'"
+# "Thorne sweeps up the coins. 'Better luck next time, friend.'"
+# "Thorne laughs. 'A tie! Let's go again — double or nothing?'"
+#   ✓ state: gamble (win/lose/tie)
+# "Brick blocks the attack. 'Is that all you've got?' [Brick HP: 90/100]"
+# "Brick grits their teeth. 'You'll pay for that!' [Brick HP: 40/100]"
+# "Brick staggers, bleeding. 'I yield! I yield!' [Brick HP: 20/100]"
+# "Brick collapses! 'How... could you...' [Brick has been defeated!]"
+#   ✓ state: attack (health thresholds)
+# "Run, coward! Brick won't forget this!" [You escaped successfully!]
+# "Brick blocks your escape! 'You're not going anywhere!' [Escape failed!]"
+#   ✓ state: flee (success vs fail)
+# ─── Full Screen Composition ───
+#   ✗ complete NPC dialog screen with all features: renderable[5] > root-schema(object)[-1] > [
+#   ✗ NPC dialog screen without weather/rep: selector(_v)[1] > [
+# ─── Performance ───
+#   ✗ render all 26+ states 10 times each: anonymous-fn[0] > [
+# ─── Structure vs Values ───
+#   ✗ NPC names are never in values array: NPC name should be in structure strings
+#   ✗ player inputs (gold, answers) are in values: Bet amount should be in values
+#   ✓ zt.$n format preserves structure, parameterizes values
+# ─── Error Handling ───
+#   ✓ invalid dialog state rejected
+# "Elara nods in acknowledgment. 'What brings you here?'"
+#   ✓ missing required kargs rejected
+# ═══════════════════════════════════
+#   32 passed, 5 failed
+# ═══════════════════════════════════
+# STRESS TEST COVERAGE:
+# ─────────────────────────────────────────────
+# ✓ zt.match: 22 dialog states tested
+# ✓ Deep nesting: vendorShop → shopCategory → shopItem (3 levels)
+# ✓ zt.map: Quest board, shop items, categories
+# ✓ zt.if: Conditional weather, reputation, portrait, discount
+# ✓ zt.join: Item name formatting
+# ✓ zt.unsafe: Rarity/item names as structure
+# ✓ zt.p: Scoped dialog injection
+# ✓ zt.bind/zt.$n: Format verification
+# ✓ Schema composition: NPC screen merges 5+ fragments
+# ✓ Validation: All states validated at render time
+# ✓ Performance: 220+ renders in <500ms
+# ✓ Structure/Values: Clear boundaries maintained
+# ✓ 30+ test cases across all library features
+# ═══════════════════════════════════════
+#   zt.match as Function Definitions
+# ═══════════════════════════════════════
+#   ✓ add: 10 + 32 = 42
+#   ✓ sub: 100 - 7 = 93
+#   ✓ mul: 6 × 7 = 42
+#   ✓ div: 100 / 8 = 12.5
+#   ✓ pow: 2^10 = 1024
+#   ✓ clamp: clamps to boundaries
+#   ✓ neg: -42
+#   ✓ abs: |-42| = 42
+#   ✓ sqrt: √144 = 12
+#   ✓ div by zero rejected by Zod
+#   ✓ sqrt of negative rejected by Zod
+#   ✓ unknown function rejected by discriminator
+#   ✓ door: open/close are stateless
+#   ✓ door: lock/unlock require key
+#   ✓ door: lock without key rejected
+#   ✓ door: knock repeats
+#     
+# 15 → 45 → 25 → 25 → 625
+#   ✓ pipeline: chains math operations
+#   ✓ expr: literal
+#   ✓ expr: binary expression
+#   ✓ expr: unary negation
+#   ✓ expr: unary sqrt
+#   ✓ expr: parenthesized
+# ═══════════════════════════════════
+#   22 passed, 0 failed
+# ═══════════════════════════════════
+# DISCOVERY: zt.match IS A FUNCTION DEFINITION DSL
+# ────────────────────────────────────────────────
+# Each branch is a typed, validated overload:
+#   math.render({ fn: 'add', a: 10, b: 32 })  // → [['',''], 42]
+# 1. THE SCHEMA IS THE SIGNATURE
+#    Zod shapes declare parameter types + constraints.
+#    No separate type annotations needed — they're the same thing.
+# 2. THE TEMPLATE IS THE BODY
+#    ${e => e.a + e.b} is the implementation.
+#    Single-expression bodies keep logic visible at the definition site.
+# 3. THE DISCRIMINATOR IS THE DISPATCH
+#    'fn' routes to the correct overload.
+#    Missing/unknown discriminators are rejected at render time.
+# 4. VALIDATION IS NOT AN AFTERTHOUGHT
+#    div by zero? Zod catches it.
+#    sqrt of negative? Zod catches it.
+#    Unknown function? Discriminated union catches it.
+#    All BEFORE the selector runs.
+# 5. THE RETURN IS PURE DATA
+#    [string[], ...values[]] carries no side effects.
+#    The caller decides what to do with the tuple.
+# This is NOT a template library that happens to validate.
+# It's a VALIDATION-FIRST function definition system that 
+# happens to use templates for implementation.
+# [System]
+# You are an automated code review assistant.
+# Act as a strictly pedantic reviewer who flags every deviation from best practices, no matter how minor.
+# [Format]: Output your review as a unified diff patch with inline comments.
+# [Severity level]: GENTLE. Focus only on impactful issues. Prefer positive reinforcement.
+# [Focus areas]: readability, performance, architecture.
+# Only comment on issues related to these domains unless a critical bug is found.
+# The following TypeScript code was submitted for review.
+# Provide actionable, constructive feedback.
+# ---
+# [Code]
+#     function add(a, b) { return a + b }
+#   
+# [System]
+# You are a knowledgeable technical explainer.
+# Use a scholarly tone with precise terminology and citations where appropriate.
+# [Audience level: professional. Assume a competent working knowledge. Define advanced terms briefly.]
+# When answering, structure your response with:
+# - A brief overview
+# - Key concepts explained
+# - Practical examples if helpful
+# Additional context: The reader has basic TypeScript experience.
+# ---
+# [User Question]
+# Please explain: How do TypeScript template literal types work?
+# CREATE TABLE IF NOT EXISTS users (
+#     id TEXT PRIMARY KEY,
+#     name TEXT NOT NULL,
+#     email TEXT UNIQUE NOT NULL,
+#     role TEXT NOT NULL CHECK(role IN ('admin', 'user', 'guest')),
+#     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+#     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+#   );
+# CREATE TABLE IF NOT EXISTS posts (
+#     id TEXT PRIMARY KEY,
+#     user_id TEXT NOT NULL,
+#     title TEXT NOT NULL,
+#     content TEXT NOT NULL,
+#     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+#     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+#   );
+# -- Insert sample data
+#   INSERT OR IGNORE INTO users (id, name, email, role) VALUES 
+#     ('d577d021-1d38-4769-a27a-3a3a03d3425c', 'Alice Johnson', 'alice@example.com', 'admin'),
+#     ('cf4f5b2b-6c13-42ba-b6dd-53d6f5e75825', 'Bob Smith', 'bob@example.com', 'user'),
+#     ('5770c836-1608-483a-98cc-8572cc2a1390', 'Carol Davis', 'carol@example.com', 'guest');
+# INSERT OR IGNORE INTO posts (id, user_id, title, content) VALUES
+#     ('edc9bc8b-5f0c-4b95-8d77-7e629c918755', 'd577d021-1d38-4769-a27a-3a3a03d3425c', 'First Post', 'Hello world!'),
+#     ('c25303ab-f869-424a-bd2f-2a0629e8ef91', 'd577d021-1d38-4769-a27a-3a3a03d3425c', 'Second Post', 'Zod is awesome'),
+#     ('dce7cab9-f24e-4a2f-a914-17b61f6069be', 'cf4f5b2b-6c13-42ba-b6dd-53d6f5e75825', 'My Journey', 'Learning TypeScript');
+# ========== ZOD-TAG SQLITE REPOSITORY DEMO ==========
+# 1. CREATE USER:
+#     INSERT INTO users 
+#       (id, name, email, role)
+#     VALUES (
+#       '2a9d405a-ea14-4ffd-990e-2db9af3c'/*+4 bytes*/,
+#       'Diana Prince', 
+#       'diana@example.com', 
+#       'admin'
+#     )
+#     RETURNING *
+#   
+#    Created: {
+#   id: '2a9d405a-ea14-4ffd-990e-2db9af3c4609',
+#   name: 'Diana Prince',
+#   email: 'diana@example.com',
+#   role: 'admin',
+#   created_at: '2026-04-27 04:48:00',
+#   updated_at: '2026-04-27 04:48:00'
+# }
+# 2. FIND USER BY ID:
+#     SELECT * FROM users
+#     WHERE id = 'd577d021-1d38-4769-a27a-3a3a03d3'/*+4 bytes*/
+#   
+#    Found: {
+#   id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
+#   name: 'Alice Johnson',
+#   email: 'alice@example.com',
+#   role: 'admin',
+#   created_at: '2026-04-27 04:48:00',
+#   updated_at: '2026-04-27 04:48:00'
+# }
+#    SQL: 
+#     SELECT * FROM users
+#     WHERE id = ?
+#   
+#    Args: [ 'd577d021-1d38-4769-a27a-3a3a03d3425c' ]
+# 3. FIND ALL USERS (sorted by name DESC):
+#     SELECT id, name, email, role
+#     FROM users
+#     ORDER BY 'name' DESC
+#     LIMIT 10.0
+#     OFFSET 0.0
+#   
+#    Users: [
+#   {
+#     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
+#     name: 'Alice Johnson',
+#     email: 'alice@example.com',
+#     role: 'admin'
+#   },
+#   {
+#     id: 'cf4f5b2b-6c13-42ba-b6dd-53d6f5e75825',
+#     name: 'Bob Smith',
+#     email: 'bob@example.com',
+#     role: 'user'
+#   },
+#   {
+#     id: '5770c836-1608-483a-98cc-8572cc2a1390',
+#     name: 'Carol Davis',
+#     email: 'carol@example.com',
+#     role: 'guest'
+#   },
+#   {
+#     id: '2a9d405a-ea14-4ffd-990e-2db9af3c4609',
+#     name: 'Diana Prince',
+#     email: 'diana@example.com',
+#     role: 'admin'
+#   }
+# ]
+#    SQL: 
+#     SELECT id, name, email, role
+#     FROM users
+#     ORDER BY ? DESC
+#     LIMIT ?
+#     OFFSET ?
+#   
+# 4. CREATE POST:
+#     INSERT INTO posts 
+#       (id, user_id, title, content)
+#     VALUES (
+#       'df1e5a50-0ce1-4725-ad87-c121682e'/*+4 bytes*/,
+#       '2a9d405a-ea14-4ffd-990e-2db9af3c'/*+4 bytes*/,
+#       'Working with zod-tag',
+#       'This library is amazing for type'/*+10 bytes*/
+#     )
+#     RETURNING *
+#   
+#    Created post: {
+#   id: 'df1e5a50-0ce1-4725-ad87-c121682e9d9c',
+#   user_id: '2a9d405a-ea14-4ffd-990e-2db9af3c4609',
+#   title: 'Working with zod-tag',
+#   content: 'This library is amazing for type-safe SQL!',
+#   created_at: '2026-04-27 04:48:00'
+# }
+# 5. FIND POSTS BY USER:
+#     SELECT * FROM posts
+#     WHERE user_id = 'd577d021-1d38-4769-a27a-3a3a03d3'/*+4 bytes*/
+#     ORDER BY 'created_at' DESC
+#   
+#    Posts: [
+#   {
+#     id: 'edc9bc8b-5f0c-4b95-8d77-7e629c918755',
+#     user_id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
+#     title: 'First Post',
+#     content: 'Hello world!',
+#     created_at: '2026-04-27 04:48:00'
+#   },
+#   {
+#     id: 'c25303ab-f869-424a-bd2f-2a0629e8ef91',
+#     user_id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
+#     title: 'Second Post',
+#     content: 'Zod is awesome',
+#     created_at: '2026-04-27 04:48:00'
+#   }
+# ]
+# 6. UPDATE USER:
+#     UPDATE users
+#     SET 
+#       
+#       
+#       role = COALESCE('admin', role),
+#       updated_at = CURRENT_TIMESTAMP
+#     WHERE id = 'cf4f5b2b-6c13-42ba-b6dd-53d6f5e7'/*+4 bytes*/
+#     RETURNING *
+#   
+#    Updated user: {
+#   id: 'cf4f5b2b-6c13-42ba-b6dd-53d6f5e75825',
+#   name: 'Bob Smith',
+#   email: 'bob@example.com',
+#   role: 'admin',
+#   created_at: '2026-04-27 04:48:00',
+#   updated_at: '2026-04-27 04:48:00'
+# }
+# 7. SEARCH USERS (name contains "a", role = admin):
+#     SELECT * FROM users
+#     WHERE 1=1
+#     AND name LIKE '%a%'
+#     
+#     AND role = 'admin'
+#     ORDER BY 'name' ASC
+#     LIMIT 5.0
+#   
+#    Search results: [
+#   {
+#     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
+#     name: 'Alice Johnson',
+#     email: 'alice@example.com',
+#     role: 'admin',
+#     created_at: '2026-04-27 04:48:00',
+#     updated_at: '2026-04-27 04:48:00'
+#   },
+#   {
+#     id: '2a9d405a-ea14-4ffd-990e-2db9af3c4609',
+#     name: 'Diana Prince',
+#     email: 'diana@example.com',
+#     role: 'admin',
+#     created_at: '2026-04-27 04:48:00',
+#     updated_at: '2026-04-27 04:48:00'
+#   }
+# ]
+#    SQL: 
+#     SELECT * FROM users
+#     WHERE 1=1
+#     AND name LIKE ?
+#     
+#     AND role = ?
+#     ORDER BY ? ASC
+#     LIMIT ?
+#   
+#    Args: [ '%a%', 'admin', 'name', 5 ]
+# 8. BATCH GET USERS:
+#     SELECT * FROM users
+#     WHERE id IN ('d577d021-1d38-4769-a27a-3a3a03d3'/*+4 bytes*/, 'cf4f5b2b-6c13-42ba-b6dd-53d6f5e7'/*+4 bytes*/, '5770c836-1608-483a-98cc-8572cc2a'/*+4 bytes*/)
+#   
+#    Batch results: [
+#   {
+#     id: '5770c836-1608-483a-98cc-8572cc2a1390',
+#     name: 'Carol Davis',
+#     email: 'carol@example.com',
+#     role: 'guest',
+#     created_at: '2026-04-27 04:48:00',
+#     updated_at: '2026-04-27 04:48:00'
+#   },
+#   {
+#     id: 'cf4f5b2b-6c13-42ba-b6dd-53d6f5e75825',
+#     name: 'Bob Smith',
+#     email: 'bob@example.com',
+#     role: 'admin',
+#     created_at: '2026-04-27 04:48:00',
+#     updated_at: '2026-04-27 04:48:00'
+#   },
+#   {
+#     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
+#     name: 'Alice Johnson',
+#     email: 'alice@example.com',
+#     role: 'admin',
+#     created_at: '2026-04-27 04:48:00',
+#     updated_at: '2026-04-27 04:48:00'
+#   }
+# ]
+#    SQL: 
+#     SELECT * FROM users
+#     WHERE id IN (?, ?, ?)
+#   
+#    Args: [
+#   'd577d021-1d38-4769-a27a-3a3a03d3425c',
+#   'cf4f5b2b-6c13-42ba-b6dd-53d6f5e75825',
+#   '5770c836-1608-483a-98cc-8572cc2a1390'
+# ]
+# 9. USER WITH POSTS (JOIN):
+#     SELECT 
+#       u.id,
+#       u.name,
+#       u.email,
+#       u.role,
+#       p.id as post_id,
+#       p.title,
+#       p.content,
+#       p.created_at as post_created_at
+#     FROM users u
+#     LEFT JOIN posts p ON u.id = p.user_id
+#     WHERE u.id = 'd577d021-1d38-4769-a27a-3a3a03d3'/*+4 bytes*/
+#     ORDER BY p.created_at DESC
+#   
+#    User with posts: [
+#   {
+#     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
+#     name: 'Alice Johnson',
+#     email: 'alice@example.com',
+#     role: 'admin',
+#     post_id: 'edc9bc8b-5f0c-4b95-8d77-7e629c918755',
+#     title: 'First Post',
+#     content: 'Hello world!',
+#     post_created_at: '2026-04-27 04:48:00'
+#   },
+#   {
+#     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
+#     name: 'Alice Johnson',
+#     email: 'alice@example.com',
+#     role: 'admin',
+#     post_id: 'c25303ab-f869-424a-bd2f-2a0629e8ef91',
+#     title: 'Second Post',
+#     content: 'Zod is awesome',
+#     post_created_at: '2026-04-27 04:48:00'
+#   }
+# ]
+#    SQL: 
+#     SELECT 
+#       u.id,
+#       u.name,
+#       u.email,
+#       u.role,
+#       p.id as post_id,
+#       p.title,
+#       p.content,
+#       p.created_at as post_created_at
+#     FROM users u
+#     LEFT JOIN posts p ON u.id = p.user_id
+#     WHERE u.id = ?
+#     ORDER BY p.created_at DESC
+#   
+# 10. DELETE USER:
+#     DELETE FROM users
+#     WHERE id = '2a9d405a-ea14-4ffd-990e-2db9af3c'/*+4 bytes*/
+#     RETURNING id
+#   
+#    Deleted user ID: { changes: 1, lastInsertRowid: 4 }
+# 11. ERROR HANDLING (invalid email):
+#    ✓ Caught validation error: root-schema(object)[-1] > [
+#   {
+#     "origin": "string",
+#     "code": "invalid_format",
+#     "format": "email",
+#     "pattern": "/^(?!\\\\.)(?!.*\\\\.\\\\.)([A-Za-z0-9_'+\\\\-\\\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\\\-]*\\\\.)+[A-Za-z]{2,}$/",
+#     "path": [
+#       "email"
+#     ],
+#     "message": "Invalid email address"
+#   }
+# ]
+# 12. QUERY INSPECTION:
+#    Raw SQL (with ?): 
+#     SELECT * FROM users
+#     WHERE id = ?
+#   
+#    Debug SQL (with $n): 
+#     SELECT * FROM users
+#     WHERE id = $0
+#   
+#    Parameters: [ 'd577d021-1d38-4769-a27a-3a3a03d3425c' ]
+# ═══════════════════════════════════════════
+#   ZOD-TAG CLI DASHBOARD DEMO
+#   Prompt Configs (SQL) + Prompt Rendering
+# ═══════════════════════════════════════════
+# ─── Saving Prompt Configurations ───
+# ✓ Config "quick-security-scan" saved: {
+#   id: '808d9821-5a1d-40e3-ab69-6f728ff046b3',
+#   name: 'quick-security-scan',
+#   persona: 'pedantic-reviewer',
+#   format: 'checklist',
+#   severity: 'strict',
+#   focus_areas: 'security,error-handling',
+#   created_at: '2026-04-27 04:48:00'
+# }
+# ✓ Config "mentor-code-review" saved: {
+#   id: '99c892a5-7a10-4b0d-b5eb-25874ab25973',
+#   name: 'mentor-code-review',
+#   persona: 'mentor',
+#   format: 'bullets',
+#   severity: 'gentle',
+#   focus_areas: 'readability,performance,architecture',
+#   created_at: '2026-04-27 04:48:00'
+# }
+# ✓ Config "architecture-audit" saved: {
+#   id: '5bcb1ad5-3eaf-4875-92dc-32b4ca7d84c7',
+#   name: 'architecture-audit',
+#   persona: 'senior-dev',
+#   format: 'diff',
+#   severity: 'strict',
+#   focus_areas: 'architecture,performance,testing',
+#   created_at: '2026-04-27 04:48:00'
+# }
+# ─── Executing Code Reviews ───
+# preparing... {
+#   sql: '\\n' +
+#     '    INSERT INTO prompt_executions (id, config_id, language, code_snippet, rendered_prompt)\\n' +
+#     '    VALUES (\\n' +
+#     '        ?,\\n' +
+#     '        ?,\\n' +
+#     '        ?,\\n' +
+#     '        ?,\\n' +
+#     '        ?\\n' +
+#     '    )\\n' +
+#     '    ',
+#   args: [
+#     'f5af811f-45f8-49b4-8a0f-4f9f05ce6728',
+#     '808d9821-5a1d-40e3-ab69-6f728ff046b3',
+#     'Python',
+#     'def process_payment(user_input):\\n' +
+#       '    query = "SELECT * FROM users WHERE id = " + user_input\\n' +
+#       '    db.execute(query)\\n' +
+#       '    process_order()',
+#     '\\n' +
+#       '[System]\\n' +
+#       'You are an automated code review assistant. Follow the instructions below exactly.\\n' +
+#       '\\n' +
+#       '\\n' +
+#       'Act as a strictly pedantic reviewer who flags every deviation from best practices, no matter how minor. Include references to style guides.\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '[Output Format]: Output your review as a markdown checklist that can be ticked off. Each item should start with "- [ ]".\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '[Severity Level]: STRICT. Flag all issues that could lead to bugs, performance problems, or maintainability concerns. Include explanations for each finding.\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '[Focus Areas]: security, error-handling\\n' +
+#       'Only comment on issues related to these domains unless a critical security vulnerability or bug is found outside them.\\n' +
+#       '\\n' +
+#       '\\n' +
+#       'The following Python code was submitted for review.\\n' +
+#       'Provide actionable, constructive feedback following the constraints above.\\n' +
+#       '\\n' +
+#       '---\\n' +
+#       '[Code to Review]\\n' +
+#       'def process_payment(user_input):\\n' +
+#       '    query = "SELECT * FROM users WHERE id = " + user_input\\n' +
+#       '    db.execute(query)\\n' +
+#       '    process_order()\\n' +
+#       '---\\n'
+#   ]
+# }
+# Review 1 (quick-security-scan):
+#   Config: quick-security-scan
+#   Parameterized values: [
+#   'Act as a strictly pedantic reviewer who flags every deviation from best practices, no matter how minor. Include references to style guides.',
+#   '\\n' +
+#     '[Output Format]: Output your review as a markdown checklist that can be ticked off. Each item should start with "- [ ]".\\n',
+#   '[Severity Level]: STRICT. Flag all issues that could lead to bugs, performance problems, or maintainability concerns. Include explanations for each finding.\\n',
+#   'security',
+#   'error-handling',
+#   'Python',
+#   'def process_payment(user_input):\\n' +
+#     '    query = "SELECT * FROM users WHERE id = " + user_input\\n' +
+#     '    db.execute(query)\\n' +
+#     '    process_order()'
+# ]
+#   SQL placeholders preview: 
+# [System]
+# You are an automated code review assistant. Follow the instructions below exactly.
+# $0
+# $1
+# $2
+# [Focus Areas]: $3, $4
+# Only comment on is...
+# preparing... {
+#   sql: '\\n' +
+#     '    INSERT INTO prompt_executions (id, config_id, language, code_snippet, rendered_prompt)\\n' +
+#     '    VALUES (\\n' +
+#     '        ?,\\n' +
+#     '        ?,\\n' +
+#     '        ?,\\n' +
+#     '        ?,\\n' +
+#     '        ?\\n' +
+#     '    )\\n' +
+#     '    ',
+#   args: [
+#     '8fdb5876-975e-47f2-9187-dee9e880737a',
+#     '99c892a5-7a10-4b0d-b5eb-25874ab25973',
+#     'TypeScript',
+#     'function add(a, b) {\\n    return a + b;\\n}',
+#     '\\n' +
+#       '[System]\\n' +
+#       'You are an automated code review assistant. Follow the instructions below exactly.\\n' +
+#       '\\n' +
+#       '\\n' +
+#       'Act as a supportive coding mentor who explains the *why* behind each suggestion. Prioritize teaching over criticizing.\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '[Output Format]: Output your review as a bulleted list grouped by severity (Critical, Warning, Suggestion).\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '[Severity Level]: GENTLE. Focus only on impactful issues (bugs, security, major performance). Prefer positive reinforcement. Skip cosmetic feedback entirely.\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '\\n' +
+#       '[Focus Areas]: readability, performance, architecture\\n' +
+#       'Only comment on issues related to these domains unless a critical security vulnerability or bug is found outside them.\\n' +
+#       '\\n' +
+#       '\\n' +
+#       'The following TypeScript code was submitted for review.\\n' +
+#       'Provide actionable, constructive feedback following the constraints above.\\n' +
+#       '\\n' +
+#       '---\\n' +
+#       '[Code to Review]\\n' +
+#       'function add(a, b) {\\n' +
+#       '    return a + b;\\n' +
+#       '}\\n' +
+#       '---\\n'
+#   ]
+# }
+# Review 2 (mentor-code-review):
+#   Config: mentor-code-review
+#   Full rendered prompt:
+# [System]
+# You are an automated code review assistant. Follow the instructions below exactly.
+# Act as a supportive coding mentor who explains the *why* behind each suggestion. Prioritize teaching over criticizing.
+# [Output Format]: Output your review as a bulleted list grouped by severity (Critical, Warning, Suggestion).
+# [Severity Level]: GENTLE. Focus only on impactful issues (bugs, security, major performance). Prefer positive reinforcement. Skip cosmetic feedback entirely.
+# [Focus Areas]: readability, performance, architecture
+# Only comment on issues related to these domains unless a critical security vulnerability or bug is found outside them.
+# The following TypeScript code was submitted for review.
+# Provide actionable, constructive feedback following the constraints above.
+# ---
+# [Code to Review]
+# function add(a, b) {
+#     return a + b;
+# }
+# ---
+# ─── Structure vs Values Demonstration ───
+# Strings (STRUCTURE - never contains user input):
+#   [0]: "\\n[System]\\nYou are an automated code review assistant. Follow the instructions be..."
+#   [1]: "\\n\\n\\n"
+#   [2]: "\\n\\n\\n"
+#   [3]: "\\n\\n\\n[Focus Areas]: "
+#   [4]: "\\nOnly comment on issues related to these domains unless a critical security vuln..."
+#   [5]: " code was submitted for review.\\nProvide actionable, constructive feedback follow..."
+#   [6]: "\\n---\\n"
+# Values (PARAMETERIZED - user input is here):
+#   [0]: "Act as a supportive coding mentor who explains the *why* behind each suggestion. Prioritize teaching over criticizing."
+#   [1]: "\\n[Output Format]: Output your review as a bulleted list grouped by severity (Critical, Warning, Suggestion).\\n"
+#   [2]: "[Severity Level]: GENTLE. Focus only on impactful issues (bugs, security, major performance). Prefer positive reinforcement. Skip cosmetic feedback entirely.\\n"
+#   [3]: "readability"
+#   [4]: "Rust"
+#   [5]: "fn main() { println!(\\"hello\\"); }"
+# ─── Execution History ───
+# History for "quick-security-scan" (1 entries):
+#   1. [2026-04-27 04:48:00] Python - def process_payment(user_input):
+#     query = "SELECT * FROM ...
+# ═══════════════════════════════════════════
+#   Key Takeaways:
+#   1. Prompt blocks are RENDERABLES → merged as STRUCTURE
+#   2. language/code are VALUES → always parameterized
+#   3. SQL schema and prompt schema share zod-tag patterns
+#   4. Config persistence + rendering = two domains, one library
+# ═══════════════════════════════════════════
+# ✓ TypeScript validates FullPromptParams at compile time
+#   Required fields: language, code, persona, format, severity, focusAreas
+# ========== SQL Query Examples ==========
+# 1. GET USER BY ID:
+#    Query: 
+# SELECT id, name, email, created_at
+# FROM users
+# WHERE id = $0
+#    Values: [ '550e8400-e29b-41d4-a716-446655440000' ]
+# 2. CREATE USER:
+#    Query: 
+# INSERT INTO users (name, email, role)
+# VALUES ($0, $1, $2)
+# RETURNING id, created_at
+#    Values: [ 'Alice Johnson', 'alice@example.com', 'user' ]
+# 3. UPDATE USER EMAIL:
+#    Query: 
+# UPDATE users
+# SET email = $0, updated_at = NOW()
+# WHERE id = $1
+# RETURNING id, email, updated_at
+#    Values: [ 'newemail@example.com', '550e8400-e29b-41d4-a716-446655440000' ]
+# 4. LIST USERS BY ROLE:
+#    Query: 
+# SELECT id, name, email, role, created_at
+# FROM users
+# WHERE role = $0
+# ORDER BY created_at DESC
+# LIMIT $1
+#    Values: [ 'admin', 100 ]
+# 5. SELECT USER COLUMNS:
+#    Query: 
+# SELECT id, name, email
+# FROM users
+# WHERE id = $0
+#    Values: [ '550e8400-e29b-41d4-a716-446655440000' ]
+# 6. SORT USERS (unsafe validated identifiers):
+#    Query: 
+# SELECT id, name, email, created_at
+# FROM users
+# ORDER BY created_at DESC
+# LIMIT 50
+#    Values: []
+# 7. UPSERT USER:
+#    Query: 
+# INSERT INTO users (email, name, role)
+# VALUES ($0, $1, $2)
+# ON CONFLICT (email)
+# DO UPDATE SET
+#     name = EXCLUDED.name,
+#     role = EXCLUDED.role,
+#     updated_at = NOW()
+# RETURNING id, email, created_at, updated_at
+#    Values: [ 'bob@example.com', 'Bob Smith', 'user' ]
+# 8. BATCH GET USERS:
+#    Query: 
+# SELECT id, name, email, role
+# FROM users
+# WHERE id = ANY(
+#   $0, $1
+# )
+# ORDER BY created_at DESC
+#    Values: [
+#   '550e8400-e29b-41d4-a716-446655440000',
+#   '660e8400-e29b-41d4-a716-446655440000'
+# ]
+# ========== VALIDATION EXAMPLES ==========
+# ✓ Valid user creation renders successfully
+# ✓ Invalid email caught at validation time
+# ✓ Invalid role caught at validation time
+# ✓ Empty name caught at validation time
+# ========== KEY TAKEAWAYS ==========
+# ✓ All values are parameterized ($1, $2, etc.)
+# ✓ All identifiers validated before tz.unsafe()
+# ✓ Zod schemas provide runtime validation
+# ✓ TypeScript infers exact parameter types
+# ✓ SQL injection is prevented by parameterization
+# ═══════════════════════════════════════
+#   STRESS: COMPOSITION EDGE CASES
+# ═══════════════════════════════════════
+# ─── 2A: Schema Conflicts ───
+#   ✓ conflicting schemas: string vs number for same key
+#   ✓ same key + same schema: composes without conflict
+#   ✓ overlapping schemas: one has extra optional field
+#   ✓ scoped + unscoped: kargs merge correctly
+#   ✓ defaults propagate through nested composition
+# ─── 2B: Deep Nesting ───
+#   ✓ 5 levels of conditional template nesting
+#   ✓ conditional branch changes kargs requirements
+# ─── 2C: Output Format Edges ───
+#   ✓ single value with no surrounding strings
+#   ✓ leading value — template starts with interpolation
+#   ✓ adjacent values with no string between them
+#   ✓ static template: no values, single string
+#   ✓ empty template: zt.t``
+#   ✓ zt.$n with static template (no values)
+#   ✓ zt.$n with multiple values
+#   ✓ zt.atIndex with multiple values
+#   ✓ zt.debug preserves full output
+# ─── 2D: Bind + Map Edges ───
+#   ✓ zt.bind: fully satisfied, renders with no parent kargs
+#   ✓ zt.map: single element with separator
+#   ✓ zt.map: two elements with separator
+# ─── 2E: Performance ───
+#     Rendered 500 items in 49.4ms
+#   ✓ performance: 500 items via zt.map with separator
+#   ✓ state isolation: repeated renders with different data
+# ═══════════════════════════════════════
+#   21 passed, 0 failed
+# ═══════════════════════════════════════
+# ═══════════════════════════════════
+#   zt.match — Pattern Matching
+# ═══════════════════════════════════
+#     INSERT INTO users (name, email) VALUES (Alice, alice@test.com)
+#   ✓ create renders INSERT
+#   ✓ update renders UPDATE
+#   ✓ delete renders DELETE
+#   ✓ calc: add with a + b
+#   ✓ calc: sub with a - b
+#   ✓ calc: clamp restricts value
+#   ✓ calc: neg flips sign
+#   ✓ calc: clamp at lower bound
+#   ✓ rejects invalid discriminator value
+#   ✓ rejects missing required kargs for matched branch
+#   ✓ nested match: pending status
+#   ✓ nested match: paid with cash
+#   ✓ nested match: paid with card (last4 via loose schema)
+#   ✓ nested match: refunded
+#   ✓ single branch works like a pass-through
+#   ✓ extra props from other branches are allowed (loose schema)
+#   ✓ values are never concatenated into structure strings
+# ═══════════════════════════════════
+#   17 passed, 0 failed
+# ═══════════════════════════════════
+# Subtest: slop tests - does the slop-test files run?
+    # Subtest: typed-tag.type-test.ts
+    ok 1 - typed-tag.type-test.ts
+      ---
+      duration_ms: 85.851
+      type: 'test'
+      ...
+    # Subtest: user-card.type-test.ts
+    ok 2 - user-card.type-test.ts
+      ---
+      duration_ms: 34.5771
+      type: 'test'
+      ...
+    # Subtest: conditional-validation-boundary.slop-test.ts
+    ok 3 - conditional-validation-boundary.slop-test.ts
+      ---
+      duration_ms: 25.6622
+      type: 'test'
+      ...
+    # Subtest: email.slop-test.ts
+    ok 4 - email.slop-test.ts
+      ---
+      duration_ms: 13.3212
+      type: 'test'
+      ...
+    # Subtest: feature-flags.slop-test.ts
+    ok 5 - feature-flags.slop-test.ts
+      ---
+      duration_ms: 22.2405
+      type: 'test'
+      ...
+    # Subtest: functional-composition.slop-test.ts
+    ok 6 - functional-composition.slop-test.ts
+      ---
+      duration_ms: 17.8682
+      type: 'test'
+      ...
+    # Subtest: graphql.slop-test.ts
+    ok 7 - graphql.slop-test.ts
+      ---
+      duration_ms: 18.995
+      type: 'test'
+      ...
+    # Subtest: npc-dialog-state-machine.slop-test.ts
+    ok 8 - npc-dialog-state-machine.slop-test.ts
+      ---
+      duration_ms: 67.7355
+      type: 'test'
+      ...
+    # Subtest: pattern-matching-function-definitions.slop-test.ts
+    ok 9 - pattern-matching-function-definitions.slop-test.ts
+      ---
+      duration_ms: 21.589
+      type: 'test'
+      ...
+    # Subtest: prompt-2.slop-test.ts
+    ok 10 - prompt-2.slop-test.ts
+      ---
+      duration_ms: 4.8881
+      type: 'test'
+      ...
+    # Subtest: prompt.slop-test.ts
+    ok 11 - prompt.slop-test.ts
+      ---
+      duration_ms: 4.0804
+      type: 'test'
+      ...
+    # Subtest: repo.slop-test.ts
+    ok 12 - repo.slop-test.ts
+      ---
+      duration_ms: 42.876
+      type: 'test'
+      ...
+    # Subtest: sql-prompt.slop-test.ts
+    ok 13 - sql-prompt.slop-test.ts
+      ---
+      duration_ms: 15.9558
+      type: 'test'
+      ...
+    # Subtest: sql.slop-test.ts
+    ok 14 - sql.slop-test.ts
+      ---
+      duration_ms: 14.0911
+      type: 'test'
+      ...
+    # Subtest: stress-composition-edge-cases.slop-test.ts
+    ok 15 - stress-composition-edge-cases.slop-test.ts
+      ---
+      duration_ms: 72.1562
+      type: 'test'
+      ...
+    # Subtest: zt-match.slop-test.ts
+    ok 16 - zt-match.slop-test.ts
+      ---
+      duration_ms: 19.0557
+      type: 'test'
+      ...
+    # Subtest: cli-test.ts
+    ok 17 - cli-test.ts
+      ---
+      duration_ms: 7.353
+      type: 'test'
+      ...
+    1..17
+ok 2 - slop tests - does the slop-test files run?
+  ---
+  duration_ms: 490.2202
+  type: 'suite'
+  ...
+# Media of 10.862988333333332 ms to render each frame of the cli test
+# Subtest: zt - Zod Tag
+    # Subtest: static template
+        # Subtest: should render a template without interpolation values
+        ok 1 - should render a template without interpolation values
+          ---
+          duration_ms: 1.8134
+          type: 'test'
+          ...
+        # Subtest: should render a template with static interpolation values
+        ok 2 - should render a template with static interpolation values
+          ---
+          duration_ms: 0.2894
+          type: 'test'
+          ...
+        # Subtest: should render a template with transformed interpolation values
+        ok 3 - should render a template with transformed interpolation values
+          ---
+          duration_ms: 0.2485
+          type: 'test'
+          ...
+        1..3
+    ok 1 - static template
+      ---
+      duration_ms: 3.2336
+      type: 'suite'
+      ...
+    # Subtest: keyword argument templates
+        # Subtest: should allow inline object/codec schemas as karg params
+        ok 1 - should allow inline object/codec schemas as karg params
+          ---
+          duration_ms: 3.4767
+          type: 'test'
+          ...
+        # Subtest: should validate against zod shape definition
+        ok 2 - should validate against zod shape definition
+          ---
+          duration_ms: 2.4716
+          type: 'test'
+          ...
+        # Subtest: should merge keyword arguments when karg are present both at shape definition and inline arg
+        ok 3 - should merge keyword arguments when karg are present both at shape definition and inline arg
+          ---
+          duration_ms: 1.7262
+          type: 'test'
+          ...
+        1..3
+    ok 2 - keyword argument templates
+      ---
+      duration_ms: 7.8582
+      type: 'suite'
+      ...
+    # Subtest: nested templates
+        # Subtest: should merge nested templates
+        ok 1 - should merge nested templates
+          ---
+          duration_ms: 3.3985
+          type: 'test'
+          ...
+        1..1
+    ok 3 - nested templates
+      ---
+      duration_ms: 3.5078
+      type: 'suite'
+      ...
+    # Subtest: utilities
+        # Subtest: zt.unsafe utility dangerously sets a static string content inside the template
+        ok 1 - zt.unsafe utility dangerously sets a static string content inside the template
+          ---
+          duration_ms: 0.2154
+          type: 'test'
+          ...
+        # Subtest: zt.p utility creates a named param and allows conditional rendering
+        ok 2 - zt.p utility creates a named param and allows conditional rendering
+          ---
+          duration_ms: 0.3023
+          type: 'test'
+          ...
+        # Subtest: format utilities
+            # Subtest: zt.$n utility formats interpolation as dolar index placeholders
+            ok 1 - zt.$n utility formats interpolation as dolar index placeholders
+              ---
+              duration_ms: 0.3447
+              type: 'test'
+              ...
+            # Subtest: zt.atIndex utility formats interpolation as @ index placeholders
+            ok 2 - zt.atIndex utility formats interpolation as @ index placeholders
+              ---
+              duration_ms: 0.304
+              type: 'test'
+              ...
+            # Subtest: zt.debug utility formats as String.raw would
+            ok 3 - zt.debug utility formats as String.raw would
+              ---
+              duration_ms: 0.2288
+              type: 'test'
+              ...
+            1..3
+        ok 3 - format utilities
+          ---
+          duration_ms: 1.0296
+          type: 'suite'
+          ...
+        1..3
+    ok 4 - utilities
+      ---
+      duration_ms: 1.7962
+      type: 'suite'
+      ...
+    1..4
+ok 3 - zt - Zod Tag
+  ---
+  duration_ms: 17.082
+  type: 'suite'
+  ...
+1..3
+# tests 30
+# suites 9
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1960.1955
+# start of coverage report
+# -------------------------------------------------------------------------------------------------------------------------------------------
+# file                                                  | line % | branch % | funcs % | uncovered lines
+# -------------------------------------------------------------------------------------------------------------------------------------------
+# dist                                                  |        |          |         | 
+#  main.js                                              |  93.89 |    91.37 |   96.55 | 26-27 141-146 189-194 206-213 327-332
+# src                                                   |        |          |         | 
+#  __tests__                                            |        |          |         | 
+#   cli                                                 |        |          |         | 
+#    cli-test.ts                                        |  95.93 |    92.59 |   81.48 | 74-76 115-116
+#    repo.test.ts                                       | 100.00 |    94.44 |  100.00 | 
+#   slop-samples.test.ts                                | 100.00 |   100.00 |  100.00 | 
+#   slop                                                |        |          |         | 
+#    conditional-validation-boundary.slop-test.ts       |  98.89 |    84.62 |  100.00 | 111-113
+#    email.slop-test.ts                                 |  98.26 |    88.00 |  100.00 | 170-172
+#    feature-flags.slop-test.ts                         | 100.00 |    89.66 |  100.00 | 
+#    functional-composition.slop-test.ts                | 100.00 |    94.44 |   93.75 | 
+#    graphql.slop-test.ts                               |  99.32 |    80.00 |   77.78 | 137-138 465-466
+#    npc-dialog-state-machine.slop-test.ts              |  98.50 |    85.88 |   96.81 | 68 144-146 341-342 358-364 427-428 610-611 1348-1352
+#    pattern-matching-function-definitions.slop-test.ts | 100.00 |    64.38 |  100.00 | 
+#    prompt-2.slop-test.ts                              |  98.44 |    77.78 |  100.00 | 15 17
+#    prompt.slop-test.ts                                |  97.37 |    62.50 |  100.00 | 15 19
+#    repo.slop-test.ts                                  | 100.00 |    85.19 |   97.83 | 
+#    sql-prompt.slop-test.ts                            |  98.65 |    93.48 |   97.44 | 58 326-328 372-374
+#    sql.slop-test.ts                                   |  99.03 |    95.65 |   73.08 | 155-156 363-364
+#    stress-composition-edge-cases.slop-test.ts         | 100.00 |    91.43 |   96.67 | 
+#    zt-match.slop-test.ts                              |  99.53 |    58.93 |  100.00 | 86
+#   typed-tag.test.ts                                   | 100.00 |   100.00 |   97.14 | 
+#   typed-tag.type-test.ts                              | 100.00 |   100.00 |   71.43 | 
+#   user-card.type-test.ts                              | 100.00 |    92.86 |  100.00 | 
+# -------------------------------------------------------------------------------------------------------------------------------------------
+# all files                                             |  98.80 |    85.73 |   95.38 | 
+# -------------------------------------------------------------------------------------------------------------------------------------------
+# end of coverage report

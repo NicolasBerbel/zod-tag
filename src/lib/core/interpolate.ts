@@ -4,8 +4,8 @@ import {
     type IZodTagRenderable,
     type IRenderable,
     isRenderable,
-    scopedKargs,
 } from "./renderable"
+import { scopedKargs } from "./scope";
 import {
     type InterpolationOperation,
     InterpolationError,
@@ -13,14 +13,9 @@ import {
 import { spliceInterpolation } from "./splice";
 
 /**
- * Transforms the interpolation strings and values:
- * - zod schemas that expects a object as input values are encoded against the full karg object
- * - nested renderables are merged into the parent interpolation
- * - selector functions are called with karg as argument and the return value is interpolated again 
- * 
- * @param kargs Keyword arguments object
- * @param strs Interpolation strings array
- * @param vals Interpolation values tuple
+ * Collapses with renderable interpolation strings and values with given kargs:
+ * @param renderable target renderable
+ * @param karg Keyword arguments object
  */
 export function interpolate<K extends KargsType>(renderable: IRenderable<K, any>, karg: K) {
     const { strs, vals, schema } = renderable as any as IZodTagRenderable;

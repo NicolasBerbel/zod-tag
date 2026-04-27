@@ -1,0 +1,37 @@
+import z from "zod";
+import { type IRenderableKargs, type IRenderableOutput, type IRenderable } from "../core/renderable";
+import { typedTag } from "../typed-tag";
+import { extractShape } from "../core/schema";
+
+export function patternMatch<
+    Discriminator extends string,
+    Cases extends Record<string, IRenderable<any, any>>,
+>(
+    discriminator: Discriminator,
+    cases: Cases
+) {
+    const unionSchemas = Object.entries(cases).map(([key, renderable]) => {
+        const shape = extractShape(renderable) ?? {}
+        return z.object({ ...shape, [discriminator]: z.literal(key) })
+    })
+
+    const union = z.discriminatedUnion(discriminator, unionSchemas as any)
+        .transform((e) => cases[e[discriminator]])
+
+    return typedTag`${(e: any) => union.decode(e)}` as (
+        IRenderable<
+            {
+                [K in keyof Cases]: {
+                    [P in keyof IRenderableKargs<Cases[K]> | Discriminator]:
+                    P extends keyof IRenderableKargs<Cases[K]>
+                    ? IRenderableKargs<Cases[K]>[P]
+                    : (
+                        P extends Discriminator ? K : never
+                    )
+                }
+            }[keyof Cases],
+            IRenderableOutput<Cases[keyof Cases]>
+        >
+    )
+}
+

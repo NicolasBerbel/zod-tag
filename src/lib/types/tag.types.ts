@@ -84,7 +84,7 @@ export type MergeOutput<T> =
 export type ExtractOutput<T> = MergeOutput<T>
 
 /** Tag primitive type */
-export type TagPrimitive = string | number | boolean | null;
+export type TagPrimitive = string | number | boolean | null | undefined | any[] | Record<string, any>;
 
 /** Kargs or Output values */
 export type TagChildren = IRenderable<any, any> | z.ZodType
