@@ -120,9 +120,32 @@ class UserRepository extends Repository {
 
 [Slop Test - persona/format/severity block composition from prompt-2.slop-test.ts](./src/__tests__/slop/prompt-2.slop-test.ts)
 
+
 ### Pattern-Matched Function Dispatch
 
 [Slop Test - math calculator from pattern-matching-function-definitions.slop-test.ts](./src/__tests__/slop/pattern-matching-function-definitions.slop-test.ts)
+
+```ts
+
+// ============================================================================
+// 1. PURE MATH — stateless, every branch returns a single number value
+// ============================================================================
+
+const math = zt.match('fn', {
+    add: zt.z({ a: z.number(), b: z.number() })`${e => e.a + e.b}`,
+    sub: zt.z({ a: z.number(), b: z.number() })`${e => e.a - e.b}`,
+    mul: zt.z({ a: z.number(), b: z.number() })`${e => e.a * e.b}`,
+    div: zt.z({ a: z.number(), b: z.number().min(Number.EPSILON) })`${e => e.a / e.b}`,
+    pow: zt.z({ base: z.number(), exp: z.number().int() })`${e => Math.pow(e.base, e.exp)}`,
+    clamp: zt.z({ val: z.number(), min: z.number(), max: z.number() })`${e => Math.max(e.min, Math.min(e.max, e.val))}`,
+    neg: zt.z({ x: z.number() })`${e => -e.x}`,
+    abs: zt.z({ x: z.number() })`${e => Math.abs(e.x)}`,
+    sqrt: zt.z({ x: z.number().min(0) })`${e => Math.sqrt(e.x)}`,
+})
+
+type MathFn = IRenderableKargs<typeof math>
+
+```
 
 ### NPC Dialog State Machine
 
@@ -167,6 +190,8 @@ This means you **see the structure/value boundary in your code**. Types enforce 
 | `zt.match(disc, cases)` | Branch on validated discriminator | "Choose the right validated fragment" |
 | `zt.empty` | Empty validated output | "Nothing to validate here" |
 | `zt.unsafe(schema, v)` | Trust a value after checking |"I've verified this is safe" |
+
+> Important: `zt.z(shape)`: the shape schema is created with a loose strategy
 
 Each of these is a mathematically well-behaved operation - they compose predictably and follow laws:
 
@@ -275,6 +300,74 @@ user.render({ firstName: 'John', lastName: 'Doe' })
 
 // Now you can interpolate raw, escape the values, derive this interpolation into other format or delegate it to other tagged template literals
 
+```
+
+```mermaid
+graph TD
+    %% Entry points
+    subgraph "Constructors"
+        zt_t["zt.t<br/>Tagged Template"]
+        zt_z["zt.z<br/>Schema Shape"]
+        zt_p["zt.p<br/>Named Parameter"]
+        zt_empty["zt.empty<br/>Identity"]
+        zt_unsafe["zt.unsafe<br/>Trusted Structure"]
+    end
+
+    %% Core Flow
+    zt_t --> IR["IRenderable<br/>(validated, composable)"]
+    zt_z --> IR
+    zt_p --> IR
+    zt_empty --> IR
+    zt_unsafe --> IR
+
+    %% Combinators
+    subgraph "Combinators"
+        zt_bind["zt.bind<br/>Partial Application"]
+        zt_map["zt.map<br/>Functor Lifting"]
+        zt_join["zt.join<br/>Monoidal Concat"]
+        zt_if["zt.if<br/>Conditional"]
+        zt_match["zt.match<br/>Pattern Match"]
+    end
+
+    IR --> zt_bind --> IR2["IRenderable<br/>(no kargs)"]
+    IR --> zt_map --> IR3["IRenderable<br/>(list → single)"]
+    IR --> zt_join --> IR3
+    IR --> zt_if --> IR4["IRenderable<br/>| zt.empty"]
+    zt_z & zt_t --> zt_match --> IR5["IRenderable<br/>(discriminated)"]
+
+    %% Format Utilities
+    subgraph "Output"
+        render[".render(kargs)"]
+        IR --> render
+        render --> tuple["[strings, ...values]"]
+
+        zt_n["zt.$n → $0, $1..."]
+        atIndex["zt.atIndex → @0, @1..."]
+        debug["zt.debug → raw string"]
+
+        tuple --> zt_n
+        tuple --> atIndex
+        tuple --> debug
+    end
+
+    %% Type Helpers
+    subgraph "Types & Guards"
+        isRenderable["isRenderable()"]
+        opaque["zt.opaque()"]
+        IR --> isRenderable
+        IR --> opaque --> IR6["IRenderable<br/>(output hidden)"]
+    end
+
+    %% Styling
+    classDef constructor fill:#1a365d,stroke:#63b3ed,color:#bee3f8
+    classDef combinator fill:#1c4532,stroke:#68d391,color:#c6f6d5
+    classDef output fill:#744210,stroke:#f6e05e,color:#fefcbf
+    classDef types fill:#553c9a,stroke:#b794f4,color:#e9d8fd
+
+    class zt_t,zt_z,zt_p,zt_empty,zt_unsafe constructor
+    class zt_bind,zt_map,zt_join,zt_if,zt_match combinator
+    class zt_n,atIndex,debug,render,tuple output
+    class isRenderable,opaque,IR6 types
 ```
 
 ## The API
@@ -763,7 +856,7 @@ graph
     zt --> zt.p
     zt -->  zt.unsafe
 
-    zt.p -- inline keyword argument definition --> schema --> ZodCodec
+    zt.p -- inline keyword argument definition --> schema --> createRenderable
     zt.p -- scoped nested template --> renderable --> createRenderable
     zt.t -- typed renderable --> typedTag -- validates nested values --> createRenderable
     zt.z -- object shape renderable --> schemaTag -- validates shape and nested values --> createRenderable
@@ -795,7 +888,7 @@ Use to declare a scoped parameter or scoped nested renderable
 
 Used to declare named parameter (keyword argument) inline/embedded into the template
 
-Returns a `ZodPipe` with `ZodObject` schema and `ZodTransform`
+Returns an `IRenderable` that wraps the schema in a single-key object and applies the optional transform.
 
 #### zt.p(name: string, template: IRenderable)
 

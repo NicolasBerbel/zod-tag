@@ -5,7 +5,13 @@ import {
     type IRenderableOutput,
 } from '../core/renderable'
 import { scopedRenderable } from "../core/scope";
+import { schemaTag } from "../schema-tag";
+import { isSchemaType } from "../core/schema";
+import { getSlotShape } from "../core/slot";
 
+/**
+ * Scoped IRenderable from IRenderable
+ */
 export function typedParam<
     P extends string,
     T extends IRenderable<any, any>
@@ -14,6 +20,9 @@ export function typedParam<
     renderable: T
 ): IRenderable<{ [K in P]: IRenderableKargs<T> }, IRenderableOutput<T>>
 
+/**
+ * Scoped IRenderable from schema
+ */
 export function typedParam<
     P extends string,
     T extends z.ZodType,
@@ -22,14 +31,20 @@ export function typedParam<
     argName: P,
     schema: T,
     decode?: (v: z.output<T>) => R,
-): z.ZodPipe<z.ZodObject<{ [K in P]: T }>, z.ZodTransform<R, z.output<T>>>;
+): IRenderable<z.input<z.ZodObject<{ [K in P]: T }>>, [R]>
 
-
+/**
+ * Scoped IRenderable from schema or IRenderable
+ */
 export function typedParam(
     scope: any,
     child: any,
-    decode: any = ((e: any) => e) as any,
+    select: any = ((e: any) => e) as any,
 ) {
-    if (child?._zod) return z.object({ [scope]: child }).transform(v => decode(v[scope]))
+    if (isSchemaType(child)) {
+        const shape = getSlotShape(child) ?? { [scope]: child }
+        return (schemaTag as any)(shape)`${(e: any) => select(e[scope])}`
+    }
+
     return scopedRenderable(child, scope);
 }

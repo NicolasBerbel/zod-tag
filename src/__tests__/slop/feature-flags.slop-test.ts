@@ -138,93 +138,93 @@ const config: ManifestConfig = {
     description: 'Feature flags for Q3 2026 release',
 
     development: {
-        envName: 'development' as const,
+        envName: 'development',
         flags: [
             {
                 featureName: 'dark-mode',
                 value: true,
                 rolloutPercentage: 100,
-                rolloutStrategy: 'instant' as const,
+                rolloutStrategy: 'instant',
             },
             {
                 featureName: 'new-checkout-flow',
                 value: true,
                 rolloutPercentage: 100,
-                rolloutStrategy: 'instant' as const,
+                rolloutStrategy: 'instant',
             },
             {
                 featureName: 'ai-recommendations',
                 value: true,
                 rolloutPercentage: 50,
-                rolloutStrategy: 'gradual' as const,
+                rolloutStrategy: 'gradual',
             },
             {
                 featureName: 'beta-analytics-dashboard',
                 value: true,
                 rolloutPercentage: 100,
-                rolloutStrategy: 'instant' as const,
+                rolloutStrategy: 'instant',
             },
         ],
     },
 
     staging: {
-        envName: 'staging' as const,
+        envName: 'staging',
         flags: [
             {
                 featureName: 'dark-mode',
                 value: true,
                 rolloutPercentage: 100,
-                rolloutStrategy: 'instant' as const,
+                rolloutStrategy: 'instant',
             },
             {
                 featureName: 'new-checkout-flow',
                 value: true,
                 rolloutPercentage: 75,
-                rolloutStrategy: 'gradual' as const,
+                rolloutStrategy: 'gradual',
             },
             {
                 featureName: 'ai-recommendations',
                 value: true,
                 rolloutPercentage: 25,
-                rolloutStrategy: 'gradual' as const,
+                rolloutStrategy: 'gradual',
             },
             {
                 featureName: 'beta-analytics-dashboard',
                 value: false,  // disabled in staging for now
                 rolloutPercentage: 0,
-                rolloutStrategy: 'instant' as const,
+                rolloutStrategy: 'instant',
             },
         ],
     },
 
     production: {
-        envName: 'production' as const,
+        envName: 'production',
         flags: [
             {
                 featureName: 'dark-mode',
                 value: true,
                 rolloutPercentage: 100,
-                rolloutStrategy: 'instant' as const,
+                rolloutStrategy: 'instant',
             },
             {
                 featureName: 'new-checkout-flow',
                 value: false,  // not yet in prod
                 rolloutPercentage: 0,
-                rolloutStrategy: 'scheduled' as const,
+                rolloutStrategy: 'scheduled',
                 scheduledAt: '2026-07-15T09:00:00Z',
             },
             {
                 featureName: 'ai-recommendations',
                 value: false,
                 rolloutPercentage: 0,
-                rolloutStrategy: 'scheduled' as const,
+                rolloutStrategy: 'scheduled',
                 scheduledAt: '2026-08-01T00:00:00Z',
             },
             {
                 featureName: 'beta-analytics-dashboard',
                 value: false,  // internal beta only
                 rolloutPercentage: 0,
-                rolloutStrategy: 'instant' as const,
+                rolloutStrategy: 'instant',
             },
         ],
     },

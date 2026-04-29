@@ -6,11 +6,16 @@ import { compile } from "./compile";
 import { withSource } from "./source";
 import { interpolate } from "./interpolate";
 import { withScope } from "./scope";
+import { createSchemaStrategies, mergeStrategies } from "./schema";
+
 
 /** Type guard for renderable instances */
 export const isRenderable = (v: unknown): v is IRenderable<any, any> => (
     typeof v === 'object' && !!v && (v as unknown as IRenderable<any, any>)[RENDERABLE_SYMBOL]
 );
+
+/** Type guard for internal renderable instances */
+export const isZTRenderable = (v: unknown): v is IZodTagRenderable<any, any> => isRenderable(v)
 
 /** Symbol for renderable instances created with `createRenderable` */
 export const RENDERABLE_SYMBOL = Symbol.for("IRenderable");
@@ -27,15 +32,17 @@ export function createRenderable<
     schema?: z.ZodType,
     scope?: string
 ) {
+    const mergeStrategy: keyof typeof mergeStrategies = 'intersect';
+    const schemaStrategy: keyof typeof createSchemaStrategies = 'loose';
     let _strs = strs.slice() as string[]
     let _vals = withScope(vals, scope);
+    let _schema = schema;
     let __compiled = false;
 
     // construct with stack
     const renderable = withSource({
         get scope() { return scope },
-        get schema() { return schema },
-        set schema(v) { schema = v },
+        get schema() { return _schema },
         get strs() { return _strs },
         get vals() { return _vals },
         get __compiled() { return __compiled }
@@ -43,7 +50,7 @@ export function createRenderable<
     renderable[RENDERABLE_SYMBOL] = true;
 
     // precompile the renderable
-    if (vals.length) [_strs, _vals] = compile(renderable);
+    if (vals.length) [_strs, _vals, _schema] = compile(renderable, { mergeStrategy, schemaStrategy });
 
     // assign interpolation
     __compiled = true;

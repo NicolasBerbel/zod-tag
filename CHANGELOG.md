@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.5] - 2026-04-29
+
+### Added
+
+- Add internal configuration for merge and schema creation strategies (open path for future configurable strict/strip/loose modes)
+- Better alignment of slot type with `isSchemaType` guard pairing with internal `isZTRenderable`.
+
+### Changed
+
+- `zt.p` for scoped schema now returns an `IRenderable` instead of a `ZodPipe`, aligning it to the funcitonal api, now it composable like any other renderable.
+- Renderable schemas are now computed at compile time and immutable after creation (no more mutable `schema` property [big win]).
+- Shape merging across nested templates uses a centralised `mergeShapes` with configurable strategy (default `intersect`).
+
+### Fixed
+
+- Minor type improvements in internal operator signatures.
+
 ## [0.0.4] - 2026-04-27
 
 ### Added

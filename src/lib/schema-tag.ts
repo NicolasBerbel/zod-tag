@@ -1,11 +1,12 @@
 import z, { core } from "zod";
 import { createRenderable } from "./core/renderable";
 import { TypedTag } from "./typed-tag";
+import { createSchema } from "./core/schema";
 
 export const schemaTag = <
     S extends core.$ZodShape,
 >(shape: S) => {
-    const schema = z.object(shape).loose();
+    const schema = createSchema(shape, "loose")
     type Schema = z.ZodObject<S>;
     type Input = z.input<Schema>
     type Output = z.output<Schema>

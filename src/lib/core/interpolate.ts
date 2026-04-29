@@ -1,9 +1,8 @@
-import z from "zod"
 import { type KargsType } from "../types/tag.types";
 import {
     type IZodTagRenderable,
     type IRenderable,
-    isRenderable,
+    isZTRenderable,
 } from "./renderable"
 import { scopedKargs } from "./scope";
 import {
@@ -11,6 +10,7 @@ import {
     InterpolationError,
 } from "./interpolation-error"
 import { spliceInterpolation } from "./splice";
+import { isSchemaType } from "./schema";
 
 /**
  * Collapses with renderable interpolation strings and values with given kargs:
@@ -46,7 +46,7 @@ export function interpolate<K extends KargsType>(renderable: IRenderable<K, any>
             while (true) {
                 value = _values[i]
 
-                if (isRenderable(value)) {
+                if (isZTRenderable(value)) {
                     /** Transform nested renderables: recursively merges inner renderables */
                     op = 'renderable'
                     if (!(value as any).__compiled) throw InterpolationError.for(new Error('uncompiled renderer violation!'), {
@@ -59,11 +59,14 @@ export function interpolate<K extends KargsType>(renderable: IRenderable<K, any>
 
                     const [_s, ..._v] = value.render(kargs)
                     spliceInterpolation(i, _strings, _values, _s, _v)
-                } else if ((value as any)?._zod) {
-                    const schema = value as z.ZodType;
+                } else if (isSchemaType(value)) {
+                    const schema = value;
                     // Object types decodes kargs
                     op = 'karg-schema'
-                    _values[i] = schema.decode(scopedKargs(value, kargs)) as any
+
+                    // TODO: maybe we should extract keys for strict mode?
+                    // const keys = Object.keys(getSlotShape(value) ?? {})
+                    _values[i] = schema.decode(scopedKargs(value, kargs))
                 } else if (typeof value === 'function') {
                     /** Transform function values: if value is a function its called with karg object to determine the actual interpolation value */
                     op = 'selector'

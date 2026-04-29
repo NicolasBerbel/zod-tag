@@ -103,29 +103,38 @@ const commandTemplate = zt.match('action', {
     update: updateUser,
     delete: deleteUser,
 })
+try {
+    // TypeScript narrows: e.action is 'create' → only name + email needed
+    console.log('CREATE:', zt.$n(commandTemplate.render({
+        action: 'create',
+        name: 'Alice',
+        email: 'alice@test.com',
+        // @ts-expect-error
+        id: ''
+        // id is NOT required here — discriminated union narrowed it away
+    })))
+} catch {
+    // expected
+}
+try {
+    console.log('UPDATE:', zt.$n(commandTemplate.render({
+        action: 'update',
+        id: '550e8400-e29b-41d4-a716-446655440000',
+        name: 'Bob',
 
-// TypeScript narrows: e.action is 'create' → only name + email needed
-console.log('CREATE:', zt.$n(commandTemplate.render({
-    action: 'create',
-    name: 'Alice',
-    email: 'alice@test.com',
-    // @ts-expect-error
-    id: ''
-    // id is NOT required here — discriminated union narrowed it away
-})))
+        // @ts-expect-error
+        email: '',
+        // email is NOT required here
+    })))
+} catch (e) {
+    // expected
+}
 
-console.log('UPDATE:', zt.$n(commandTemplate.render({
-    action: 'update',
-    id: '550e8400-e29b-41d4-a716-446655440000',
-    name: 'Bob',
-
-    // @ts-expect-error
-    email: '',
-    // email is NOT required here
-})))
-
-console.log('DELETE:', zt.$n(commandTemplate.render({
-    action: 'delete',
-    id: '550e8400-e29b-41d4-a716-446655440000',
-    // name + email NOT required
-})))
+try {
+    console.log('DELETE:', zt.$n(commandTemplate.render({
+        action: 'delete',
+        id: '550e8400-e29b-41d4-a716-446655440000',
+    })))
+} catch {
+    // expected
+}

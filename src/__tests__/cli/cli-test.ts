@@ -1,7 +1,9 @@
 import { z } from 'zod'
 import { zt } from '../../../dist/main.js'
 
-const date = zt.p('now', z.date().optional().default(() => new Date()), d => d.toLocaleString() + `${d.getMilliseconds()}`.padEnd(3, '0'))
+const date = zt.p('now', z.date().optional().default(() => new Date()), d => {
+    return d.toLocaleString() + `${d.getMilliseconds()}`.padEnd(3, '0')
+})
 
 const user = zt.t`@${zt.p('user', z.string(), d => d.toLowerCase().split(' ').join('.'))} <${zt.p('email', z.email())}>`
 
@@ -11,6 +13,11 @@ const nested1 = zt.z({ nested1: z.string().optional().default(() => crypto.rando
     ${() => 'hello from template 1'}
 `
 const nested2 = zt.z({ nested2: z.string().optional().default(() => crypto.randomUUID()) })`
+    ${(d) => {
+        // log side-effect
+        // console.log({ d })
+        return zt.empty
+    }}
     nested2 id = (${e => e.nested2})
     Nested2 template child: ${zt.p('nested1scope', zt.t`${nested1} Parent to child composition: ${'constant value'}`)}
 `

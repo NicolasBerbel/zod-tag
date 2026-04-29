@@ -49,7 +49,8 @@ export const zt = typedTag as (typeof typedTag) & {
     /**
      * Defines a named keyword argument for a inline schema or renderable
      * 
-     * Its actually just a zod object with transform for schemas
+     * For a schema, it creates a renderable that scopes the schema under the given name.
+     * For a renderable, it produces a scoped version of it.
      * 
      * @param name The keyword argument name for this schema
      * @param schemaOrRenderable the zod schema or renderable

@@ -1,5 +1,5 @@
 
-> zod-tag@0.0.4 test
+> zod-tag@0.0.5 test
 > node --test --experimental-test-coverage src/**/*.test.ts
 
 TAP version 13
@@ -8,24 +8,24 @@ TAP version 13
         # Subtest: getById
         ok 1 - getById
           ---
-          duration_ms: 5.8554
+          duration_ms: 5.5484
           type: 'test'
           ...
         1..1
     ok 1 - Users
       ---
-      duration_ms: 6.6632
+      duration_ms: 6.4193
       type: 'suite'
       ...
     1..1
 ok 1 - Repository
   ---
-  duration_ms: 7.1667
+  duration_ms: 6.9523
   type: 'suite'
   ...
 # {
 #   scope: [Getter],
-#   schema: [Getter/Setter],
+#   schema: [Getter],
 #   strs: [Getter],
 #   vals: [Getter],
 #   __compiled: [Getter],
@@ -55,18 +55,18 @@ ok 1 - Repository
 #     '\\n\\n    ---- TITLE ----\\n    \\n    A new user in the application\\n    ',
 #     '\\n\\n'
 #   ],
-#   '27/04/2026',
-#   1777265280010,
-#   27,
+#   '29/04/2026',
+#   1777479390869,
+#   29,
 #   'John Doe',
 #   19,
 #   'aaa',
 #   'Content of val2',
 #   'Say hello!'
 # ] 
-#     Date: 27/04/2026
-#     Timestamp: 1777265280010
-#     Date: 27
+#     Date: 29/04/2026
+#     Timestamp: 1777479390869
+#     Date: 29
 #     ----- USER CARD -----
 #     
 #     Hello: John Doe
@@ -77,10 +77,6 @@ ok 1 - Repository
 #     
 #     A new user in the application
 #     Say hello!
-# CREATE: 
-# INSERT INTO users (name, email) VALUES ($0, $1)
-# UPDATE: 
-# UPDATE users SET name = $0 WHERE id = $1
 # DELETE: 
 # DELETE FROM users WHERE id = $0
 # ═══════════════════════════════════
@@ -223,7 +219,7 @@ ok 1 - Repository
 # ▶ VALUES (flag values, percentages, dates):
 #   [0] my-saas-platform
 #   [1] 2.4.1
-#   [2] 2026-04-27T04:48:00.084Z
+#   [2] 2026-04-29T16:16:30.943Z
 #   [3] Feature flags for Q3 2026 release
 #   [4] boolean
 #   [5] true
@@ -280,7 +276,7 @@ ok 1 - Repository
 # \# Feature Flags Manifest
 # \# Project: my-saas-platform
 # \# Version: 2.4.1
-# \# Generated: 2026-04-27T04:48:00.084Z
+# \# Generated: 2026-04-29T16:16:30.943Z
 # \# ============================================================================
 # \# Feature flags for Q3 2026 release
 # \# development environment
@@ -1023,6 +1019,7 @@ ok 1 - Repository
 # This is NOT a template library that happens to validate.
 # It's a VALIDATION-FIRST function definition system that 
 # happens to use templates for implementation.
+# { _personaBlock: '' }
 # [System]
 # You are an automated code review assistant.
 # Act as a strictly pedantic reviewer who flags every deviation from best practices, no matter how minor.
@@ -1078,7 +1075,7 @@ ok 1 - Repository
 #     INSERT INTO users 
 #       (id, name, email, role)
 #     VALUES (
-#       '2a9d405a-ea14-4ffd-990e-2db9af3c'/*+4 bytes*/,
+#       '44e6217b-e698-4165-b045-2b03d4da'/*+4 bytes*/,
 #       'Diana Prince', 
 #       'diana@example.com', 
 #       'admin'
@@ -1086,12 +1083,12 @@ ok 1 - Repository
 #     RETURNING *
 #   
 #    Created: {
-#   id: '2a9d405a-ea14-4ffd-990e-2db9af3c4609',
+#   id: '44e6217b-e698-4165-b045-2b03d4da9881',
 #   name: 'Diana Prince',
 #   email: 'diana@example.com',
 #   role: 'admin',
-#   created_at: '2026-04-27 04:48:00',
-#   updated_at: '2026-04-27 04:48:00'
+#   created_at: '2026-04-29 16:16:31',
+#   updated_at: '2026-04-29 16:16:31'
 # }
 # 2. FIND USER BY ID:
 #     SELECT * FROM users
@@ -1102,8 +1099,8 @@ ok 1 - Repository
 #   name: 'Alice Johnson',
 #   email: 'alice@example.com',
 #   role: 'admin',
-#   created_at: '2026-04-27 04:48:00',
-#   updated_at: '2026-04-27 04:48:00'
+#   created_at: '2026-04-29 16:16:31',
+#   updated_at: '2026-04-29 16:16:31'
 # }
 #    SQL: 
 #     SELECT * FROM users
@@ -1137,7 +1134,7 @@ ok 1 - Repository
 #     role: 'guest'
 #   },
 #   {
-#     id: '2a9d405a-ea14-4ffd-990e-2db9af3c4609',
+#     id: '44e6217b-e698-4165-b045-2b03d4da9881',
 #     name: 'Diana Prince',
 #     email: 'diana@example.com',
 #     role: 'admin'
@@ -1154,19 +1151,19 @@ ok 1 - Repository
 #     INSERT INTO posts 
 #       (id, user_id, title, content)
 #     VALUES (
-#       'df1e5a50-0ce1-4725-ad87-c121682e'/*+4 bytes*/,
-#       '2a9d405a-ea14-4ffd-990e-2db9af3c'/*+4 bytes*/,
+#       '491f0518-9981-4014-891d-6838bdf2'/*+4 bytes*/,
+#       '44e6217b-e698-4165-b045-2b03d4da'/*+4 bytes*/,
 #       'Working with zod-tag',
 #       'This library is amazing for type'/*+10 bytes*/
 #     )
 #     RETURNING *
 #   
 #    Created post: {
-#   id: 'df1e5a50-0ce1-4725-ad87-c121682e9d9c',
-#   user_id: '2a9d405a-ea14-4ffd-990e-2db9af3c4609',
+#   id: '491f0518-9981-4014-891d-6838bdf2efb2',
+#   user_id: '44e6217b-e698-4165-b045-2b03d4da9881',
 #   title: 'Working with zod-tag',
 #   content: 'This library is amazing for type-safe SQL!',
-#   created_at: '2026-04-27 04:48:00'
+#   created_at: '2026-04-29 16:16:31'
 # }
 # 5. FIND POSTS BY USER:
 #     SELECT * FROM posts
@@ -1179,14 +1176,14 @@ ok 1 - Repository
 #     user_id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
 #     title: 'First Post',
 #     content: 'Hello world!',
-#     created_at: '2026-04-27 04:48:00'
+#     created_at: '2026-04-29 16:16:31'
 #   },
 #   {
 #     id: 'c25303ab-f869-424a-bd2f-2a0629e8ef91',
 #     user_id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
 #     title: 'Second Post',
 #     content: 'Zod is awesome',
-#     created_at: '2026-04-27 04:48:00'
+#     created_at: '2026-04-29 16:16:31'
 #   }
 # ]
 # 6. UPDATE USER:
@@ -1204,8 +1201,8 @@ ok 1 - Repository
 #   name: 'Bob Smith',
 #   email: 'bob@example.com',
 #   role: 'admin',
-#   created_at: '2026-04-27 04:48:00',
-#   updated_at: '2026-04-27 04:48:00'
+#   created_at: '2026-04-29 16:16:31',
+#   updated_at: '2026-04-29 16:16:31'
 # }
 # 7. SEARCH USERS (name contains "a", role = admin):
 #     SELECT * FROM users
@@ -1222,16 +1219,16 @@ ok 1 - Repository
 #     name: 'Alice Johnson',
 #     email: 'alice@example.com',
 #     role: 'admin',
-#     created_at: '2026-04-27 04:48:00',
-#     updated_at: '2026-04-27 04:48:00'
+#     created_at: '2026-04-29 16:16:31',
+#     updated_at: '2026-04-29 16:16:31'
 #   },
 #   {
-#     id: '2a9d405a-ea14-4ffd-990e-2db9af3c4609',
+#     id: '44e6217b-e698-4165-b045-2b03d4da9881',
 #     name: 'Diana Prince',
 #     email: 'diana@example.com',
 #     role: 'admin',
-#     created_at: '2026-04-27 04:48:00',
-#     updated_at: '2026-04-27 04:48:00'
+#     created_at: '2026-04-29 16:16:31',
+#     updated_at: '2026-04-29 16:16:31'
 #   }
 # ]
 #    SQL: 
@@ -1254,24 +1251,24 @@ ok 1 - Repository
 #     name: 'Carol Davis',
 #     email: 'carol@example.com',
 #     role: 'guest',
-#     created_at: '2026-04-27 04:48:00',
-#     updated_at: '2026-04-27 04:48:00'
+#     created_at: '2026-04-29 16:16:31',
+#     updated_at: '2026-04-29 16:16:31'
 #   },
 #   {
 #     id: 'cf4f5b2b-6c13-42ba-b6dd-53d6f5e75825',
 #     name: 'Bob Smith',
 #     email: 'bob@example.com',
 #     role: 'admin',
-#     created_at: '2026-04-27 04:48:00',
-#     updated_at: '2026-04-27 04:48:00'
+#     created_at: '2026-04-29 16:16:31',
+#     updated_at: '2026-04-29 16:16:31'
 #   },
 #   {
 #     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
 #     name: 'Alice Johnson',
 #     email: 'alice@example.com',
 #     role: 'admin',
-#     created_at: '2026-04-27 04:48:00',
-#     updated_at: '2026-04-27 04:48:00'
+#     created_at: '2026-04-29 16:16:31',
+#     updated_at: '2026-04-29 16:16:31'
 #   }
 # ]
 #    SQL: 
@@ -1307,7 +1304,7 @@ ok 1 - Repository
 #     post_id: 'edc9bc8b-5f0c-4b95-8d77-7e629c918755',
 #     title: 'First Post',
 #     content: 'Hello world!',
-#     post_created_at: '2026-04-27 04:48:00'
+#     post_created_at: '2026-04-29 16:16:31'
 #   },
 #   {
 #     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
@@ -1317,7 +1314,7 @@ ok 1 - Repository
 #     post_id: 'c25303ab-f869-424a-bd2f-2a0629e8ef91',
 #     title: 'Second Post',
 #     content: 'Zod is awesome',
-#     post_created_at: '2026-04-27 04:48:00'
+#     post_created_at: '2026-04-29 16:16:31'
 #   }
 # ]
 #    SQL: 
@@ -1337,7 +1334,7 @@ ok 1 - Repository
 #   
 # 10. DELETE USER:
 #     DELETE FROM users
-#     WHERE id = '2a9d405a-ea14-4ffd-990e-2db9af3c'/*+4 bytes*/
+#     WHERE id = '44e6217b-e698-4165-b045-2b03d4da'/*+4 bytes*/
 #     RETURNING id
 #   
 #    Deleted user ID: { changes: 1, lastInsertRowid: 4 }
@@ -1370,31 +1367,31 @@ ok 1 - Repository
 # ═══════════════════════════════════════════
 # ─── Saving Prompt Configurations ───
 # ✓ Config "quick-security-scan" saved: {
-#   id: '808d9821-5a1d-40e3-ab69-6f728ff046b3',
+#   id: 'f0e722a3-cc9e-46f5-9136-e8b17449a39d',
 #   name: 'quick-security-scan',
 #   persona: 'pedantic-reviewer',
 #   format: 'checklist',
 #   severity: 'strict',
 #   focus_areas: 'security,error-handling',
-#   created_at: '2026-04-27 04:48:00'
+#   created_at: '2026-04-29 16:16:31'
 # }
 # ✓ Config "mentor-code-review" saved: {
-#   id: '99c892a5-7a10-4b0d-b5eb-25874ab25973',
+#   id: '515f5fe9-904e-4658-a939-6ca8202dd4e1',
 #   name: 'mentor-code-review',
 #   persona: 'mentor',
 #   format: 'bullets',
 #   severity: 'gentle',
 #   focus_areas: 'readability,performance,architecture',
-#   created_at: '2026-04-27 04:48:00'
+#   created_at: '2026-04-29 16:16:31'
 # }
 # ✓ Config "architecture-audit" saved: {
-#   id: '5bcb1ad5-3eaf-4875-92dc-32b4ca7d84c7',
+#   id: 'a37636a7-e85a-4bd8-8eb5-01762db06c8a',
 #   name: 'architecture-audit',
 #   persona: 'senior-dev',
 #   format: 'diff',
 #   severity: 'strict',
 #   focus_areas: 'architecture,performance,testing',
-#   created_at: '2026-04-27 04:48:00'
+#   created_at: '2026-04-29 16:16:31'
 # }
 # ─── Executing Code Reviews ───
 # preparing... {
@@ -1409,8 +1406,8 @@ ok 1 - Repository
 #     '    )\\n' +
 #     '    ',
 #   args: [
-#     'f5af811f-45f8-49b4-8a0f-4f9f05ce6728',
-#     '808d9821-5a1d-40e3-ab69-6f728ff046b3',
+#     'fb6e9a69-ba27-4a71-8aad-79973cc3b38b',
+#     'f0e722a3-cc9e-46f5-9136-e8b17449a39d',
 #     'Python',
 #     'def process_payment(user_input):\\n' +
 #       '    query = "SELECT * FROM users WHERE id = " + user_input\\n' +
@@ -1484,8 +1481,8 @@ ok 1 - Repository
 #     '    )\\n' +
 #     '    ',
 #   args: [
-#     '8fdb5876-975e-47f2-9187-dee9e880737a',
-#     '99c892a5-7a10-4b0d-b5eb-25874ab25973',
+#     'b8a707c6-caff-4eb5-8a91-afc778a46618',
+#     '515f5fe9-904e-4658-a939-6ca8202dd4e1',
 #     'TypeScript',
 #     'function add(a, b) {\\n    return a + b;\\n}',
 #     '\\n' +
@@ -1556,7 +1553,7 @@ ok 1 - Repository
 #   [5]: "fn main() { println!(\\"hello\\"); }"
 # ─── Execution History ───
 # History for "quick-security-scan" (1 entries):
-#   1. [2026-04-27 04:48:00] Python - def process_payment(user_input):
+#   1. [2026-04-29 16:16:31] Python - def process_payment(user_input):
 #     query = "SELECT * FROM ...
 # ═══════════════════════════════════════════
 #   Key Takeaways:
@@ -1669,7 +1666,7 @@ ok 1 - Repository
 #   ✓ zt.map: single element with separator
 #   ✓ zt.map: two elements with separator
 # ─── 2E: Performance ───
-#     Rendered 500 items in 49.4ms
+#     Rendered 500 items in 68.5ms
 #   ✓ performance: 500 items via zt.map with separator
 #   ✓ state isolation: repeated renders with different data
 # ═══════════════════════════════════════
@@ -1690,237 +1687,237 @@ ok 1 - Repository
 #   ✓ rejects invalid discriminator value
 #   ✓ rejects missing required kargs for matched branch
 #   ✓ nested match: pending status
-#   ✓ nested match: paid with cash
-#   ✓ nested match: paid with card (last4 via loose schema)
+#   ✗ nested match: paid with cash: anonymous-fn[0] > [
+#   ✗ nested match: paid with card (last4 via loose schema): anonymous-fn[0] > [
 #   ✓ nested match: refunded
 #   ✓ single branch works like a pass-through
-#   ✓ extra props from other branches are allowed (loose schema)
+#   ✗ extra props from other branches are allowed (loose schema): anonymous-fn[0] > [
 #   ✓ values are never concatenated into structure strings
 # ═══════════════════════════════════
-#   17 passed, 0 failed
+#   14 passed, 3 failed
 # ═══════════════════════════════════
 # Subtest: slop tests - does the slop-test files run?
     # Subtest: typed-tag.type-test.ts
     ok 1 - typed-tag.type-test.ts
       ---
-      duration_ms: 85.851
+      duration_ms: 97.5565
       type: 'test'
       ...
     # Subtest: user-card.type-test.ts
     ok 2 - user-card.type-test.ts
       ---
-      duration_ms: 34.5771
+      duration_ms: 35.0642
       type: 'test'
       ...
     # Subtest: conditional-validation-boundary.slop-test.ts
     ok 3 - conditional-validation-boundary.slop-test.ts
       ---
-      duration_ms: 25.6622
+      duration_ms: 27.3401
       type: 'test'
       ...
     # Subtest: email.slop-test.ts
     ok 4 - email.slop-test.ts
       ---
-      duration_ms: 13.3212
+      duration_ms: 14.0726
       type: 'test'
       ...
     # Subtest: feature-flags.slop-test.ts
     ok 5 - feature-flags.slop-test.ts
       ---
-      duration_ms: 22.2405
+      duration_ms: 20.1319
       type: 'test'
       ...
     # Subtest: functional-composition.slop-test.ts
     ok 6 - functional-composition.slop-test.ts
       ---
-      duration_ms: 17.8682
+      duration_ms: 18.3674
       type: 'test'
       ...
     # Subtest: graphql.slop-test.ts
     ok 7 - graphql.slop-test.ts
       ---
-      duration_ms: 18.995
+      duration_ms: 22.8173
       type: 'test'
       ...
     # Subtest: npc-dialog-state-machine.slop-test.ts
     ok 8 - npc-dialog-state-machine.slop-test.ts
       ---
-      duration_ms: 67.7355
+      duration_ms: 64.7886
       type: 'test'
       ...
     # Subtest: pattern-matching-function-definitions.slop-test.ts
     ok 9 - pattern-matching-function-definitions.slop-test.ts
       ---
-      duration_ms: 21.589
+      duration_ms: 21.4827
       type: 'test'
       ...
     # Subtest: prompt-2.slop-test.ts
     ok 10 - prompt-2.slop-test.ts
       ---
-      duration_ms: 4.8881
+      duration_ms: 7.413
       type: 'test'
       ...
     # Subtest: prompt.slop-test.ts
     ok 11 - prompt.slop-test.ts
       ---
-      duration_ms: 4.0804
+      duration_ms: 4.4696
       type: 'test'
       ...
     # Subtest: repo.slop-test.ts
     ok 12 - repo.slop-test.ts
       ---
-      duration_ms: 42.876
+      duration_ms: 66.2903
       type: 'test'
       ...
     # Subtest: sql-prompt.slop-test.ts
     ok 13 - sql-prompt.slop-test.ts
       ---
-      duration_ms: 15.9558
+      duration_ms: 15.4511
       type: 'test'
       ...
     # Subtest: sql.slop-test.ts
     ok 14 - sql.slop-test.ts
       ---
-      duration_ms: 14.0911
+      duration_ms: 13.7494
       type: 'test'
       ...
     # Subtest: stress-composition-edge-cases.slop-test.ts
     ok 15 - stress-composition-edge-cases.slop-test.ts
       ---
-      duration_ms: 72.1562
+      duration_ms: 91.0857
       type: 'test'
       ...
     # Subtest: zt-match.slop-test.ts
     ok 16 - zt-match.slop-test.ts
       ---
-      duration_ms: 19.0557
+      duration_ms: 15.5819
       type: 'test'
       ...
     # Subtest: cli-test.ts
     ok 17 - cli-test.ts
       ---
-      duration_ms: 7.353
+      duration_ms: 12.2674
       type: 'test'
       ...
     1..17
 ok 2 - slop tests - does the slop-test files run?
   ---
-  duration_ms: 490.2202
+  duration_ms: 549.9449
   type: 'suite'
   ...
-# Media of 10.862988333333332 ms to render each frame of the cli test
+# Media of 6.938314999999999 ms to render each frame of the cli test
 # Subtest: zt - Zod Tag
     # Subtest: static template
         # Subtest: should render a template without interpolation values
         ok 1 - should render a template without interpolation values
           ---
-          duration_ms: 1.8134
+          duration_ms: 1.9584
           type: 'test'
           ...
         # Subtest: should render a template with static interpolation values
         ok 2 - should render a template with static interpolation values
           ---
-          duration_ms: 0.2894
+          duration_ms: 0.2628
           type: 'test'
           ...
         # Subtest: should render a template with transformed interpolation values
         ok 3 - should render a template with transformed interpolation values
           ---
-          duration_ms: 0.2485
+          duration_ms: 0.2121
           type: 'test'
           ...
         1..3
     ok 1 - static template
       ---
-      duration_ms: 3.2336
+      duration_ms: 3.3075
       type: 'suite'
       ...
     # Subtest: keyword argument templates
         # Subtest: should allow inline object/codec schemas as karg params
         ok 1 - should allow inline object/codec schemas as karg params
           ---
-          duration_ms: 3.4767
+          duration_ms: 3.9517
           type: 'test'
           ...
         # Subtest: should validate against zod shape definition
         ok 2 - should validate against zod shape definition
           ---
-          duration_ms: 2.4716
+          duration_ms: 2.5793
           type: 'test'
           ...
         # Subtest: should merge keyword arguments when karg are present both at shape definition and inline arg
         ok 3 - should merge keyword arguments when karg are present both at shape definition and inline arg
           ---
-          duration_ms: 1.7262
+          duration_ms: 1.7195
           type: 'test'
           ...
         1..3
     ok 2 - keyword argument templates
       ---
-      duration_ms: 7.8582
+      duration_ms: 8.4296
       type: 'suite'
       ...
     # Subtest: nested templates
         # Subtest: should merge nested templates
         ok 1 - should merge nested templates
           ---
-          duration_ms: 3.3985
+          duration_ms: 4.4992
           type: 'test'
           ...
         1..1
     ok 3 - nested templates
       ---
-      duration_ms: 3.5078
+      duration_ms: 4.6029
       type: 'suite'
       ...
     # Subtest: utilities
         # Subtest: zt.unsafe utility dangerously sets a static string content inside the template
         ok 1 - zt.unsafe utility dangerously sets a static string content inside the template
           ---
-          duration_ms: 0.2154
+          duration_ms: 0.1931
           type: 'test'
           ...
         # Subtest: zt.p utility creates a named param and allows conditional rendering
         ok 2 - zt.p utility creates a named param and allows conditional rendering
           ---
-          duration_ms: 0.3023
+          duration_ms: 0.2533
           type: 'test'
           ...
         # Subtest: format utilities
             # Subtest: zt.$n utility formats interpolation as dolar index placeholders
             ok 1 - zt.$n utility formats interpolation as dolar index placeholders
               ---
-              duration_ms: 0.3447
+              duration_ms: 0.3051
               type: 'test'
               ...
             # Subtest: zt.atIndex utility formats interpolation as @ index placeholders
             ok 2 - zt.atIndex utility formats interpolation as @ index placeholders
               ---
-              duration_ms: 0.304
+              duration_ms: 0.2189
               type: 'test'
               ...
             # Subtest: zt.debug utility formats as String.raw would
             ok 3 - zt.debug utility formats as String.raw would
               ---
-              duration_ms: 0.2288
+              duration_ms: 0.1961
               type: 'test'
               ...
             1..3
         ok 3 - format utilities
           ---
-          duration_ms: 1.0296
+          duration_ms: 0.8581
           type: 'suite'
           ...
         1..3
     ok 4 - utilities
       ---
-      duration_ms: 1.7962
+      duration_ms: 1.5359
       type: 'suite'
       ...
     1..4
 ok 3 - zt - Zod Tag
   ---
-  duration_ms: 17.082
+  duration_ms: 18.6191
   type: 'suite'
   ...
 1..3
@@ -1931,17 +1928,17 @@ ok 3 - zt - Zod Tag
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 1960.1955
+# duration_ms 1553.986
 # start of coverage report
-# -------------------------------------------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------------------------------------
 # file                                                  | line % | branch % | funcs % | uncovered lines
-# -------------------------------------------------------------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------------------------------------
 # dist                                                  |        |          |         | 
-#  main.js                                              |  93.89 |    91.37 |   96.55 | 26-27 141-146 189-194 206-213 327-332
+#  main.js                                              |  93.01 |    88.67 |   95.52 | 26-27 149-154 222-227 238-245 268-274 368-373
 # src                                                   |        |          |         | 
 #  __tests__                                            |        |          |         | 
 #   cli                                                 |        |          |         | 
-#    cli-test.ts                                        |  95.93 |    92.59 |   81.48 | 74-76 115-116
+#    cli-test.ts                                        |  96.15 |    92.86 |   82.14 | 81-83 122-123
 #    repo.test.ts                                       | 100.00 |    94.44 |  100.00 | 
 #   slop-samples.test.ts                                | 100.00 |   100.00 |  100.00 | 
 #   slop                                                |        |          |         | 
@@ -1950,19 +1947,19 @@ ok 3 - zt - Zod Tag
 #    feature-flags.slop-test.ts                         | 100.00 |    89.66 |  100.00 | 
 #    functional-composition.slop-test.ts                | 100.00 |    94.44 |   93.75 | 
 #    graphql.slop-test.ts                               |  99.32 |    80.00 |   77.78 | 137-138 465-466
-#    npc-dialog-state-machine.slop-test.ts              |  98.50 |    85.88 |   96.81 | 68 144-146 341-342 358-364 427-428 610-611 1348-1352
+#    npc-dialog-state-machine.slop-test.ts              |  98.36 |    86.13 |   95.74 | 68 144-146 284-285 341-342 358-364 427-428 610-611 1348-1352
 #    pattern-matching-function-definitions.slop-test.ts | 100.00 |    64.38 |  100.00 | 
-#    prompt-2.slop-test.ts                              |  98.44 |    77.78 |  100.00 | 15 17
+#    prompt-2.slop-test.ts                              |  98.14 |    80.00 |  100.00 | 16-17 19
 #    prompt.slop-test.ts                                |  97.37 |    62.50 |  100.00 | 15 19
 #    repo.slop-test.ts                                  | 100.00 |    85.19 |   97.83 | 
 #    sql-prompt.slop-test.ts                            |  98.65 |    93.48 |   97.44 | 58 326-328 372-374
 #    sql.slop-test.ts                                   |  99.03 |    95.65 |   73.08 | 155-156 363-364
 #    stress-composition-edge-cases.slop-test.ts         | 100.00 |    91.43 |   96.67 | 
-#    zt-match.slop-test.ts                              |  99.53 |    58.93 |  100.00 | 86
+#    zt-match.slop-test.ts                              |  99.53 |    58.49 |   90.63 | 86
 #   typed-tag.test.ts                                   | 100.00 |   100.00 |   97.14 | 
 #   typed-tag.type-test.ts                              | 100.00 |   100.00 |   71.43 | 
-#   user-card.type-test.ts                              | 100.00 |    92.86 |  100.00 | 
-# -------------------------------------------------------------------------------------------------------------------------------------------
-# all files                                             |  98.80 |    85.73 |   95.38 | 
-# -------------------------------------------------------------------------------------------------------------------------------------------
+#   user-card.type-test.ts                              |  98.57 |    81.82 |   66.67 | 139-140
+# ---------------------------------------------------------------------------------------------------------------------------------------------------
+# all files                                             |  98.64 |    85.33 |   94.00 | 
+# ---------------------------------------------------------------------------------------------------------------------------------------------------
 # end of coverage report
