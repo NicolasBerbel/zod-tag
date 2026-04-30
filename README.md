@@ -466,7 +466,10 @@ result.render() // → [['before  after']]
 #### `zt.bind(renderable, kargs)`
 
 Applies the keyword arguments to a `IRenderable` returning a new collapsed one.
+
 Returns a new `IRenderable` that requires no kargs — the provided kargs are validated at bind time and baked in.
+
+Validates at bind time.
 
 ```ts
 const greet = zt.z({ name: z.string() })`Hello, ${e => e.name}!`
@@ -502,6 +505,9 @@ tpl.render({ ids: ['a', 'b', 'c'] })
 
 Conditionally renders a template. Returns the renderable if the condition is truthy, otherwise returns `zt.empty`.
 
+Uses JavaScript truthiness, making 0 and '' falsy.
+
+
 ```ts
 const tpl = zt.z({ name: z.string().optional() })`
   ${e => zt.if(e.name, zt.t`Your name is ${e.name}`)}
@@ -533,6 +539,8 @@ math.render({ op: 'neg', x: 5 })          // → [['', ''], -5]
 Treats a validated value as trusted structure. The value is validated against schema at definition time, then stringified and concatenated directly into the template strings. It never appears in the values array.
 
 Use for identifiers, keywords, or other protocol-level strings that MUST be validated before structural use (column names, sort directions, enum-constrained identifiers).
+
+`zt.unsafe` injects data into structure, never as values.
 
 ```ts
 const table = 'users' // trusted, not user input

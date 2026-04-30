@@ -10,7 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added unit tests for interpolation, composition and pattern-matching
+- Added unit tests for algebraic-properties, performance and memory
 - `zt.join` overload for correct type inference in combine operation of renderables
+- `zt.if` overload for correct type inference in conditional identity operation of renderables
 
 ### Changed
 
