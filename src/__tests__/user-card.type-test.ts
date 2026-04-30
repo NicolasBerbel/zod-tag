@@ -138,3 +138,17 @@ try {
 } catch {
     // expected
 }
+
+
+// const result = zt.join([
+//     zt.bind(zt.z({ title: z.string() })`Header is: ${e => e.title}`), // Closed
+// ], zt.empty).render({ content: "Dynamic Content" });
+
+const header = zt.bind(zt.z({ title: z.string() })`Header is: ${e => e.title}`, { title: 'Header' });
+const body = zt.z({ content: z.string() })`Body is: ${e => e.content}`
+
+const renderedJoin = zt.join([
+    header,
+    body,
+    zt.p('header2', header),
+], zt.z({ separator: z.number() })`a ${1 as const} `)

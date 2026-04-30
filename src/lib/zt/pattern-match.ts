@@ -2,7 +2,7 @@ import z from "zod";
 import {
     type IRenderableKargs,
     type IRenderableOutput,
-    type IRenderable
+    type IRenderable,
 } from "../core/renderable";
 import { typedTag } from "../typed-tag";
 import { getSlotShape } from "../core/slot";
@@ -17,7 +17,7 @@ export function patternMatch<
 ) {
     const unionSchemas = Object.entries(cases).map(([key, renderable]) => {
         const shape = getSlotShape(renderable) ?? {}
-        return createSchema({ ...shape, [discriminator]: z.literal(key) }, 'strict')
+        return createSchema({ ...shape, [discriminator]: z.literal(key) }, 'loose')
     })
 
     const union = z.discriminatedUnion(discriminator, unionSchemas as any)

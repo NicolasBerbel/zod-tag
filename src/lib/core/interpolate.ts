@@ -86,5 +86,6 @@ export function interpolate<K extends KargsType>(renderable: IRenderable<K, any>
         });
     }
 
-    return [_strings, ..._values] as const
+    Object.freeze(_strings)
+    return Object.freeze([_strings, ..._values] as const)
 }

@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Added unit tests for interpolation, composition and pattern-matching
+- `zt.join` overload for correct type inference in combine operation of renderables
+
+### Changed
+
+- The output tuple `[strs[], ...vals]` of `renderer.render()` is now immutable (both: the tuple and the strings array)
+
+### Fixed
+
+- Regression on `zt.match` given 'strict' inner discriminated union shape
+
 ## [0.0.5] - 2026-04-29
 
 ### Added

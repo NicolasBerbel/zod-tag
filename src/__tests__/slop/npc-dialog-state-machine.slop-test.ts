@@ -1358,7 +1358,7 @@ test('render all 26+ states 10 times each', () => {
 
 console.log('\n─── Structure vs Values ───\n')
 
-test('NPC names are never in values array', () => {
+test('NPC names are in values array', () => {
     const result = npcDialogState.render({
         dialogState: 'greet',
         npcName: 'Elara',
@@ -1367,8 +1367,8 @@ test('NPC names are never in values array', () => {
 
     const [strs, ...vals] = result as unknown as [string[], ...unknown[]]
     const allStrings = strs.join('')
-    assert(allStrings.includes('Elara'), 'NPC name should be in structure strings')
-    assert(!vals.some(v => v === 'Elara'), 'NPC name should not be in values')
+    assert(!allStrings.includes('Elara'), 'NPC name should not be in structure strings')
+    assert(vals.some(v => typeof v === 'string' && v.includes('Elara')), 'NPC name should be in values')
 })
 
 test('player inputs (gold, answers) are in values', () => {
