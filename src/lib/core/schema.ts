@@ -1,6 +1,7 @@
 import z from "zod"
 import { type IZodTagRenderable } from "./renderable"
 import { getSlotSchema, getSlotScope, getSlotShape } from "./slot"
+import { buildScopedShape } from "./scope"
 
 /** { ...a, ...b } */
 export function shallowMerge(
@@ -69,7 +70,7 @@ export const mergeSchemas = (
     if (slotShape) {
         const slotSchema = getSlotSchema(value)
         const nestedScope = getSlotScope(value)
-        const scopedShape = nestedScope ? { [nestedScope]: slotSchema } : slotShape
+        const scopedShape = nestedScope?.length ? buildScopedShape(slotSchema, nestedScope) : slotShape;
         const newShape = mergeShapes(getSlotShape(schema), scopedShape, mergeStrategy)
 
         if (Object.keys(newShape).length > 0) {

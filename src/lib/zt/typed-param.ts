@@ -31,7 +31,10 @@ export function typedParam<
     argName: P,
     schema: T,
     decode?: (v: z.output<T>) => R,
-): IRenderable<z.input<z.ZodObject<{ [K in P]: T }>>, [R]>
+): IRenderable<
+    z.input<z.ZodObject<{ [K in P]: T }>>,
+    R extends IRenderable<any, any> ? IRenderableOutput<R> : [R]
+>
 
 /**
  * Scoped IRenderable from schema or IRenderable
@@ -46,5 +49,5 @@ export function typedParam(
         return (schemaTag as any)(shape)`${(e: any) => select(e[scope])}`
     }
 
-    return scopedRenderable(child, scope);
+    return scopedRenderable(child, [scope]);
 }

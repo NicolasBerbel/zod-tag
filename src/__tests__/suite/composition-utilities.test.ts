@@ -224,12 +224,8 @@ describe('zt.match', () => {
         );
     });
 
-    // Nested zt.match delegation is currently limited: the outer match extracts
-    // the shape of the inner renderable, which for a match returns the full
-    // discriminator‑union schema, but strict wrapping can make extra keys
-    // (method, amount) unrecognised.  For now we simply document the limitation
-    // and test a workaround using a selector that returns the inner match.
-    it.skip('nested match via selector returns inner renderable correctly', () => {
+    // a workaround using a selector that returns the inner match.
+    it('nested match via selector returns inner renderable correctly', () => {
         const inner = zt.match('method', {
             cash: zt.z({ amount: z.number() })`PAID $${(e) => e.amount.toFixed(2)}`,
             card: zt.z({ amount: z.number(), last4: z.string().length(4) })`CHARGED $${(e) => e.amount.toFixed(2)} card ****${(e) => e.last4}`,
@@ -246,9 +242,9 @@ describe('zt.match', () => {
             }}
     `;
         const r1 = payment.render({ status: 'pending' });
-        deepEqual(r1, [['[AWAITING]']]);
+        deepEqual(r1, [['\n      [AWAITING]\n    ']]);
         const r2 = payment.render({ status: 'paid', method: 'cash', amount: 49.99 });
-        deepEqual(r2, [['PAID $', ''], '49.99']);
+        deepEqual(r2, [['\n      PAID $', '\n    '], '49.99']);
     });
 });
 

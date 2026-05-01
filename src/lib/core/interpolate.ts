@@ -4,7 +4,7 @@ import {
     type IRenderable,
     isZTRenderable,
 } from "./renderable"
-import { scopedKargs } from "./scope";
+import { scopedSchemaKargs } from "./scope";
 import {
     type InterpolationOperation,
     InterpolationError,
@@ -66,7 +66,7 @@ export function interpolate<K extends KargsType>(renderable: IRenderable<K, any>
 
                 // TODO: maybe we should extract keys for strict mode?
                 // const keys = Object.keys(getSlotShape(value) ?? {})
-                _values[i] = schema.decode(scopedKargs(value, kargs))
+                _values[i] = schema.decode(scopedSchemaKargs(value, kargs))
                 i--;
             } else if (typeof value === 'function') {
                 /** Transform function values: if value is a function its called with karg object to determine the actual interpolation value */

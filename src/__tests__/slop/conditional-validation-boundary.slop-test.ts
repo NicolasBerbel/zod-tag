@@ -103,15 +103,10 @@ let totalPassed = 0
 let totalFailed = 0
 
 function test(name: string, fn: () => void) {
-    try {
-        fn()
-        console.log(`  ✓ ${name}`)
-        totalPassed++
-    } catch (e) {
-        console.log(`  ✗ ${name}: ${(e as Error).message.split('\n')[0]}`)
-        totalFailed++
-    }
+    try { fn(); console.log(`  ✓ ${name}`); totalPassed++ }
+    catch (e) { console.log(`  ✗ ${name}: ${(e as Error).message.split('\n')[0]}`); console.log(e); totalFailed++ }
 }
+
 
 // Test 1-9: Individual command tests (same as before, they work)
 test('CREATE with 3 columns, 3 values', () => {

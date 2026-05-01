@@ -60,7 +60,7 @@ export function mapKargs<
     return joinParams(
         items,
         separator
-    ) as any as IRenderable<
+    ) as any as List extends [] ? IRenderable<void, []> : IRenderable<
         IRenderableKargs<Sep>,
         MapOutput<List, Target, Sep>
     >

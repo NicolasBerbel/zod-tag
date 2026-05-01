@@ -74,7 +74,7 @@ describe('Bind · render law', () => {
 
     it('bind with empty kargs still works', () => {
         const staticTpl = zt.t`no kargs`;
-        const bound = zt.bind(staticTpl, undefined as any);
+        const bound = zt.bind(staticTpl, undefined);
         deepEqual(bound.render(), staticTpl.render());
     });
 });

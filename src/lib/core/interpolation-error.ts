@@ -61,7 +61,7 @@ export class InterpolationError extends Error {
                 break;
         }
         const scope = _value?.__ztScope || renderer.scope;
-        if (scope) operationMessage += ` at scope "${scope}"`
+        if (scope) operationMessage += ` at scope "${scope.join('.')}"`
         const operation = `${valueType}[${i}]`
 
         const before = InterpolationError.format(strings.slice(0, i + 1), 0);

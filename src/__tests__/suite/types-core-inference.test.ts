@@ -1,11 +1,11 @@
 import { describe, it } from 'node:test';
+import { ok } from 'node:assert/strict';
 import z from 'zod';
 import {
     zt,
     type IRenderableKargs,
     type IRenderableOutput,
 } from '../../../dist/main.js';
-import { ok } from 'node:assert/strict';
 
 // ---------------------------------------------------------------------------
 // Suite: Core type inference (zt.t)

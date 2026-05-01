@@ -5,7 +5,7 @@ import {
 import { compile } from "./compile";
 import { withSource } from "./source";
 import { interpolate } from "./interpolate";
-import { withScope } from "./scope";
+import { extractScopedKargs } from "./scope";
 import { createSchemaStrategies, mergeStrategies } from "./schema";
 
 
@@ -30,12 +30,12 @@ export function createRenderable<
     strs: string[] | TemplateStringsArray,
     vals: unknown[],
     schema?: z.ZodType,
-    scope?: string
+    scope?: string[]
 ) {
     const mergeStrategy: keyof typeof mergeStrategies = 'intersect';
     const schemaStrategy: keyof typeof createSchemaStrategies = 'loose';
     let _strs = strs.slice() as string[]
-    let _vals = withScope(vals, scope);
+    let _vals = vals.slice();
     let _schema = schema;
     let __compiled = false;
 
@@ -50,11 +50,16 @@ export function createRenderable<
     renderable[RENDERABLE_SYMBOL] = true;
 
     // precompile the renderable
-    if (vals.length) [_strs, _vals, _schema] = compile(renderable, { mergeStrategy, schemaStrategy });
+    if (vals.length) {
+        [_strs, _vals, _schema] = compile(renderable, { mergeStrategy, schemaStrategy });
+    }
 
     // assign interpolation
     __compiled = true;
-    renderable.render = (kargs: Kargs) => interpolate(renderable, kargs) as any
+    renderable.render = (kargs: Kargs) => {
+        const scopedKargs = extractScopedKargs(kargs, scope)
+        return interpolate(renderable, scopedKargs) as any
+    }
 
     // assert immutability
     Object.freeze(_strs)
@@ -101,7 +106,7 @@ export interface IZodTagRenderable<
     strs: string[];
     vals: unknown[]
     schema?: z.ZodType;
-    scope?: string;
+    scope?: string[];
 }
 
 /** Infers the keyword arguments of a renderable */

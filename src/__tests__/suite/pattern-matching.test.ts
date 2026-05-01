@@ -147,7 +147,7 @@ describe('zt.match - varying shapes', () => {
 // TODO: zt.match inside zt.p
 // zt.p not properly scoping the renderable returned from zt.match
 // ---------------------------------------------------------------------------
-describe.skip('zt.match inside zt.p', () => {
+describe('zt.match inside zt.p', () => {
   const cityMatch = zt.match('type', {
     small: zt.z({ name: z.string() })`Small city: ${(e) => e.name}`,
     metro: zt.z({ name: z.string(), population: z.number() })`Metro: ${(e) => e.name} (pop ${(e) => e.population})`,

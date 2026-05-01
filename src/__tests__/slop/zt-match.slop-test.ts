@@ -56,7 +56,7 @@ console.log('══════════════════════�
 let passed = 0, failed = 0
 function test(name: string, fn: () => void) {
     try { fn(); console.log(`  ✓ ${name}`); passed++ }
-    catch (e) { console.log(`  ✗ ${name}: ${(e as Error).message.split('\n')[0]}`); failed++ }
+    catch (e) { console.log(`  ✗ ${name}: ${(e as Error).message.split('\n')[0]}`); console.error(e); failed++ }
 }
 
 // ── Basic routing ────────────────────────────────────────────────
