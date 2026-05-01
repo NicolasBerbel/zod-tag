@@ -31,7 +31,7 @@ export function patternMatch<
                     P extends Discriminator ? K
                     : P extends keyof IRenderableKargs<Cases[K]>
                     ? IRenderableKargs<Cases[K]>[P]
-                    : P extends Discriminator ? K : never
+                    : never
                 }
             }[keyof Cases],
             IRenderableOutput<Cases[keyof Cases]>

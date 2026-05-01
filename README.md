@@ -2,7 +2,7 @@
 
 ## ⚠️ This library is experimental. APIs may change without notice. Use at your own risk!
 
-> The fact is that I've put a loop inside another as they tell us not to do and the resulting is becoming surprisingly fun to experiment with!
+> The fact is that I've put a loop inside another as they tell us not to do and the resulting is becoming surprisingly fun to experiment with! (Also they were right... I didn't needed the nested one :])
 
 This is a experimental library that aims to provide templating composition and type/runtime safe interpolation for tagged template literals by leveraging Zod's validation ecosystem.
 
@@ -422,9 +422,6 @@ user.render({ firstName: 'John', lastName: 'Doe' })
 // → [['Hello, ', '!'], 'John Doe']
 ```
 
-The usage of `zt.z({})` without a `${}` (hole) is a type violation, if you dont have a shape you dont have a hole!
-Use `zt.t` for static structure instead, as they mean "collapsed" renderable in the sense it consumes `void` kargs.
-
 #### `zt.p(name, schema, transform?)`
 
 Declares a named keyword argument inline that:
@@ -558,10 +555,11 @@ const tpl = zt.z({ sortCol: column, dir: z.enum(['ASC', 'DESC']) })`
 
 #### `zt.opaque(renderable)`
 
-Opts a `IRenderable` out of output tuple type inference. The output is typed as [] (empty), reducing TypeScript compiler pressure for deeply nested or complex compositions.
+Opts a `IRenderable` out of output tuple type inference. The output is typed as [] (empty), reducing TypeScript compiler pressure for deeply nested kargs or complex compositions of output tuples.
 
 ```ts
-const complex = zt.z({ ... })`... deeply nested ...`
+const complex = zt.z({ ... })`... deeply nested with many conditions w/ different sets of values may slow down ts compiler ...`
+// If a large template being inserted into a parent one trigger compiler error at parent:
 const safe = zt.opaque(complex)
 // safe.render(kargs) → IRenderable<..., []> (output tuple hidden from type system)
 ```
@@ -1025,7 +1023,9 @@ Rule of thumb:
 While zod-tag is a fun experiment, its design pushes TypeScript’s type system and runtime validation to their limits. Be aware of these sharp edges before using it in anything serious.
 
 ### TypeScript Performance & Inference Limits
-- Deeply nested templates can cause the TypeScript compiler to slow down or fail with Type instantiation is excessively deep errors. The recursive utility types (MergeKargs, tuples traversing, etc.) were not built for complex, real‑world component trees.
+Wide output‑tuple unions can slow IntelliSense or produce unreadable hover types. This happens when you reuse a renderable that has a large output type many times in the same template (e.g., an environment block with dozens of values, repeated for every environment). TypeScript must then compute the concatenation of all those tuples, which can explode combinatorially.
+
+Use `zt.opaque(renderable)` to bail out of output‑tuple inference for such heavy blocks. It preserves full runtime behaviour and kargs typing, but tells TypeScript to treat the output as an empty tuple, dramatically reducing compiler pressure.
 
 ### Schema Shape Validation is Loose by Default
 - zt.z({ ... }) creates a schema using z.object(shape).loose(). This means extra properties are allowed in the keyword arguments object without throwing a validation error.

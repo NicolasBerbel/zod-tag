@@ -18,7 +18,9 @@ export interface TypedTag<
     KargsOutput extends KargsType,
     Types = TagTypes<KargsOutput>,
 > {
-    // Dynamic
+    /** zt.z({})`static-content` <- no holes - this means throw if schema invalid, but show only structure if data match */
+    (s: TemplateStringsArray): IRenderable<KargsInput, []>
+
     <
         /** Keyword args (obj arg) */
         Kargs extends ExtractKargs<V>,

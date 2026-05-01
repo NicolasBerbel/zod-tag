@@ -1,10 +1,29 @@
 import { type ExtractKargs, type ExtractOutput } from "../types/tag.types";
-import { type IRenderable } from "../core/renderable"
+import { IRenderableOutput, type IRenderable } from "../core/renderable"
 import { typedTag } from "../typed-tag"
 import { tagIdentity } from "./identity"
+import { SliceFirst } from "../types/util.types";
 
-type _JoinOutput<T, S> = T extends readonly [infer L, ...infer R] ? [S, L, ..._JoinOutput<R, S>] : []
-type JoinOutput<T, S> = _JoinOutput<T, S> extends [any, ...infer R] ? R : []
+/**
+ * Joins any tuple into output of target IRenderable argument
+ */
+type JoinOutputImpl<
+    List extends any[],
+    Sep extends IRenderable<any, any> = IRenderable<void, []>,
+    Acc extends any[] = []
+> = List extends [infer L, ...infer R]
+    ? JoinOutputImpl<R, Sep, [...Acc, ...IRenderableOutput<Sep>, ...IRenderableOutput<L>]>
+    : Acc;
+
+/**
+ * Joins any tuple into output of target IRenderable argument
+ */
+type JoinOutput<
+    List extends any[],
+    Sep extends IRenderable<any, any> = IRenderable<void, []>,
+> = IRenderableOutput<Sep> extends []
+    ? JoinOutputImpl<List, Sep>
+    : SliceFirst<JoinOutputImpl<List, Sep>>
 
 /**
  * Combine multiple renderables with given separator

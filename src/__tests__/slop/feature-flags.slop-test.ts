@@ -77,26 +77,30 @@ const environmentBlock = zt.z({
     })).min(1),
 })`
 # ${e => zt.unsafe(z.enum(ENVIRONMENTS), e.envName)} environment
-${e => zt.map(
-    e.flags,
-    featureFlag,
-    flag => ({
-        featureName: flag.featureName,
-        flagType: 'boolean' as const, // could be inferred from registry
-        value: flag.value,
-        rolloutPercentage: flag.rolloutPercentage,
-        rolloutStrategy: flag.rolloutStrategy,
-        scheduledAt: flag.scheduledAt,
-    }),
-    zt.t`\n`
-)}
+${e => {
+        const flagMapped = zt.map(
+            e.flags,
+            featureFlag,
+            flag => ({
+                featureName: flag.featureName,
+                flagType: 'boolean' as const, // could be inferred from registry
+                value: flag.value,
+                rolloutPercentage: flag.rolloutPercentage,
+                rolloutStrategy: flag.rolloutStrategy,
+                scheduledAt: flag.scheduledAt,
+            }),
+            zt.t`\n`
+        );
+        return flagMapped
+    }}
 `
 
 /**
  * This is important!
  * TODO: we need a kind of zt.opaque(renderer) that drops inference of output tuple, that rises the ts inference wall higher
  */
-const _safeEnvironmentBlock = zt.opaque(environmentBlock)
+const safeEnvironmentBlock = zt.opaque(environmentBlock)
+// const safeEnvironmentBlock = zt.opaque(environmentBlock)
 
 // ============================================================================
 // Full Feature Flag Manifest
@@ -121,9 +125,13 @@ const featureFlagManifest = zt.z({
 ${e => zt.if(e.description, zt.t`
 # ${e.description}
 `)}
-${zt.p('development', _safeEnvironmentBlock)}
-${zt.p('staging', _safeEnvironmentBlock)}
-${zt.p('production', _safeEnvironmentBlock)}
+${zt.p('development', environmentBlock)}
+${zt.p('staging', environmentBlock)}
+${zt.p('production', environmentBlock) /* <- featureFlagManifest : IRenderable<Karg, [...] | ... 14422 more ... | [...]>  */}
+${zt.p('staging:2', zt.opaque(environmentBlock))}
+${zt.p('production:2', zt.opaque(environmentBlock))}
+${zt.p('production:3', safeEnvironmentBlock)}
+${zt.p('production:4', safeEnvironmentBlock)}
 `
 
 // ============================================================================
@@ -132,7 +140,7 @@ ${zt.p('production', _safeEnvironmentBlock)}
 
 type ManifestConfig = IRenderableKargs<typeof featureFlagManifest>
 
-const config: ManifestConfig = {
+const config = {
     project: 'my-saas-platform',
     version: '2.4.1',
     description: 'Feature flags for Q3 2026 release',
@@ -228,7 +236,11 @@ const config: ManifestConfig = {
             },
         ],
     },
-}
+} as ManifestConfig;
+config['staging:2'] = config.staging;
+config['production:2'] = config.production;
+config['production:3'] = config.production;
+config['production:4'] = config.production;
 
 // ============================================================================
 // Render & Inspect

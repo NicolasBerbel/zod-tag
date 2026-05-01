@@ -25,63 +25,52 @@ export type ExtractValueKargs<T> =
         ) : {}
     ) : {}
 
+/**
+ * Produces a intersection of kargs found in the template input values
+ */
+export type ExtractKargsImpl<List extends any[], Acc = {}> =
+    List extends [infer L, ...infer R]
+    ? ExtractKargsImpl<R, Acc & ExtractValueKargs<L>>
+    : Acc
 
 /**
- * Produces a intersection of kwargs found in the template input values
+ * Produces a intersection of kargs found in the template input values
  */
-export type MergeKargs<
-    T,
-    A extends Record<string, any> = {}
-> =
-    T extends [infer L, ...infer R] ? (
-        A & (
-            ExtractValueKargs<L> extends void
-            ? {}
-            : ExtractValueKargs<L>
-        ) & MergeKargs<R, A>
-    ) : A
-
-/**
- * Produces a intersection of kwargs found in the template input values
- */
-export type ExtractKargs<T> = (
-    keyof MergeKargs<T> extends never
-    ? void
-    : MergeKargs<T>
+export type ExtractKargs<T extends any[]> = (
+    keyof ExtractKargsImpl<T> extends never ? void : ExtractKargsImpl<T>
 )
 
 /**
- * Produces a tuple of output values found in the template input values
+ * Values that needs a arg with record shape
+ * 
+ * Primitives are returned wrapped in single tuple
  */
-export type MergeOutput<T> =
-    T extends readonly [infer L, ...infer R] ? (
-        // Merge renderables
-        L extends IRenderable<any, infer O> ? (
-            [...O, ...MergeOutput<R>]
-        ) : (
-            L extends TagSelector<any, infer V> ? (
-                // One depth call for selectors
-                V extends TagBehavior ? (
-                    MergeOutput<[V, ...R]>
-                ) : [V, ...MergeOutput<R>]
-            ) : (
-                // Schemas may output other tag types or the validated
-                L extends z.ZodType ? (
-                    z.output<L> extends IRenderable<infer K, any> ? (
-                        // Recursive call for schema selectors
-                        MergeOutput<[z.output<L>, ...R]>
-                        // Schema output is primitive
-                    ) : [z.output<L>, ...MergeOutput<R>]
-                    // Output is primitive
-                ) : [L, ...MergeOutput<R>]
-            )
-        )
-    ) : []
+export type ExtractValueOutput<T> =
+    // Inner renderable templates kargs
+    T extends IRenderable<any, infer O> ? (
+        [...O]
+    ) :
+    // Recursively collects kargs inside selectors 
+    T extends TagSelector<any, infer V> ? (
+        ExtractValueOutput<V>
+    ) :
+    // Extract shape from object inputs
+    T extends z.ZodType ? (
+        ExtractValueOutput<z.output<T>>
+    ) : [T]
 
 /**
- * Produces a tuple of output values found in the template input values
+ * Produces a tuple of output values found in the template input values tuple
  */
-export type ExtractOutput<T> = MergeOutput<T>
+export type ExtractOutputImpl<T extends any[], Acc extends any[] = []> =
+    T extends [infer L, ...infer R] ? (
+        ExtractOutputImpl<R, [...Acc, ...ExtractValueOutput<L>]>
+    ) : Acc
+
+/**
+ * Produces a tuple of output values found in the template input values tuple
+ */
+export type ExtractOutput<T extends any[]> = ExtractOutputImpl<T>
 
 /** Tag primitive type */
 export type TagPrimitive = string | number | boolean | null | undefined | any[] | Record<string, any>;

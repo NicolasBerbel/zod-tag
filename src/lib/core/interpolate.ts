@@ -43,37 +43,36 @@ export function interpolate<K extends KargsType>(renderable: IRenderable<K, any>
     let op: InterpolationOperation = null!;
     try {
         for (; i < _values.length; i++) {
-            while (true) {
-                value = _values[i]
+            value = _values[i]
 
-                if (isZTRenderable(value)) {
-                    /** Transform nested renderables: recursively merges inner renderables */
-                    op = 'renderable'
-                    if (!(value as any).__compiled) throw InterpolationError.for(new Error('uncompiled renderer violation!'), {
-                        index: i,
-                        op,
-                        renderer: renderable,
-                        strings: _strings,
-                        value,
-                    })
+            if (isZTRenderable(value)) {
+                /** Transform nested renderables: recursively merges inner renderables */
+                op = 'renderable'
+                if (!(value as any).__compiled) throw InterpolationError.for(new Error('uncompiled renderer violation!'), {
+                    index: i,
+                    op,
+                    renderer: renderable,
+                    strings: _strings,
+                    value,
+                })
 
-                    const [_s, ..._v] = value.render(kargs)
-                    spliceInterpolation(i, _strings, _values, _s, _v)
-                } else if (isSchemaType(value)) {
-                    const schema = value;
-                    // Object types decodes kargs
-                    op = 'karg-schema'
+                const [_s, ..._v] = value.render(kargs)
+                spliceInterpolation(i, _strings, _values, _s, _v)
+                i--;
+            } else if (isSchemaType(value)) {
+                const schema = value;
+                // Object types decodes kargs
+                op = 'karg-schema'
 
-                    // TODO: maybe we should extract keys for strict mode?
-                    // const keys = Object.keys(getSlotShape(value) ?? {})
-                    _values[i] = schema.decode(scopedKargs(value, kargs))
-                } else if (typeof value === 'function') {
-                    /** Transform function values: if value is a function its called with karg object to determine the actual interpolation value */
-                    op = 'selector'
-                    _values[i] = value(kargs)
-                } else {
-                    break;
-                }
+                // TODO: maybe we should extract keys for strict mode?
+                // const keys = Object.keys(getSlotShape(value) ?? {})
+                _values[i] = schema.decode(scopedKargs(value, kargs))
+                i--;
+            } else if (typeof value === 'function') {
+                /** Transform function values: if value is a function its called with karg object to determine the actual interpolation value */
+                op = 'selector'
+                _values[i] = value(kargs)
+                i--;
             }
         }
     } catch (e) {

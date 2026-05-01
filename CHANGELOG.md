@@ -5,22 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.0.6] - 2026-04-30
 
 ### Added
 
 - Added unit tests for interpolation, composition and pattern-matching
 - Added unit tests for algebraic-properties, performance and memory
+- Added type tests for core inference (sanity checks)
 - `zt.join` overload for correct type inference in combine operation of renderables
 - `zt.if` overload for correct type inference in conditional identity operation of renderables
 
 ### Changed
 
 - The output tuple `[strs[], ...vals]` of `renderer.render()` is now immutable (both: the tuple and the strings array)
+- Removed nested `while(true)` loop from `compile` and `interpolate`
+- Refactor on `ExtractKargs` and `ExtractOutput` to use tail recursive patterns
 
 ### Fixed
 
 - Regression on `zt.match` given 'strict' inner discriminated union shape
+- Better type inference for `zt.map` and `zt.join`
 
 ## [0.0.5] - 2026-04-29
 
