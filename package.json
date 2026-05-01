@@ -1,6 +1,6 @@
 {
   "name": "zod-tag",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Typesafe runtime validation for tagged template strings leveraging zod schemas",
   "private": false,
   "type": "module",
