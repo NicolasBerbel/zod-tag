@@ -1,7 +1,7 @@
 import {
     type IRenderable,
+    type IZodTagRenderable,
     isZTRenderable,
-    IZodTagRenderable
 } from "./renderable"
 import {
     type InterpolationOperation,
@@ -9,16 +9,11 @@ import {
 } from "./interpolation-error"
 import { spliceInterpolation } from "./splice"
 import {
-    createSchemaStrategies,
+    type CreateSchemaStrategy,
+    type MergeSchemaStrategy,
     mergeSchemas,
-    mergeStrategies,
 } from "./schema"
 import { withScope } from "./scope"
-
-export type CompileOptions = {
-    mergeStrategy: keyof typeof mergeStrategies,
-    schemaStrategy: keyof typeof createSchemaStrategies,
-}
 
 /**
  * The compile step iterates through each slot preflattening the renderable with each nested renderable found
@@ -29,13 +24,12 @@ export type CompileOptions = {
  * What can we skip in the interpolation step?
  * - Already known static primitives can be saved and skipped later?
  */
-export function compile<T extends IRenderable<any, any>>(_renderable: T, options?: CompileOptions) {
-    const {
-        mergeStrategy = 'intersect',
-        schemaStrategy = 'loose',
-    } = options ?? {}
+export function compile<T extends IRenderable<any, any>>(_renderable: T) {
     const renderable = _renderable as any as IZodTagRenderable
-    const { vals, strs } = renderable
+    const { vals, strs,
+        merge: mergeStrategy,
+        trait: schemaStrategy,
+    } = renderable
     const _values = vals.slice()
     const _strings = strs.slice()
 
@@ -63,7 +57,7 @@ export function compile<T extends IRenderable<any, any>>(_renderable: T, options
                 // TODO: could improve by collecting shape before compile?
                 // real parse for us is js native tagged template literals [str[], ...v] <- our AST?
                 // collectSchema|"parse" -> compile -> interpolate
-                const [mergedSchema] = mergeSchemas(_schema, value, { mergeStrategy, schemaStrategy })
+                const [mergedSchema] = mergeSchemas(_schema, value, mergeStrategy, schemaStrategy)
                 _schema = mergedSchema;
 
                 const scopedValues = withScope(_v, value.scope, true)

@@ -3,7 +3,7 @@
  */
 
 import z from 'zod'
-import { zt, type IRenderableKargs } from '../../dist/main.js'
+import { zt, type IRenderableKargs } from '../../../dist/main.js'
 
 const hello = zt`Hello ${1} World`
 console.log(zt.debug(hello.render()), hello.render().slice(1))
@@ -65,6 +65,8 @@ console.log(renderedUserHeading, zt.raw(e => e)(renderedUserHeading))
 const createUser = zt.z({ name: z.string(), email: z.email() })`
 INSERT INTO users (name, email) VALUES (${e => e.name}, ${e => e.email})
 `
+// const createUserStrict = createUser
+
 const updateUser = zt.z({ id: z.uuid(), name: z.string() })`
 UPDATE users SET name = ${e => e.name} WHERE id = ${e => e.id}
 `

@@ -104,7 +104,7 @@ describe('Rendering performance', () => {
         });
         // Expect 500-value renders to be at most 7× slower than 100-value renders
         // (allowing some non-linearity from array copying, but not exponential).
-        ok(times[1] / times[0] < 7, `non-linear scaling: ${times[1] / times[0]}x`);
+        ok(times[1] / times[0] < 7, `non-linear scaling: ${sizes[1]}-value renders to be at most 7x slower than ${sizes[0]}-value renders - result = ${times[1] / times[0]}x`);
     });
 
     it('repeated renders are stable (no memory leak or degradation)', () => {

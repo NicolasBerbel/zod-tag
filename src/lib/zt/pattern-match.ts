@@ -3,6 +3,8 @@ import {
     type IRenderableKargs,
     type IRenderableOutput,
     type IRenderable,
+    type ZtTrait,
+    DEFAULT_TRAIT,
 } from "../core/renderable";
 import { typedTag } from "../typed-tag";
 import { getSlotShape } from "../core/slot";
@@ -11,13 +13,15 @@ import { createSchema } from "../core/schema";
 export function patternMatch<
     Discriminator extends string,
     Cases extends Record<string, IRenderable<any, any>>,
+    Trait extends ZtTrait = DEFAULT_TRAIT,
 >(
     discriminator: Discriminator,
-    cases: Cases
+    cases: Cases,
+    trait: Trait = DEFAULT_TRAIT as any,
 ) {
     const unionSchemas = Object.entries(cases).map(([key, renderable]) => {
         const shape = getSlotShape(renderable) ?? {}
-        return createSchema({ ...shape, [discriminator]: z.literal(key) }, 'loose')
+        return createSchema({ ...shape, [discriminator]: z.literal(key) }, trait)
     })
 
     const union = z.discriminatedUnion(discriminator, unionSchemas as any)

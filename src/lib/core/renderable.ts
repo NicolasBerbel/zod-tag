@@ -6,8 +6,10 @@ import { compile } from "./compile";
 import { withSource } from "./source";
 import { interpolate } from "./interpolate";
 import { extractScopedKargs } from "./scope";
-import { createSchemaStrategies, mergeStrategies } from "./schema";
-
+import {
+    type CreateSchemaStrategy,
+    type MergeSchemaStrategy
+} from "./schema";
 
 /** Type guard for renderable instances */
 export const isRenderable = (v: unknown): v is IRenderable<any, any> => (
@@ -20,20 +22,33 @@ export const isZTRenderable = (v: unknown): v is IZodTagRenderable<any, any> => 
 /** Symbol for renderable instances created with `createRenderable` */
 export const RENDERABLE_SYMBOL = Symbol.for("IRenderable");
 
+/** Zod Tag trait / shape strategy (loose | strict | default) */
+export type ZtTrait = CreateSchemaStrategy;
+/** Zod Tag merge strategy */
+export type ZtMerge = MergeSchemaStrategy;
+
+export const DEFAULT_TRAIT = 'loose' as const satisfies CreateSchemaStrategy;
+export type DEFAULT_TRAIT = typeof DEFAULT_TRAIT;
+
+export const DEFAULT_MERGE = 'intersect' as const satisfies MergeSchemaStrategy;
+export type DEFAULT_MERGE = typeof DEFAULT_MERGE;
+
 /**
  * @param fn a function to be executed on rendering
  */
 export function createRenderable<
     Kargs extends KargsType = any,
     Output extends unknown[] = any,
+    Trait extends CreateSchemaStrategy = DEFAULT_TRAIT,
+    Merge extends MergeSchemaStrategy = DEFAULT_MERGE
 >(
     strs: string[] | TemplateStringsArray,
     vals: unknown[],
     schema?: z.ZodType,
-    scope?: string[]
+    scope: string[] = [],
+    trait: Trait = DEFAULT_TRAIT as any,
+    merge: Merge = DEFAULT_MERGE as any,
 ) {
-    const mergeStrategy: keyof typeof mergeStrategies = 'intersect';
-    const schemaStrategy: keyof typeof createSchemaStrategies = 'loose';
     let _strs = strs.slice() as string[]
     let _vals = vals.slice();
     let _schema = schema;
@@ -41,6 +56,8 @@ export function createRenderable<
 
     // construct with stack
     const renderable = withSource({
+        get trait() { return trait },
+        get merge() { return merge },
         get scope() { return scope },
         get schema() { return _schema },
         get strs() { return _strs },
@@ -51,7 +68,7 @@ export function createRenderable<
 
     // precompile the renderable
     if (vals.length) {
-        [_strs, _vals, _schema] = compile(renderable, { mergeStrategy, schemaStrategy });
+        [_strs, _vals, _schema] = compile(renderable);
     }
 
     // assign interpolation
@@ -87,13 +104,7 @@ export interface IRenderable<
     /**
      * Process input kwargs
      */
-    render: (
-        this: IRenderable<Kargs, Output>,
-        kargs: Kargs,
-    ) => [
-            strs: string[],
-            ...vals: Output
-        ];
+    render: (kargs: Kargs) => [strs: string[], ...vals: Output];
 }
 
 /**
@@ -101,8 +112,12 @@ export interface IRenderable<
  */
 export interface IZodTagRenderable<
     Kargs extends KargsType = any,
-    Output extends unknown[] = any
+    Output extends unknown[] = any,
+    Trait extends ZtTrait = any,
+    Merge extends ZtMerge = any,
 > extends IRenderable<Kargs, Output> {
+    trait: Trait,
+    merge: Merge,
     strs: string[];
     vals: unknown[]
     schema?: z.ZodType;

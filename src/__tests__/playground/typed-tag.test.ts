@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import { throws, deepEqual } from 'node:assert/strict';
 import z from 'zod';
-import { zt, InterpolationError } from '../../dist/main.js'
+import { zt, InterpolationError } from '../../../dist/main.js'
 
 describe('zt - Zod Tag', () => {
 

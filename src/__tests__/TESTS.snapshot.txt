@@ -8,81 +8,199 @@ TAP version 13
         # Subtest: getById
         ok 1 - getById
           ---
-          duration_ms: 10.4506
+          duration_ms: 10.0649
           type: 'test'
           ...
         1..1
     ok 1 - Users
       ---
-      duration_ms: 12.114
+      duration_ms: 11.5616
       type: 'suite'
       ...
     1..1
 ok 1 - Repository
   ---
-  duration_ms: 13.221
+  duration_ms: 12.6576
   type: 'suite'
   ...
-# {
-#   scope: [Getter],
-#   schema: [Getter],
-#   strs: [Getter],
-#   vals: [Getter],
-#   __compiled: [Getter],
-#   __templateSource: {
-#     stack: '    at file:///./zod-tag/src/__tests__/typed-tag.type-test.ts:32:15'
-#   },
-#   render: [Function (anonymous)],
-#   [Symbol(IRenderable)]: true
+# Subtest: zt - Zod Tag
+    # Subtest: static template
+        # Subtest: should render a template without interpolation values
+        ok 1 - should render a template without interpolation values
+          ---
+          duration_ms: 3.8673
+          type: 'test'
+          ...
+        # Subtest: should render a template with static interpolation values
+        ok 2 - should render a template with static interpolation values
+          ---
+          duration_ms: 0.5255
+          type: 'test'
+          ...
+        # Subtest: should render a template with transformed interpolation values
+        ok 3 - should render a template with transformed interpolation values
+          ---
+          duration_ms: 0.645
+          type: 'test'
+          ...
+        1..3
+    ok 1 - static template
+      ---
+      duration_ms: 6.6008
+      type: 'suite'
+      ...
+    # Subtest: keyword argument templates
+        # Subtest: should allow inline object/codec schemas as karg params
+        ok 1 - should allow inline object/codec schemas as karg params
+          ---
+          duration_ms: 7.1225
+          type: 'test'
+          ...
+        # Subtest: should validate against zod shape definition
+        ok 2 - should validate against zod shape definition
+          ---
+          duration_ms: 3.4518
+          type: 'test'
+          ...
+        # Subtest: should merge keyword arguments when karg are present both at shape definition and inline arg
+        ok 3 - should merge keyword arguments when karg are present both at shape definition and inline arg
+          ---
+          duration_ms: 3.2178
+          type: 'test'
+          ...
+        1..3
+    ok 2 - keyword argument templates
+      ---
+      duration_ms: 14.1431
+      type: 'suite'
+      ...
+    # Subtest: nested templates
+        # Subtest: should merge nested templates
+        ok 1 - should merge nested templates
+          ---
+          duration_ms: 5.1822
+          type: 'test'
+          ...
+        1..1
+    ok 3 - nested templates
+      ---
+      duration_ms: 7.4746
+      type: 'suite'
+      ...
+    # Subtest: utilities
+        # Subtest: zt.unsafe utility dangerously sets a static string content inside the template
+        ok 1 - zt.unsafe utility dangerously sets a static string content inside the template
+          ---
+          duration_ms: 0.3604
+          type: 'test'
+          ...
+        # Subtest: zt.p utility creates a named param and allows conditional rendering
+        ok 2 - zt.p utility creates a named param and allows conditional rendering
+          ---
+          duration_ms: 0.5296
+          type: 'test'
+          ...
+        # Subtest: format utilities
+            # Subtest: zt.$n utility formats interpolation as dolar index placeholders
+            ok 1 - zt.$n utility formats interpolation as dolar index placeholders
+              ---
+              duration_ms: 0.5785
+              type: 'test'
+              ...
+            # Subtest: zt.atIndex utility formats interpolation as @ index placeholders
+            ok 2 - zt.atIndex utility formats interpolation as @ index placeholders
+              ---
+              duration_ms: 0.4611
+              type: 'test'
+              ...
+            # Subtest: zt.debug utility formats as String.raw would
+            ok 3 - zt.debug utility formats as String.raw would
+              ---
+              duration_ms: 0.4524
+              type: 'test'
+              ...
+            1..3
+        ok 3 - format utilities
+          ---
+          duration_ms: 1.7826
+          type: 'suite'
+          ...
+        1..3
+    ok 4 - utilities
+      ---
+      duration_ms: 3.1108
+      type: 'suite'
+      ...
+    1..4
+ok 2 - zt - Zod Tag
+  ---
+  duration_ms: 32.8011
+  type: 'suite'
+  ...
+# ═══════════════════════════════════════
+#   Universal Code Generator - Stress
+# ═══════════════════════════════════════
+# export class User {
+#   id: number;
+#   name: string;
+#   active: boolean;
 # }
-# [
-#   [ '\\n    [static]: ', ' ', '\\n\\n    ', '\\n\\n    ', '\\n\\n\\n' ],
-#   2,
-#   'string value',
-#   'asd',
-#   [ 1, 2, [Function (anonymous)], 4 ]
-# ]
-# Hello 1 World [ 1 ]
-# [
-#   [
-#     '\\n    Date: ',
-#     '\\n    Timestamp: ',
-#     '\\n    Date: ',
-#     '\\n\\n    ----- USER CARD -----\\n    \\n    Hello: ',
-#     '\\n    Age: ',
-#     '\\n    val: ',
-#     '\\n    val2: ',
-#     '\\n\\n    ---- TITLE ----\\n    \\n    A new user in the application\\n    ',
-#     '\\n\\n'
-#   ],
-#   '01/05/2026',
-#   1777657816242,
-#   1,
-#   'John Doe',
-#   19,
-#   'aaa',
-#   'Content of val2',
-#   'Say hello!'
-# ] 
-#     Date: 01/05/2026
-#     Timestamp: 1777657816242
-#     Date: 1
-#     ----- USER CARD -----
+#   TS output:
 #     
-#     Hello: John Doe
-#     Age: 19
-#     val: aaa
-#     val2: Content of val2
-#     ---- TITLE ----
 #     
-#     A new user in the application
-#     Say hello!
-# CREATE: 
-# INSERT INTO users (name, email) VALUES ($0, $1)
-# UPDATE: 
-# UPDATE users SET name = $0 WHERE id = $1
-# DELETE: 
-# DELETE FROM users WHERE id = $0
+#     
+#     
+#     export class User {
+#     
+#       id: number;
+#     
+#       name: string;
+#     
+#       active: boolean;
+#     }
+#     
+#   ✓ TypeScript entity with decorators and imports
+# CREATE TABLE Products (
+#   product_id REAL
+#   name TEXT
+#   price REAL
+# );
+#   SQL output:
+#     
+#     
+#     
+#     CREATE TABLE Products (
+#     
+#       product_id REAL
+#     
+#       name TEXT
+#     
+#       price REAL
+#     );
+#     
+#   ✓ SQL entity generation produces valid CREATE TABLE
+# class AdminUser(User):
+#     permissions: str
+#   Python output:
+#     
+#     class AdminUser(User):
+#     
+#     
+#         permissions: str
+#     
+#   ✓ Python entity with inheritance
+#   Rendered 50 entities in 255.7ms (5.113479999999998ms/entity)
+#   Values: 500, Strings length: 501
+#   ✓ large data set - 50 entities with 10 fields each
+#   ✓ empty entities array produces no entity code
+#   ✓ missing required key in strict mode throws
+#   ✓ extra key rejected by strict parent
+#   Strict with scoped dynamic (works): col: TEXT
+#   Strict correctly rejects dynamic selector extra key
+#   ✓ dynamic field type via loose parent works, strict fails for dynamic
+# ═══════════════════════════════════
+#   8 passed, 0 failed
+# ═══════════════════════════════════
 # ═══════════════════════════════════
 #   CONDITIONAL SQL COMMAND BUILDER
 # ═══════════════════════════════════
@@ -293,7 +411,7 @@ ok 1 - Repository
 # ▶ VALUES (flag values, percentages, dates):
 #   [0] my-saas-platform
 #   [1] 2.4.1
-#   [2] 2026-05-01T17:50:16.395Z
+#   [2] 2026-05-02T01:08:08.816Z
 #   [3] Feature flags for Q3 2026 release
 #   [4] boolean
 #   [5] true
@@ -420,7 +538,7 @@ ok 1 - Repository
 # \# Feature Flags Manifest
 # \# Project: my-saas-platform
 # \# Version: 2.4.1
-# \# Generated: 2026-05-01T17:50:16.395Z
+# \# Generated: 2026-05-02T01:08:08.816Z
 # \# ============================================================================
 # \# Feature flags for Q3 2026 release
 # \# development environment
@@ -1152,6 +1270,50 @@ ok 1 - Repository
 # ✓ Conditional rendering keeps queries flexible
 # ✓ Dynamic field selection for advanced use cases
 # ═══════════════════════════════════════
+#   Multi-Tenant SaaS Config Generator
+# ═══════════════════════════════════════
+#     Output:
+#       
+#       \# Tenant: Acme Corp
+#       \# ID: t-123
+#       \# Environment: production
+#       
+#       \#\# Features
+#       
+#       dark-mode:
+#         enabled: true
+#         rollout: 100%
+#       
+#       
+#       new-checkout:
+#         enabled: false
+#         rollout: 0%
+#       
+#       
+#       \#\# Provisioning
+#       aws:
+#         region: us-east-1
+#         instance: t3.medium
+#         role: arn:aws:iam::123456789012:role/MyRole
+#       
+#   ✓ strict tenant manifest renders correctly with valid data
+#   ✓ zt.p isolates provisioning strategy – no provider keys leaked to parent
+#   ✓ strict parent rejects unrecognised key inside provisioning if not passthrough
+#     Output: 
+#         Standard: std-flag: true
+#         beta-flag: false
+#     
+#   ✓ dynamic selector in loose parent can be finalized via zt.strict() pattern
+#     Number of tenants: 2
+#     Total parameterized values: 16
+#   ✓ map over tenants produces individual strict manifests
+#     Error message snippet: root-schema(object)[-1] > [
+#   ✓ missing required key in strict mode produces clear error
+#   ✓ invalid provider in scoped provisioning is caught
+# ═══════════════════════════════════
+#   7 passed, 0 failed
+# ═══════════════════════════════════
+# ═══════════════════════════════════════
 #   NPC DIALOG STATE MACHINE
 #   Full Library Stress Test
 # ═══════════════════════════════════════
@@ -1375,7 +1537,7 @@ ok 1 - Repository
 # ╚══════════════════════════════════════════════════╝
 #   ✓ NPC dialog screen without weather/rep
 # ─── Performance ───
-#     Rendered 220 dialogs in 26.1ms (0.12ms each)
+#     Rendered 220 dialogs in 24.7ms (0.11ms each)
 #   ✓ render all 26+ states 10 times each
 # ─── Structure vs Values ───
 #   ✓ NPC names are in values array
@@ -1513,7 +1675,7 @@ ok 1 - Repository
 #     INSERT INTO users 
 #       (id, name, email, role)
 #     VALUES (
-#       '176c2116-b3ec-41e1-b142-9e40a3b9'/*+4 bytes*/,
+#       '9fa79fa4-8f25-4ad0-ae2b-089d0e99'/*+4 bytes*/,
 #       'Diana Prince', 
 #       'diana@example.com', 
 #       'admin'
@@ -1521,12 +1683,12 @@ ok 1 - Repository
 #     RETURNING *
 #   
 #    Created: {
-#   id: '176c2116-b3ec-41e1-b142-9e40a3b9c9cd',
+#   id: '9fa79fa4-8f25-4ad0-ae2b-089d0e99ed6e',
 #   name: 'Diana Prince',
 #   email: 'diana@example.com',
 #   role: 'admin',
-#   created_at: '2026-05-01 17:50:16',
-#   updated_at: '2026-05-01 17:50:16'
+#   created_at: '2026-05-02 01:08:09',
+#   updated_at: '2026-05-02 01:08:09'
 # }
 # 2. FIND USER BY ID:
 #     SELECT * FROM users
@@ -1537,8 +1699,8 @@ ok 1 - Repository
 #   name: 'Alice Johnson',
 #   email: 'alice@example.com',
 #   role: 'admin',
-#   created_at: '2026-05-01 17:50:16',
-#   updated_at: '2026-05-01 17:50:16'
+#   created_at: '2026-05-02 01:08:09',
+#   updated_at: '2026-05-02 01:08:09'
 # }
 #    SQL: 
 #     SELECT * FROM users
@@ -1572,7 +1734,7 @@ ok 1 - Repository
 #     role: 'guest'
 #   },
 #   {
-#     id: '176c2116-b3ec-41e1-b142-9e40a3b9c9cd',
+#     id: '9fa79fa4-8f25-4ad0-ae2b-089d0e99ed6e',
 #     name: 'Diana Prince',
 #     email: 'diana@example.com',
 #     role: 'admin'
@@ -1589,19 +1751,19 @@ ok 1 - Repository
 #     INSERT INTO posts 
 #       (id, user_id, title, content)
 #     VALUES (
-#       'd8fe70ba-e2ea-413e-8ff6-90543ba5'/*+4 bytes*/,
-#       '176c2116-b3ec-41e1-b142-9e40a3b9'/*+4 bytes*/,
+#       'fcf364e3-341d-43ad-8efa-a88da50b'/*+4 bytes*/,
+#       '9fa79fa4-8f25-4ad0-ae2b-089d0e99'/*+4 bytes*/,
 #       'Working with zod-tag',
 #       'This library is amazing for type'/*+10 bytes*/
 #     )
 #     RETURNING *
 #   
 #    Created post: {
-#   id: 'd8fe70ba-e2ea-413e-8ff6-90543ba55b0e',
-#   user_id: '176c2116-b3ec-41e1-b142-9e40a3b9c9cd',
+#   id: 'fcf364e3-341d-43ad-8efa-a88da50b2f46',
+#   user_id: '9fa79fa4-8f25-4ad0-ae2b-089d0e99ed6e',
 #   title: 'Working with zod-tag',
 #   content: 'This library is amazing for type-safe SQL!',
-#   created_at: '2026-05-01 17:50:16'
+#   created_at: '2026-05-02 01:08:09'
 # }
 # 5. FIND POSTS BY USER:
 #     SELECT * FROM posts
@@ -1614,14 +1776,14 @@ ok 1 - Repository
 #     user_id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
 #     title: 'First Post',
 #     content: 'Hello world!',
-#     created_at: '2026-05-01 17:50:16'
+#     created_at: '2026-05-02 01:08:09'
 #   },
 #   {
 #     id: 'c25303ab-f869-424a-bd2f-2a0629e8ef91',
 #     user_id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
 #     title: 'Second Post',
 #     content: 'Zod is awesome',
-#     created_at: '2026-05-01 17:50:16'
+#     created_at: '2026-05-02 01:08:09'
 #   }
 # ]
 # 6. UPDATE USER:
@@ -1639,8 +1801,8 @@ ok 1 - Repository
 #   name: 'Bob Smith',
 #   email: 'bob@example.com',
 #   role: 'admin',
-#   created_at: '2026-05-01 17:50:16',
-#   updated_at: '2026-05-01 17:50:16'
+#   created_at: '2026-05-02 01:08:09',
+#   updated_at: '2026-05-02 01:08:09'
 # }
 # 7. SEARCH USERS (name contains "a", role = admin):
 #     SELECT * FROM users
@@ -1657,16 +1819,16 @@ ok 1 - Repository
 #     name: 'Alice Johnson',
 #     email: 'alice@example.com',
 #     role: 'admin',
-#     created_at: '2026-05-01 17:50:16',
-#     updated_at: '2026-05-01 17:50:16'
+#     created_at: '2026-05-02 01:08:09',
+#     updated_at: '2026-05-02 01:08:09'
 #   },
 #   {
-#     id: '176c2116-b3ec-41e1-b142-9e40a3b9c9cd',
+#     id: '9fa79fa4-8f25-4ad0-ae2b-089d0e99ed6e',
 #     name: 'Diana Prince',
 #     email: 'diana@example.com',
 #     role: 'admin',
-#     created_at: '2026-05-01 17:50:16',
-#     updated_at: '2026-05-01 17:50:16'
+#     created_at: '2026-05-02 01:08:09',
+#     updated_at: '2026-05-02 01:08:09'
 #   }
 # ]
 #    SQL: 
@@ -1689,24 +1851,24 @@ ok 1 - Repository
 #     name: 'Carol Davis',
 #     email: 'carol@example.com',
 #     role: 'guest',
-#     created_at: '2026-05-01 17:50:16',
-#     updated_at: '2026-05-01 17:50:16'
+#     created_at: '2026-05-02 01:08:09',
+#     updated_at: '2026-05-02 01:08:09'
 #   },
 #   {
 #     id: 'cf4f5b2b-6c13-42ba-b6dd-53d6f5e75825',
 #     name: 'Bob Smith',
 #     email: 'bob@example.com',
 #     role: 'admin',
-#     created_at: '2026-05-01 17:50:16',
-#     updated_at: '2026-05-01 17:50:16'
+#     created_at: '2026-05-02 01:08:09',
+#     updated_at: '2026-05-02 01:08:09'
 #   },
 #   {
 #     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
 #     name: 'Alice Johnson',
 #     email: 'alice@example.com',
 #     role: 'admin',
-#     created_at: '2026-05-01 17:50:16',
-#     updated_at: '2026-05-01 17:50:16'
+#     created_at: '2026-05-02 01:08:09',
+#     updated_at: '2026-05-02 01:08:09'
 #   }
 # ]
 #    SQL: 
@@ -1742,7 +1904,7 @@ ok 1 - Repository
 #     post_id: 'edc9bc8b-5f0c-4b95-8d77-7e629c918755',
 #     title: 'First Post',
 #     content: 'Hello world!',
-#     post_created_at: '2026-05-01 17:50:16'
+#     post_created_at: '2026-05-02 01:08:09'
 #   },
 #   {
 #     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
@@ -1752,7 +1914,7 @@ ok 1 - Repository
 #     post_id: 'c25303ab-f869-424a-bd2f-2a0629e8ef91',
 #     title: 'Second Post',
 #     content: 'Zod is awesome',
-#     post_created_at: '2026-05-01 17:50:16'
+#     post_created_at: '2026-05-02 01:08:09'
 #   }
 # ]
 #    SQL: 
@@ -1772,7 +1934,7 @@ ok 1 - Repository
 #   
 # 10. DELETE USER:
 #     DELETE FROM users
-#     WHERE id = '176c2116-b3ec-41e1-b142-9e40a3b9'/*+4 bytes*/
+#     WHERE id = '9fa79fa4-8f25-4ad0-ae2b-089d0e99'/*+4 bytes*/
 #     RETURNING id
 #   
 #    Deleted user ID: { changes: 1, lastInsertRowid: 4 }
@@ -1799,37 +1961,55 @@ ok 1 - Repository
 #     WHERE id = $0
 #   
 #    Parameters: [ 'd577d021-1d38-4769-a27a-3a3a03d3425c' ]
+# ═══════════════════════════════════════
+#   SQL + Prompt Engineering Pipeline
+# ═══════════════════════════════════════
+#   Config "quick-security-scan" saved with id 3d513bb0-2c78-4c7d-84a5-b8a76b95c02d
+#   ✓ save and retrieve a strict prompt config
+#   ✓ strict config insertion rejects invalid severity
+#   Prompt generated with 5 parameterized values
+#   ✓ render prompt with valid config and verify structure/value separation
+#   ✓ re-render with different language does not bleed
+#   ✓ strict prompt rejects unknown extra key
+#   Generated 2 reviews
+#   ✓ batch review generation via zt.map
+#   100 configs + prompt render in 11ms
+#   ✓ performance: insert 100 configs and render prompt
+#   ✓ missing config throws
+# ═══════════════════════════════════
+#   8 passed, 0 failed
+# ═══════════════════════════════════
 # ═══════════════════════════════════════════
 #   ZOD-TAG CLI DASHBOARD DEMO
 #   Prompt Configs (SQL) + Prompt Rendering
 # ═══════════════════════════════════════════
 # ─── Saving Prompt Configurations ───
 # ✓ Config "quick-security-scan" saved: {
-#   id: 'b1ab5cf5-8fba-4ec7-b338-888b985ff436',
+#   id: 'af2b2d8e-2292-4941-a3e5-dc5dcf06b121',
 #   name: 'quick-security-scan',
 #   persona: 'pedantic-reviewer',
 #   format: 'checklist',
 #   severity: 'strict',
 #   focus_areas: 'security,error-handling',
-#   created_at: '2026-05-01 17:50:16'
+#   created_at: '2026-05-02 01:08:09'
 # }
 # ✓ Config "mentor-code-review" saved: {
-#   id: '90192aa5-4927-4ff4-be6e-ac228fd1c352',
+#   id: '3b86a6d7-e9ea-4839-b190-29ab4dc75a43',
 #   name: 'mentor-code-review',
 #   persona: 'mentor',
 #   format: 'bullets',
 #   severity: 'gentle',
 #   focus_areas: 'readability,performance,architecture',
-#   created_at: '2026-05-01 17:50:16'
+#   created_at: '2026-05-02 01:08:09'
 # }
 # ✓ Config "architecture-audit" saved: {
-#   id: '422e4a57-4a90-4aa8-9a71-0794c5bac920',
+#   id: 'b9dd5f54-f6ff-4522-942e-e33fa2d45b9d',
 #   name: 'architecture-audit',
 #   persona: 'senior-dev',
 #   format: 'diff',
 #   severity: 'strict',
 #   focus_areas: 'architecture,performance,testing',
-#   created_at: '2026-05-01 17:50:16'
+#   created_at: '2026-05-02 01:08:09'
 # }
 # ─── Executing Code Reviews ───
 # preparing... {
@@ -1844,8 +2024,8 @@ ok 1 - Repository
 #     '    )\\n' +
 #     '    ',
 #   args: [
-#     '53c79981-f7a7-496e-90e0-870405e8c644',
-#     'b1ab5cf5-8fba-4ec7-b338-888b985ff436',
+#     '9cfa731c-12ab-4534-9bf7-1ebc1557b3ac',
+#     'af2b2d8e-2292-4941-a3e5-dc5dcf06b121',
 #     'Python',
 #     'def process_payment(user_input):\\n' +
 #       '    query = "SELECT * FROM users WHERE id = " + user_input\\n' +
@@ -1919,8 +2099,8 @@ ok 1 - Repository
 #     '    )\\n' +
 #     '    ',
 #   args: [
-#     'f5e4e4df-e236-4596-a0ac-e657940b7633',
-#     '90192aa5-4927-4ff4-be6e-ac228fd1c352',
+#     'ec63a7fb-5d4a-47d5-aa6d-68c6943a5dca',
+#     '3b86a6d7-e9ea-4839-b190-29ab4dc75a43',
 #     'TypeScript',
 #     'function add(a, b) {\\n    return a + b;\\n}',
 #     '\\n' +
@@ -1991,7 +2171,7 @@ ok 1 - Repository
 #   [5]: "fn main() { println!(\\"hello\\"); }"
 # ─── Execution History ───
 # History for "quick-security-scan" (1 entries):
-#   1. [2026-05-01 17:50:16] Python - def process_payment(user_input):
+#   1. [2026-05-02 01:08:09] Python - def process_payment(user_input):
 #     query = "SELECT * FROM ...
 # ═══════════════════════════════════════════
 #   Key Takeaways:
@@ -2104,7 +2284,7 @@ ok 1 - Repository
 #   ✓ zt.map: single element with separator
 #   ✓ zt.map: two elements with separator
 # ─── 2E: Performance ───
-#     Rendered 500 items in 52.0ms
+#     Rendered 500 items in 59.2ms
 #   ✓ performance: 500 items via zt.map with separator
 #   ✓ state isolation: repeated renders with different data
 # ═══════════════════════════════════════
@@ -2134,872 +2314,952 @@ ok 1 - Repository
 # ═══════════════════════════════════
 #   17 passed, 0 failed
 # ═══════════════════════════════════
+# {
+#   trait: [Getter],
+#   merge: [Getter],
+#   scope: [Getter],
+#   schema: [Getter],
+#   strs: [Getter],
+#   vals: [Getter],
+#   __compiled: [Getter],
+#   __templateSource: {
+#     stack: '    at file:///./zod-tag/src/__tests__/playground/typed-tag.type-test.ts:32:15'
+#   },
+#   render: [Function (anonymous)],
+#   [Symbol(IRenderable)]: true
+# }
+# [
+#   [ '\\n    [static]: ', ' ', '\\n\\n    ', '\\n\\n    ', '\\n\\n\\n' ],
+#   2,
+#   'string value',
+#   'asd',
+#   [ 1, 2, [Function (anonymous)], 4 ]
+# ]
+# Hello 1 World [ 1 ]
+# [
+#   [
+#     '\\n    Date: ',
+#     '\\n    Timestamp: ',
+#     '\\n    Date: ',
+#     '\\n\\n    ----- USER CARD -----\\n    \\n    Hello: ',
+#     '\\n    Age: ',
+#     '\\n    val: ',
+#     '\\n    val2: ',
+#     '\\n\\n    ---- TITLE ----\\n    \\n    A new user in the application\\n    ',
+#     '\\n\\n'
+#   ],
+#   '01/05/2026',
+#   1777684089319,
+#   1,
+#   'John Doe',
+#   19,
+#   'aaa',
+#   'Content of val2',
+#   'Say hello!'
+# ] 
+#     Date: 01/05/2026
+#     Timestamp: 1777684089319
+#     Date: 1
+#     ----- USER CARD -----
+#     
+#     Hello: John Doe
+#     Age: 19
+#     val: aaa
+#     val2: Content of val2
+#     ---- TITLE ----
+#     
+#     A new user in the application
+#     Say hello!
+# CREATE: 
+# INSERT INTO users (name, email) VALUES ($0, $1)
+# UPDATE: 
+# UPDATE users SET name = $0 WHERE id = $1
+# DELETE: 
+# DELETE FROM users WHERE id = $0
 # Subtest: slop tests - does the slop-test files run?
-    # Subtest: typed-tag.type-test.ts
-    ok 1 - typed-tag.type-test.ts
+    # Subtest: code-generator.slop-test.ts
+    ok 1 - code-generator.slop-test.ts
       ---
-      duration_ms: 191.823
-      type: 'test'
-      ...
-    # Subtest: user-card.type-test.ts
-    ok 2 - user-card.type-test.ts
-      ---
-      duration_ms: 81.5648
+      duration_ms: 493.3336
       type: 'test'
       ...
     # Subtest: conditional-validation-boundary.slop-test.ts
-    ok 3 - conditional-validation-boundary.slop-test.ts
+    ok 2 - conditional-validation-boundary.slop-test.ts
       ---
-      duration_ms: 60.7839
+      duration_ms: 32.197
       type: 'test'
       ...
     # Subtest: email.slop-test.ts
-    ok 4 - email.slop-test.ts
+    ok 3 - email.slop-test.ts
       ---
-      duration_ms: 15.1583
+      duration_ms: 15.7458
       type: 'test'
       ...
     # Subtest: feature-flags.slop-test.ts
-    ok 5 - feature-flags.slop-test.ts
+    ok 4 - feature-flags.slop-test.ts
       ---
-      duration_ms: 37.6152
+      duration_ms: 39.04
       type: 'test'
       ...
     # Subtest: functional-composition.slop-test.ts
-    ok 6 - functional-composition.slop-test.ts
+    ok 5 - functional-composition.slop-test.ts
       ---
-      duration_ms: 25.9691
+      duration_ms: 30.9912
       type: 'test'
       ...
     # Subtest: graphql.slop-test.ts
-    ok 7 - graphql.slop-test.ts
+    ok 6 - graphql.slop-test.ts
       ---
-      duration_ms: 24.6794
+      duration_ms: 29.4694
+      type: 'test'
+      ...
+    # Subtest: multi-tenant-saas.slop-test.ts
+    ok 7 - multi-tenant-saas.slop-test.ts
+      ---
+      duration_ms: 24.9113
       type: 'test'
       ...
     # Subtest: npc-dialog-state-machine.slop-test.ts
     ok 8 - npc-dialog-state-machine.slop-test.ts
       ---
-      duration_ms: 106.6996
+      duration_ms: 97.903
       type: 'test'
       ...
     # Subtest: pattern-matching-function-definitions.slop-test.ts
     ok 9 - pattern-matching-function-definitions.slop-test.ts
       ---
-      duration_ms: 27.2454
+      duration_ms: 27.8017
       type: 'test'
       ...
     # Subtest: prompt-2.slop-test.ts
     ok 10 - prompt-2.slop-test.ts
       ---
-      duration_ms: 9.753
+      duration_ms: 8.5313
       type: 'test'
       ...
     # Subtest: prompt.slop-test.ts
     ok 11 - prompt.slop-test.ts
       ---
-      duration_ms: 4.8589
+      duration_ms: 5.8605
       type: 'test'
       ...
     # Subtest: repo.slop-test.ts
     ok 12 - repo.slop-test.ts
       ---
-      duration_ms: 51.4673
+      duration_ms: 59.4232
+      type: 'test'
+      ...
+    # Subtest: sql-prompt-pipeline.slop-test.ts
+    ok 13 - sql-prompt-pipeline.slop-test.ts
+      ---
+      duration_ms: 30.1911
       type: 'test'
       ...
     # Subtest: sql-prompt.slop-test.ts
-    ok 13 - sql-prompt.slop-test.ts
+    ok 14 - sql-prompt.slop-test.ts
       ---
-      duration_ms: 22.5025
+      duration_ms: 21.4925
       type: 'test'
       ...
     # Subtest: sql.slop-test.ts
-    ok 14 - sql.slop-test.ts
+    ok 15 - sql.slop-test.ts
       ---
-      duration_ms: 16.5109
+      duration_ms: 22.411
       type: 'test'
       ...
     # Subtest: stress-composition-edge-cases.slop-test.ts
-    ok 15 - stress-composition-edge-cases.slop-test.ts
+    ok 16 - stress-composition-edge-cases.slop-test.ts
       ---
-      duration_ms: 82.4247
+      duration_ms: 83.9381
       type: 'test'
       ...
     # Subtest: zt-match.slop-test.ts
-    ok 16 - zt-match.slop-test.ts
+    ok 17 - zt-match.slop-test.ts
       ---
-      duration_ms: 16.6813
+      duration_ms: 15.2092
+      type: 'test'
+      ...
+    # Subtest: typed-tag.type-test.ts
+    ok 18 - typed-tag.type-test.ts
+      ---
+      duration_ms: 10.1946
+      type: 'test'
+      ...
+    # Subtest: user-card.type-test.ts
+    ok 19 - user-card.type-test.ts
+      ---
+      duration_ms: 27.4118
       type: 'test'
       ...
     # Subtest: cli-test.ts
-    ok 17 - cli-test.ts
+    ok 20 - cli-test.ts
       ---
-      duration_ms: 9.5478
+      duration_ms: 8.8615
       type: 'test'
       ...
-    1..17
-ok 2 - slop tests - does the slop-test files run?
+    1..20
+ok 3 - slop tests - does the slop-test files run?
   ---
-  duration_ms: 788.283
+  duration_ms: 1087.6779
   type: 'suite'
   ...
-# Media of 9.196658333333335 ms to render each frame of the cli test
+# Media of 8.237553333333333 ms to render each frame of the cli test
 # Subtest: Identity (zt.empty)
     # Subtest: empty · template == template (left identity)
     ok 1 - empty · template == template (left identity)
       ---
-      duration_ms: 4.3162
+      duration_ms: 4.0776
       type: 'test'
       ...
     # Subtest: template · empty == template (right identity)
     ok 2 - template · empty == template (right identity)
       ---
-      duration_ms: 1.0384
+      duration_ms: 0.5003
       type: 'test'
       ...
     # Subtest: empty renders to an empty string array
     ok 3 - empty renders to an empty string array
       ---
-      duration_ms: 0.4414
+      duration_ms: 0.3222
       type: 'test'
       ...
     # Subtest: composing empty with a static template yields identical output
     ok 4 - composing empty with a static template yields identical output
       ---
-      duration_ms: 0.6442
+      duration_ms: 1.4125
       type: 'test'
       ...
     1..4
-ok 3 - Identity (zt.empty)
+ok 4 - Identity (zt.empty)
   ---
-  duration_ms: 8.6158
+  duration_ms: 8.5011
   type: 'suite'
   ...
 # Subtest: Associativity
     # Subtest: (a · b) · c == a · (b · c) for concatenation via zt.t
     ok 1 - (a · b) · c == a · (b · c) for concatenation via zt.t
       ---
-      duration_ms: 0.8695
+      duration_ms: 0.8543
       type: 'test'
       ...
     # Subtest: (a join b) join c == a join (b join c) using zt.join
     ok 2 - (a join b) join c == a join (b join c) using zt.join
       ---
-      duration_ms: 1.3665
+      duration_ms: 1.3012
       type: 'test'
       ...
     1..2
-ok 4 - Associativity
+ok 5 - Associativity
   ---
-  duration_ms: 2.556
+  duration_ms: 2.4483
   type: 'suite'
   ...
 # Subtest: Bind · render law
     # Subtest: bind(t, k).render() == t.render(k)
     ok 1 - bind(t, k).render() == t.render(k)
       ---
-      duration_ms: 1.2347
+      duration_ms: 1.1552
       type: 'test'
       ...
     # Subtest: bind with empty kargs still works
     ok 2 - bind with empty kargs still works
       ---
-      duration_ms: 0.5043
+      duration_ms: 0.4908
       type: 'test'
       ...
     1..2
-ok 5 - Bind · render law
+ok 6 - Bind · render law
   ---
-  duration_ms: 1.9631
+  duration_ms: 1.8892
   type: 'suite'
   ...
 # Subtest: Map properties
     # Subtest: empty list returns identity
     ok 1 - empty list returns identity
       ---
-      duration_ms: 0.3697
+      duration_ms: 0.4439
       type: 'test'
       ...
     # Subtest: single item renders without separator
     ok 2 - single item renders without separator
       ---
-      duration_ms: 0.9254
+      duration_ms: 5.3774
       type: 'test'
       ...
     # Subtest: map with identity mapFn produces join of individually bound items
     ok 3 - map with identity mapFn produces join of individually bound items
       ---
-      duration_ms: 3.8055
+      duration_ms: 1.8054
       type: 'test'
       ...
     # Subtest: map with separator is equivalent to join of references
     ok 4 - map with separator is equivalent to join of references
       ---
-      duration_ms: 1.6778
+      duration_ms: 1.5454
       type: 'test'
       ...
     1..4
-ok 6 - Map properties
+ok 7 - Map properties
   ---
-  duration_ms: 7.1908
+  duration_ms: 9.5245
   type: 'suite'
   ...
 # Subtest: Join monoidal properties
     # Subtest: join of empty list is zt.empty
     ok 1 - join of empty list is zt.empty
       ---
-      duration_ms: 0.3859
+      duration_ms: 0.1819
       type: 'test'
       ...
     # Subtest: join of a single element list returns that element
     ok 2 - join of a single element list returns that element
       ---
-      duration_ms: 1.26
+      duration_ms: 0.8585
       type: 'test'
       ...
     # Subtest: join of list with default separator (identity) composes without gaps
     ok 3 - join of list with default separator (identity) composes without gaps
       ---
-      duration_ms: 0.6153
+      duration_ms: 0.7432
       type: 'test'
       ...
     1..3
-ok 7 - Join monoidal properties
+ok 8 - Join monoidal properties
   ---
-  duration_ms: 2.5466
+  duration_ms: 2.0373
   type: 'suite'
   ...
 # Subtest: Conditional identity
     # Subtest: zt.if(false, t) is equivalent to zt.empty
     ok 1 - zt.if(false, t) is equivalent to zt.empty
       ---
-      duration_ms: 0.9805
+      duration_ms: 1.067
       type: 'test'
       ...
     # Subtest: zt.if(true, t) yields t
     ok 2 - zt.if(true, t) yields t
       ---
-      duration_ms: 0.4258
+      duration_ms: 0.4353
       type: 'test'
       ...
     1..2
-ok 8 - Conditional identity
+ok 9 - Conditional identity
   ---
-  duration_ms: 1.6266
+  duration_ms: 1.7603
   type: 'suite'
   ...
 # Subtest: Opaque runtime identity
     # Subtest: zt.opaque preserves the same rendered output
     ok 1 - zt.opaque preserves the same rendered output
       ---
-      duration_ms: 1.285
+      duration_ms: 1.1554
       type: 'test'
       ...
     # Subtest: opaque renderable can still be used in composition
     ok 2 - opaque renderable can still be used in composition
       ---
-      duration_ms: 0.6245
+      duration_ms: 0.4998
       type: 'test'
       ...
     1..2
-ok 9 - Opaque runtime identity
+ok 10 - Opaque runtime identity
   ---
-  duration_ms: 2.1547
+  duration_ms: 1.8988
   type: 'suite'
   ...
 # Subtest: zt.unsafe
     # Subtest: embeds validated value as static string, not in values
     ok 1 - embeds validated value as static string, not in values
       ---
-      duration_ms: 11.0474
+      duration_ms: 6.3306
       type: 'test'
       ...
     # Subtest: fails at creation time if value fails schema validation
     ok 2 - fails at creation time if value fails schema validation
       ---
-      duration_ms: 6.5409
+      duration_ms: 2.0533
       type: 'test'
       ...
     # Subtest: accepts other primitive types (number, boolean)
     ok 3 - accepts other primitive types (number, boolean)
       ---
-      duration_ms: 1.0444
+      duration_ms: 0.8918
       type: 'test'
       ...
     # Subtest: is structural - value never appears in the values array of parent
     ok 4 - is structural - value never appears in the values array of parent
       ---
-      duration_ms: 1.392
+      duration_ms: 1.364
       type: 'test'
       ...
     # Subtest: can be used inside conditional or mapped contexts
     ok 5 - can be used inside conditional or mapped contexts
       ---
-      duration_ms: 1.3046
+      duration_ms: 1.0695
       type: 'test'
       ...
     1..5
-ok 10 - zt.unsafe
+ok 11 - zt.unsafe
   ---
-  duration_ms: 28.6689
+  duration_ms: 14.0658
   type: 'suite'
   ...
 # Subtest: zt.bind
     # Subtest: fully bound renderable requires no kargs (void input)
     ok 1 - fully bound renderable requires no kargs (void input)
       ---
-      duration_ms: 3.6462
+      duration_ms: 2.5902
       type: 'test'
       ...
     # Subtest: bound renderable can be composed without adding kargs to parent
     ok 2 - bound renderable can be composed without adding kargs to parent
       ---
-      duration_ms: 1.1144
+      duration_ms: 0.635
       type: 'test'
       ...
     # Subtest: binding with invalid kargs throws at bind time
     ok 3 - binding with invalid kargs throws at bind time
       ---
-      duration_ms: 3.6389
+      duration_ms: 2.1106
       type: 'test'
       ...
     # Subtest: bind produces an IRenderable that is itself bindable
     ok 4 - bind produces an IRenderable that is itself bindable
       ---
-      duration_ms: 0.5881
+      duration_ms: 0.5419
       type: 'test'
       ...
     1..4
-ok 11 - zt.bind
+ok 12 - zt.bind
   ---
-  duration_ms: 10.1705
+  duration_ms: 8.8442
   type: 'suite'
   ...
 # Subtest: zt.map
     # Subtest: empty array returns identity (zt.empty)
     ok 1 - empty array returns identity (zt.empty)
       ---
-      duration_ms: 0.5837
+      duration_ms: 0.5059
       type: 'test'
       ...
     # Subtest: single item renders without separator
     ok 2 - single item renders without separator
       ---
-      duration_ms: 1.1035
+      duration_ms: 0.9165
       type: 'test'
       ...
     # Subtest: multiple items with separator join correctly
     ok 3 - multiple items with separator join correctly
       ---
-      duration_ms: 0.8532
+      duration_ms: 1.3464
       type: 'test'
       ...
     # Subtest: validates each mapped item's kargs against the renderable schema
     ok 4 - validates each mapped item's kargs against the renderable schema
       ---
-      duration_ms: 0.7596
+      duration_ms: 2.0271
       type: 'test'
       ...
     1..4
-ok 12 - zt.map
+ok 13 - zt.map
   ---
-  duration_ms: 3.6844
+  duration_ms: 5.1746
   type: 'suite'
   ...
 # Subtest: zt.join
     # Subtest: joins list of renderables with separator
     ok 1 - joins list of renderables with separator
       ---
-      duration_ms: 3.4787
+      duration_ms: 1.9724
       type: 'test'
       ...
     # Subtest: joins list of primitives using separator (zt.join on any[])
     ok 2 - joins list of primitives using separator (zt.join on any[])
       ---
-      duration_ms: 0.8379
+      duration_ms: 2.0648
       type: 'test'
       ...
     # Subtest: empty list returns identity
     ok 3 - empty list returns identity
       ---
-      duration_ms: 0.3375
+      duration_ms: 0.3654
       type: 'test'
       ...
     1..3
-ok 13 - zt.join
+ok 14 - zt.join
   ---
-  duration_ms: 4.9388
+  duration_ms: 4.7006
   type: 'suite'
   ...
 # Subtest: zt.if
     # Subtest: true condition yields the template
     ok 1 - true condition yields the template
       ---
-      duration_ms: 0.3556
+      duration_ms: 1.4197
       type: 'test'
       ...
     # Subtest: false condition yields empty identity
     ok 2 - false condition yields empty identity
       ---
-      duration_ms: 0.2859
+      duration_ms: 0.2921
       type: 'test'
       ...
     # Subtest: truthy non-boolean values treated as true
     ok 3 - truthy non-boolean values treated as true
       ---
-      duration_ms: 0.2568
+      duration_ms: 0.2582
       type: 'test'
       ...
     # Subtest: falsy values (null, undefined, 0) yield identity
     ok 4 - falsy values (null, undefined, 0) yield identity
       ---
-      duration_ms: 0.2973
+      duration_ms: 0.3129
       type: 'test'
       ...
     1..4
-ok 14 - zt.if
+ok 15 - zt.if
   ---
-  duration_ms: 1.5229
+  duration_ms: 2.6086
   type: 'suite'
   ...
 # Subtest: zt.match
     # Subtest: routes to correct branch based on discriminator
     ok 1 - routes to correct branch based on discriminator
       ---
-      duration_ms: 3.4024
+      duration_ms: 4.6535
       type: 'test'
       ...
     # Subtest: lose schema: extra keys from other branches are not rejected
     ok 2 - lose schema: extra keys from other branches are not rejected
       ---
-      duration_ms: 0.5179
+      duration_ms: 0.6841
       type: 'test'
       ...
     # Subtest: missing required kargs for the matched branch throws
     ok 3 - missing required kargs for the matched branch throws
       ---
-      duration_ms: 0.7142
+      duration_ms: 0.9975
       type: 'test'
       ...
     # Subtest: invalid discriminator throws
     ok 4 - invalid discriminator throws
       ---
-      duration_ms: 0.5708
+      duration_ms: 0.8419
       type: 'test'
       ...
     # Subtest: nested match via selector returns inner renderable correctly
     ok 5 - nested match via selector returns inner renderable correctly
       ---
-      duration_ms: 6.4756
+      duration_ms: 6.7758
       type: 'test'
       ...
     1..5
-ok 15 - zt.match
+ok 16 - zt.match
   ---
-  duration_ms: 12.1323
+  duration_ms: 14.4751
   type: 'suite'
   ...
 # Subtest: zt.opaque
     # Subtest: renders identical content to the original renderable
     ok 1 - renders identical content to the original renderable
       ---
-      duration_ms: 1.3607
+      duration_ms: 1.1315
       type: 'test'
       ...
     # Subtest: opaque hides the output type at TS level but preserves runtime behavior
     ok 2 - opaque hides the output type at TS level but preserves runtime behavior
       ---
-      duration_ms: 0.4494
+      duration_ms: 0.4915
       type: 'test'
       ...
     1..2
-ok 16 - zt.opaque
+ok 17 - zt.opaque
   ---
-  duration_ms: 2.085
+  duration_ms: 1.8722
   type: 'suite'
   ...
 # Subtest: Structural vs values boundary
     # Subtest: user-supplied primitive values are never concatenated into string segments
     ok 1 - user-supplied primitive values are never concatenated into string segments
       ---
-      duration_ms: 1.362
+      duration_ms: 1.2304
       type: 'test'
       ...
     # Subtest: zt.unsafe injects validated content as static, not as a value
     ok 2 - zt.unsafe injects validated content as static, not as a value
       ---
-      duration_ms: 0.9441
+      duration_ms: 0.867
       type: 'test'
       ...
     # Subtest: nested renderable structure is flattened, but dynamic parts become values
     ok 3 - nested renderable structure is flattened, but dynamic parts become values
       ---
-      duration_ms: 1.9689
+      duration_ms: 1.7671
       type: 'test'
       ...
     1..3
-ok 17 - Structural vs values boundary
+ok 18 - Structural vs values boundary
   ---
-  duration_ms: 4.6168
+  duration_ms: 4.2225
   type: 'suite'
   ...
 # Subtest: Schema composition edge cases
     # Subtest: two sibling zt.z with same key and compatible schema intersect gracefully
     ok 1 - two sibling zt.z with same key and compatible schema intersect gracefully
       ---
-      duration_ms: 4.4999
+      duration_ms: 3.7678
       type: 'test'
       ...
     # Subtest: sibling zt.z with conflicting types cause validation failure
     ok 2 - sibling zt.z with conflicting types cause validation failure
       ---
-      duration_ms: 9.6529
+      duration_ms: 2.742
       type: 'test'
       ...
     # Subtest: scoped parameter (zt.p) merges schema under namespace
     ok 3 - scoped parameter (zt.p) merges schema under namespace
       ---
-      duration_ms: 5.2896
+      duration_ms: 2.8831
       type: 'test'
       ...
     # Subtest: unscoped renderable schema merges with zt.z parent schema
     ok 4 - unscoped renderable schema merges with zt.z parent schema
       ---
-      duration_ms: 3.1293
+      duration_ms: 1.8437
       type: 'test'
       ...
     1..4
-ok 18 - Schema composition edge cases
+ok 19 - Schema composition edge cases
   ---
-  duration_ms: 23.0308
+  duration_ms: 11.6698
   type: 'suite'
   ...
 # Subtest: Static templates
     # Subtest: zt.t with no interpolations → single string, no values
     ok 1 - zt.t with no interpolations → single string, no values
       ---
-      duration_ms: 4.3229
+      duration_ms: 4.104
       type: 'test'
       ...
     # Subtest: zt.t with only static text (multiple lines)
     ok 2 - zt.t with only static text (multiple lines)
       ---
-      duration_ms: 0.5216
+      duration_ms: 0.7348
       type: 'test'
       ...
     # Subtest: render() has stable output
     ok 3 - render() has stable output
       ---
-      duration_ms: 0.5407
+      duration_ms: 1.2444
       type: 'test'
       ...
     # Subtest: zod-tag identity (zt.empty) renders to empty string
     ok 4 - zod-tag identity (zt.empty) renders to empty string
       ---
-      duration_ms: 0.3625
+      duration_ms: 0.6231
       type: 'test'
       ...
     1..4
-ok 19 - Static templates
+ok 20 - Static templates
   ---
-  duration_ms: 8.1544
+  duration_ms: 9.297
   type: 'suite'
   ...
 # Subtest: Primitive value interpolation
     # Subtest: produces correct strings and values arrays
     ok 1 - produces correct strings and values arrays
       ---
-      duration_ms: 0.6681
+      duration_ms: 0.4414
       type: 'test'
       ...
     # Subtest: primitive values are not structurally part of strings
     ok 2 - primitive values are not structurally part of strings
       ---
-      duration_ms: 0.4033
+      duration_ms: 0.5008
       type: 'test'
       ...
     # Subtest: supports boolean and null
     ok 3 - supports boolean and null
       ---
-      duration_ms: 0.503
+      duration_ms: 0.4547
       type: 'test'
       ...
     # Subtest: supports undefined as a value
     ok 4 - supports undefined as a value
       ---
-      duration_ms: 0.5293
+      duration_ms: 0.4093
       type: 'test'
       ...
     # Subtest: adjacent primitive values create empty string boundaries
     ok 5 - adjacent primitive values create empty string boundaries
       ---
-      duration_ms: 0.5311
+      duration_ms: 0.4381
       type: 'test'
       ...
     1..5
-ok 20 - Primitive value interpolation
+ok 21 - Primitive value interpolation
   ---
-  duration_ms: 3.1745
+  duration_ms: 3.028
   type: 'suite'
   ...
 # Subtest: Selector functions (kargs)
     # Subtest: selector can return a renderable (composed inside)
     ok 1 - selector can return a renderable (composed inside)
       ---
-      duration_ms: 1.1264
+      duration_ms: 0.6897
       type: 'test'
       ...
     1..1
-ok 21 - Selector functions (kargs)
+ok 22 - Selector functions (kargs)
   ---
-  duration_ms: 1.8011
+  duration_ms: 0.8725
   type: 'suite'
   ...
 # Subtest: Inline Zod schemas
     # Subtest: z.object({...}) validates and unwraps value
     ok 1 - z.object({...}) validates and unwraps value
       ---
-      duration_ms: 4.7322
+      duration_ms: 6.0511
       type: 'test'
       ...
     # Subtest: z.codec() as inline schema validates string value directly
     ok 2 - z.codec() as inline schema validates string value directly
       ---
-      duration_ms: 4.4176
+      duration_ms: 3.0588
       type: 'test'
       ...
     # Subtest: inline schema validation failure throws InterpolationError
     ok 3 - inline schema validation failure throws InterpolationError
       ---
-      duration_ms: 4.083
+      duration_ms: 9.551
       type: 'test'
       ...
     # Subtest: multiple inline schemas with different keys merges kargs
     ok 4 - multiple inline schemas with different keys merges kargs
       ---
-      duration_ms: 4.9521
+      duration_ms: 1.7423
       type: 'test'
       ...
     1..4
-ok 22 - Inline Zod schemas
+ok 23 - Inline Zod schemas
   ---
-  duration_ms: 19.0298
+  duration_ms: 21.0174
   type: 'suite'
   ...
 # Subtest: zt.p - scoped parameters
     # Subtest: zt.p with schema scopes under name and transforms
     ok 1 - zt.p with schema scopes under name and transforms
       ---
-      duration_ms: 5.5552
+      duration_ms: 2.8149
       type: 'test'
       ...
     # Subtest: zt.p with renderable scopes its kargs
     ok 2 - zt.p with renderable scopes its kargs
       ---
-      duration_ms: 2.2649
+      duration_ms: 5.1011
       type: 'test'
       ...
     # Subtest: zt.p with schema and no transform uses identity
     ok 3 - zt.p with schema and no transform uses identity
       ---
-      duration_ms: 1.8315
+      duration_ms: 1.9837
       type: 'test'
       ...
     # Subtest: zt.p with schema validation fails
     ok 4 - zt.p with schema validation fails
       ---
-      duration_ms: 2.8909
+      duration_ms: 2.1058
       type: 'test'
       ...
     # Subtest: multiple zt.p with different names compose
     ok 5 - multiple zt.p with different names compose
       ---
-      duration_ms: 2.0766
+      duration_ms: 2.1092
       type: 'test'
       ...
     1..5
-ok 23 - zt.p - scoped parameters
+ok 24 - zt.p - scoped parameters
   ---
-  duration_ms: 15.2066
+  duration_ms: 14.856
   type: 'suite'
   ...
 # Subtest: Nested renderable composition
     # Subtest: nested renderable is flattened into parent strings
     ok 1 - nested renderable is flattened into parent strings
       ---
-      duration_ms: 1.141
+      duration_ms: 1.2164
       type: 'test'
       ...
     # Subtest: nested renderable with its own kargs requires those kargs at parent
     ok 2 - nested renderable with its own kargs requires those kargs at parent
       ---
-      duration_ms: 1.4399
+      duration_ms: 1.2743
       type: 'test'
       ...
     # Subtest: schema from nested renderable is merged into parent schema
     ok 3 - schema from nested renderable is merged into parent schema
       ---
-      duration_ms: 1.012
+      duration_ms: 0.7951
       type: 'test'
       ...
     # Subtest: two nested renderables with overlapping kargs merge schemas
     ok 4 - two nested renderables with overlapping kargs merge schemas
       ---
-      duration_ms: 1.994
+      duration_ms: 2.0356
       type: 'test'
       ...
     # Subtest: deeply nested renderables (3 levels) compose correctly
     ok 5 - deeply nested renderables (3 levels) compose correctly
       ---
-      duration_ms: 2.2362
+      duration_ms: 2.3039
       type: 'test'
       ...
     # Subtest: nested renderable can be rendered standalone and still works when nested
     ok 6 - nested renderable can be rendered standalone and still works when nested
       ---
-      duration_ms: 1.0082
+      duration_ms: 1.0617
       type: 'test'
       ...
     1..6
-ok 24 - Nested renderable composition
+ok 25 - Nested renderable composition
   ---
-  duration_ms: 9.3934
+  duration_ms: 9.2608
   type: 'suite'
   ...
 # Subtest: Schema validation
     # Subtest: zt.z with shape enforces kargs
     ok 1 - zt.z with shape enforces kargs
       ---
-      duration_ms: 2.5619
+      duration_ms: 2.8895
       type: 'test'
       ...
     # Subtest: zt.z with shape uses defaults
     ok 2 - zt.z with shape uses defaults
       ---
-      duration_ms: 1.5884
+      duration_ms: 3.0199
       type: 'test'
       ...
     # Subtest: schema intersection when two zt.z are composed
     ok 3 - schema intersection when two zt.z are composed
       ---
-      duration_ms: 2.6069
+      duration_ms: 4.3011
       type: 'test'
       ...
     # Subtest: schema with transform works
     ok 4 - schema with transform works
       ---
-      duration_ms: 1.8806
+      duration_ms: 3.472
       type: 'test'
       ...
     1..4
-ok 25 - Schema validation
+ok 26 - Schema validation
   ---
-  duration_ms: 9.0456
+  duration_ms: 14.1315
   type: 'suite'
   ...
 # Subtest: Output structure edges
     # Subtest: template with only a leading value
     ok 1 - template with only a leading value
       ---
-      duration_ms: 0.6237
+      duration_ms: 0.6851
       type: 'test'
       ...
     # Subtest: template with only a trailing value
     ok 2 - template with only a trailing value
       ---
-      duration_ms: 0.4304
+      duration_ms: 0.5139
       type: 'test'
       ...
     # Subtest: template with only edge values
     ok 3 - template with only edge values
       ---
-      duration_ms: 0.3634
+      duration_ms: 0.532
       type: 'test'
       ...
     # Subtest: template with only one value surrounded by nothing
     ok 4 - template with only one value surrounded by nothing
       ---
-      duration_ms: 0.3805
+      duration_ms: 0.5099
       type: 'test'
       ...
     # Subtest: mixed static and dynamic spaces
     ok 5 - mixed static and dynamic spaces
       ---
-      duration_ms: 0.3637
+      duration_ms: 0.4983
       type: 'test'
       ...
     # Subtest: zt.debug() produces expected concatenation
     ok 6 - zt.debug() produces expected concatenation
       ---
-      duration_ms: 0.2607
+      duration_ms: 0.4985
       type: 'test'
       ...
     # Subtest: zt.$n replaces values with $0... placeholders
     ok 7 - zt.$n replaces values with $0... placeholders
       ---
-      duration_ms: 0.2504
+      duration_ms: 0.5631
       type: 'test'
       ...
     # Subtest: zt.atIndex replaces with @0...
     ok 8 - zt.atIndex replaces with @0...
       ---
-      duration_ms: 0.2556
+      duration_ms: 0.4526
       type: 'test'
       ...
     1..8
-ok 26 - Output structure edges
+ok 27 - Output structure edges
   ---
-  duration_ms: 3.4808
+  duration_ms: 4.9604
   type: 'suite'
   ...
 # Subtest: Pre-compilation guarantees
     # Subtest: nested renderables are compiled only once (immutable strings/values)
     ok 1 - nested renderables are compiled only once (immutable strings/values)
       ---
-      duration_ms: 0.4524
+      duration_ms: 0.6828
       type: 'test'
       ...
     # Subtest: schema of nested renderable is merged into parent at creation time, not render time
     ok 2 - schema of nested renderable is merged into parent at creation time, not render time
       ---
-      duration_ms: 1.0436
+      duration_ms: 1.6174
       type: 'test'
       ...
     1..2
-ok 27 - Pre-compilation guarantees
+ok 28 - Pre-compilation guarantees
   ---
-  duration_ms: 1.6635
+  duration_ms: 2.5276
   type: 'suite'
   ...
 # Subtest: Low-level API
     # Subtest: createRenderable works directly
     ok 1 - createRenderable works directly
       ---
-      duration_ms: 0.4553
+      duration_ms: 0.5042
       type: 'test'
       ...
     # Subtest: interpolate can process a renderable with kargs
     ok 2 - interpolate can process a renderable with kargs
       ---
-      duration_ms: 0.5723
+      duration_ms: 0.4945
       type: 'test'
       ...
     # Subtest: createRenderable with schema validates
     ok 3 - createRenderable with schema validates
       ---
-      duration_ms: 1.4833
+      duration_ms: 1.6439
       type: 'test'
       ...
     # Subtest: createRenderable with nested renderable pre-compiles
     ok 4 - createRenderable with nested renderable pre-compiles
       ---
-      duration_ms: 0.5472
+      duration_ms: 0.7346
       type: 'test'
       ...
     1..4
-ok 28 - Low-level API
+ok 29 - Low-level API
   ---
-  duration_ms: 3.4565
+  duration_ms: 4.2888
   type: 'suite'
   ...
 # 'creating 10k static renderables uses bounded memory': delta 0.1 MB
@@ -3009,788 +3269,944 @@ ok 28 - Low-level API
     # Subtest: creating 10k static renderables uses bounded memory
     ok 1 - creating 10k static renderables uses bounded memory
       ---
-      duration_ms: 502.1975
+      duration_ms: 516.6777
       type: 'test'
       ...
     # Subtest: rendering the same template repeatedly does not leak memory
     ok 2 - rendering the same template repeatedly does not leak memory
       ---
-      duration_ms: 53.0239
+      duration_ms: 52.6779
       type: 'test'
       ...
     # Subtest: large flat template with 10k values uses memory proportional to output size
     ok 3 - large flat template with 10k values uses memory proportional to output size
       ---
-      duration_ms: 5968.2233
+      duration_ms: 5834.7266
       type: 'test'
       ...
     1..3
-ok 29 - Memory footprint
+ok 30 - Memory footprint
   ---
-  duration_ms: 6525.4408
+  duration_ms: 6405.7537
   type: 'suite'
   ...
 # Subtest: zt.match - basic routing
     # Subtest: routes to the correct branch based on discriminator
     ok 1 - routes to the correct branch based on discriminator
       ---
-      duration_ms: 8.3762
+      duration_ms: 11.0379
       type: 'test'
       ...
     1..1
-ok 30 - zt.match - basic routing
+ok 31 - zt.match - basic routing
   ---
-  duration_ms: 10.1153
+  duration_ms: 14.532
   type: 'suite'
   ...
 # Subtest: zt.match - loose schema allows extra keys
     # Subtest: extra keys from another branch do not cause validation errors
     ok 1 - extra keys from another branch do not cause validation errors
       ---
-      duration_ms: 1.5885
+      duration_ms: 1.8437
       type: 'test'
       ...
     # Subtest: extra key not used by any branch is also allowed (loose)
     ok 2 - extra key not used by any branch is also allowed (loose)
       ---
-      duration_ms: 0.4735
+      duration_ms: 0.4381
       type: 'test'
       ...
     # Subtest: missing required key for selected branch still fails
     ok 3 - missing required key for selected branch still fails
       ---
-      duration_ms: 2.9721
+      duration_ms: 5.1996
       type: 'test'
       ...
     # Subtest: invalid discriminator value fails
     ok 4 - invalid discriminator value fails
       ---
-      duration_ms: 0.7961
+      duration_ms: 0.8689
       type: 'test'
       ...
     1..4
-ok 31 - zt.match - loose schema allows extra keys
+ok 32 - zt.match - loose schema allows extra keys
   ---
-  duration_ms: 6.296
+  duration_ms: 8.8063
   type: 'suite'
   ...
 # Subtest: zt.match - direct nesting
     # Subtest: outer discriminator routes to pending
     ok 1 - outer discriminator routes to pending
       ---
-      duration_ms: 0.8896
+      duration_ms: 1.1107
       type: 'test'
       ...
     # Subtest: outer discriminator routes to inner match (paid → cash)
     ok 2 - outer discriminator routes to inner match (paid → cash)
       ---
-      duration_ms: 2.2423
+      duration_ms: 1.4852
       type: 'test'
       ...
     # Subtest: outer discriminator routes to inner match (paid → card) with extra last4
     ok 3 - outer discriminator routes to inner match (paid → card) with extra last4
       ---
-      duration_ms: 1.5787
+      duration_ms: 2.0196
       type: 'test'
       ...
     # Subtest: missing required key for inner branch fails
     ok 4 - missing required key for inner branch fails
       ---
-      duration_ms: 1.0173
+      duration_ms: 1.9847
       type: 'test'
       ...
     1..4
-ok 32 - zt.match - direct nesting
+ok 33 - zt.match - direct nesting
   ---
-  duration_ms: 7.9627
+  duration_ms: 7.0098
   type: 'suite'
   ...
 # Subtest: zt.match - varying shapes
     # Subtest: each branch uses only its own kargs
     ok 1 - each branch uses only its own kargs
       ---
-      duration_ms: 4.469
+      duration_ms: 4.0192
       type: 'test'
       ...
     # Subtest: validation still rejects branch-specific constraints
     ok 2 - validation still rejects branch-specific constraints
       ---
-      duration_ms: 1.2276
+      duration_ms: 0.9303
       type: 'test'
       ...
     # Subtest: branch-specific constraints are not applied to other branches
     ok 3 - branch-specific constraints are not applied to other branches
       ---
-      duration_ms: 1.4131
+      duration_ms: 2.2849
       type: 'test'
       ...
     1..3
-ok 33 - zt.match - varying shapes
+ok 34 - zt.match - varying shapes
   ---
-  duration_ms: 7.5262
+  duration_ms: 8.2606
   type: 'suite'
   ...
 # Subtest: zt.match inside zt.p
     # Subtest: scoped match uses nested kargs
     ok 1 - scoped match uses nested kargs
       ---
-      duration_ms: 2.2819
+      duration_ms: 2.2483
       type: 'test'
       ...
     # Subtest: scoped match with a more complex branch
     ok 2 - scoped match with a more complex branch
       ---
-      duration_ms: 1.5605
+      duration_ms: 1.7235
       type: 'test'
       ...
     # Subtest: scoped match validation failures propagate
     ok 3 - scoped match validation failures propagate
       ---
-      duration_ms: 5.5794
+      duration_ms: 6.8172
       type: 'test'
       ...
     1..3
-ok 34 - zt.match inside zt.p
+ok 35 - zt.match inside zt.p
   ---
-  duration_ms: 9.8387
+  duration_ms: 11.138
   type: 'suite'
   ...
 # Subtest: zt.match with map/join/if
     # Subtest: map over array of match inputs
     ok 1 - map over array of match inputs
       ---
-      duration_ms: 10.5938
+      duration_ms: 6.1635
       type: 'test'
       ...
     # Subtest: join two match renderables
     ok 2 - join two match renderables
       ---
-      duration_ms: 3.7455
+      duration_ms: 3.933
       type: 'test'
       ...
     # Subtest: conditional branch returning match renderable
     ok 3 - conditional branch returning match renderable
       ---
-      duration_ms: 2.2712
+      duration_ms: 1.4746
       type: 'test'
       ...
     1..3
-ok 35 - zt.match with map/join/if
+ok 36 - zt.match with map/join/if
   ---
-  duration_ms: 17.053
+  duration_ms: 11.9544
   type: 'suite'
   ...
 # Subtest: zt.match - error handling
     # Subtest: single branch match works
     ok 1 - single branch match works
       ---
-      duration_ms: 4.1845
+      duration_ms: 2.2441
       type: 'test'
       ...
     # Subtest: discriminator must be present in kargs
     ok 2 - discriminator must be present in kargs
       ---
-      duration_ms: 1.5996
+      duration_ms: 3.1199
       type: 'test'
       ...
     1..2
-ok 36 - zt.match - error handling
+ok 37 - zt.match - error handling
   ---
-  duration_ms: 6.0294
+  duration_ms: 5.6406
   type: 'suite'
   ...
 # Subtest: Creation performance
     # Subtest: creates many tiny static renderables quickly
     ok 1 - creates many tiny static renderables quickly # SKIP
       ---
-      duration_ms: 1.3251
+      duration_ms: 1.5321
       type: 'test'
       ...
     # Subtest: creates renderables with many primitive values (flat, no nesting)
     ok 2 - creates renderables with many primitive values (flat, no nesting)
       ---
-      duration_ms: 6.0033
+      duration_ms: 10.5456
       type: 'test'
       ...
     # Subtest: creates deeply nested renderables (10 levels) without explosion
     ok 3 - creates deeply nested renderables (10 levels) without explosion
       ---
-      duration_ms: 2.5215
+      duration_ms: 2.0596
       type: 'test'
       ...
     # Subtest: zt.map over 500 items creates quickly
     ok 4 - zt.map over 500 items creates quickly # SKIP
       ---
-      duration_ms: 0.154
+      duration_ms: 0.1791
       type: 'test'
       ...
     1..4
-ok 37 - Creation performance
+ok 38 - Creation performance
   ---
-  duration_ms: 12.1745
+  duration_ms: 17.1855
   type: 'suite'
   ...
 # Subtest: Rendering performance
     # Subtest: renders a large flat template with many primitive values quickly
     ok 1 - renders a large flat template with many primitive values quickly
       ---
-      duration_ms: 1.9106
+      duration_ms: 3.6632
       type: 'test'
       ...
     # Subtest: rendering pre-compiled nested structures is fast (flattened at creation)
     ok 2 - rendering pre-compiled nested structures is fast (flattened at creation)
       ---
-      duration_ms: 29.1279
+      duration_ms: 27.0709
       type: 'test'
       ...
     # Subtest: render performance scales roughly linearly with value count
     ok 3 - render performance scales roughly linearly with value count
       ---
-      duration_ms: 35.7873
+      duration_ms: 32.4076
       type: 'test'
       ...
     # Subtest: repeated renders are stable (no memory leak or degradation)
     ok 4 - repeated renders are stable (no memory leak or degradation)
       ---
-      duration_ms: 33.2582
+      duration_ms: 23.6806
       type: 'test'
       ...
     1..4
-ok 38 - Rendering performance
+ok 39 - Rendering performance
   ---
-  duration_ms: 100.5103
+  duration_ms: 87.2369
   type: 'suite'
   ...
 # Subtest: Large-data handling
     # Subtest: zt.join with 1000 renderables and separator completes
     ok 1 - zt.join with 1000 renderables and separator completes
       ---
-      duration_ms: 508.5914
+      duration_ms: 556.8517
       type: 'test'
       ...
     # Subtest: zt.match with many branches (50) creates and renders quickly
     ok 2 - zt.match with many branches (50) creates and renders quickly
       ---
-      duration_ms: 14.2943
+      duration_ms: 13.3486
       type: 'test'
       ...
     # Subtest: creates renderable with many scoped parameters (zt.p) without slowdown
     ok 3 - creates renderable with many scoped parameters (zt.p) without slowdown
       ---
-      duration_ms: 80.9484
+      duration_ms: 106.8499
       type: 'test'
       ...
     1..3
-ok 39 - Large-data handling
+ok 40 - Large-data handling
   ---
-  duration_ms: 604.1227
+  duration_ms: 677.3031
+  type: 'suite'
+  ...
+# Subtest: Schema Strategies (strict/strip/loose)
+    # Subtest: zt.z.strict
+        # Subtest: rejects extra top-level keys
+        ok 1 - rejects extra top-level keys
+          ---
+          duration_ms: 6.548
+          type: 'test'
+          ...
+        # Subtest: allows required keys and produces correct output
+        ok 2 - allows required keys and produces correct output
+          ---
+          duration_ms: 5.5741
+          type: 'test'
+          ...
+        # Subtest: rejects missing required keys
+        ok 3 - rejects missing required keys
+          ---
+          duration_ms: 0.9908
+          type: 'test'
+          ...
+        1..3
+    ok 1 - zt.z.strict
+      ---
+      duration_ms: 15.2763
+      type: 'suite'
+      ...
+    # Subtest: zt.z.strip
+        # Subtest: strips extra keys silently
+        ok 1 - strips extra keys silently
+          ---
+          duration_ms: 0.9036
+          type: 'test'
+          ...
+        # Subtest: required keys still work
+        ok 2 - required keys still work
+          ---
+          duration_ms: 0.4
+          type: 'test'
+          ...
+        1..2
+    ok 2 - zt.z.strip
+      ---
+      duration_ms: 1.592
+      type: 'suite'
+      ...
+    # Subtest: zt.z (default loose)
+        # Subtest: allows extra keys
+        ok 1 - allows extra keys
+          ---
+          duration_ms: 0.9998
+          type: 'test'
+          ...
+        1..1
+    ok 3 - zt.z (default loose)
+      ---
+      duration_ms: 1.1776
+      type: 'suite'
+      ...
+    # Subtest: with zt.p (scoped)
+        # Subtest: strict parent does not interfere with scoped child
+        ok 1 - strict parent does not interfere with scoped child
+          ---
+          duration_ms: 4.0983
+          type: 'test'
+          ...
+        # Subtest: strict scoped child rejects extra keys within its scope
+        ok 2 - strict scoped child rejects extra keys within its scope
+          ---
+          duration_ms: 2.6371
+          type: 'test'
+          ...
+        # Subtest: strip scoped child removes extra keys silently
+        ok 3 - strip scoped child removes extra keys silently
+          ---
+          duration_ms: 2.7414
+          type: 'test'
+          ...
+        1..3
+    ok 4 - with zt.p (scoped)
+      ---
+      duration_ms: 11.1774
+      type: 'suite'
+      ...
+    # Subtest: unscoped composition
+        # Subtest: strict parent rejects extra keys even if child is loose
+        ok 1 - strict parent rejects extra keys even if child is loose
+          ---
+          duration_ms: 2.0109
+          type: 'test'
+          ...
+        # Subtest: strip parent strips extra keys from unscoped child
+        ok 2 - strip parent strips extra keys from unscoped child
+          ---
+          duration_ms: 27.7838
+          type: 'test'
+          ...
+        # Subtest: loose parent allows extra keys from unscoped child
+        ok 3 - loose parent allows extra keys from unscoped child
+          ---
+          duration_ms: 2.879
+          type: 'test'
+          ...
+        1..3
+    ok 5 - unscoped composition
+      ---
+      duration_ms: 33.0146
+      type: 'suite'
+      ...
+    1..5
+ok 41 - Schema Strategies (strict/strip/loose)
+  ---
+  duration_ms: 63.6604
+  type: 'suite'
+  ...
+# Subtest: Advanced Schema Strategies
+    # Subtest: scoped composition (zt.p)
+        # Subtest: strict parent - loose scoped child allows extra keys within scope
+        ok 1 - strict parent - loose scoped child allows extra keys within scope
+          ---
+          duration_ms: 2.6619
+          type: 'test'
+          ...
+        # Subtest: strict parent - strict scoped child rejects extra keys within scope
+        ok 2 - strict parent - strict scoped child rejects extra keys within scope
+          ---
+          duration_ms: 2.5857
+          type: 'test'
+          ...
+        # Subtest: loose parent - strict scoped child still rejects extra keys inside scope
+        ok 3 - loose parent - strict scoped child still rejects extra keys inside scope
+          ---
+          duration_ms: 1.5004
+          type: 'test'
+          ...
+        # Subtest: strip parent - scoped child with strip strategy removes extra keys inside scope
+        ok 4 - strip parent - scoped child with strip strategy removes extra keys inside scope
+          ---
+          duration_ms: 1.5783
+          type: 'test'
+          ...
+        1..4
+    ok 1 - scoped composition (zt.p)
+      ---
+      duration_ms: 8.7673
+      type: 'suite'
+      ...
+    # Subtest: unscoped composition (direct nesting)
+        # Subtest: strict parent rejects extra keys even if child is loose
+        ok 1 - strict parent rejects extra keys even if child is loose
+          ---
+          duration_ms: 1.7311
+          type: 'test'
+          ...
+        # Subtest: strip parent strips extra keys from unscoped child
+        ok 2 - strip parent strips extra keys from unscoped child
+          ---
+          duration_ms: 1.1039
+          type: 'test'
+          ...
+        # Subtest: loose parent allows extra keys from unscoped strict child
+        ok 3 - loose parent allows extra keys from unscoped strict child
+          ---
+          duration_ms: 1.5467
+          type: 'test'
+          ...
+        # Subtest: strict parent with two merged children - merged shape must be satisfied without extras
+        ok 4 - strict parent with two merged children - merged shape must be satisfied without extras
+          ---
+          duration_ms: 3.071
+          type: 'test'
+          ...
+        1..4
+    ok 2 - unscoped composition (direct nesting)
+      ---
+      duration_ms: 7.9118
+      type: 'suite'
+      ...
+    # Subtest: dynamic selectors
+        # Subtest: strict parent rejects extra key from dynamic selector because shape is not known at compile time
+        ok 1 - strict parent rejects extra key from dynamic selector because shape is not known at compile time
+          ---
+          duration_ms: 2.8227
+          type: 'test'
+          ...
+        # Subtest: loose parent allows dynamic extra keys from selector
+        ok 2 - loose parent allows dynamic extra keys from selector
+          ---
+          duration_ms: 2.1945
+          type: 'test'
+          ...
+        # Subtest: strip parent silently removes dynamic keys not in compile‑time shape
+        ok 3 - strip parent silently removes dynamic keys not in compile‑time shape
+          ---
+          duration_ms: 2.343
+          type: 'test'
+          ...
+        # Subtest: dynamic keys work only when the parent is loose
+        ok 4 - dynamic keys work only when the parent is loose
+          ---
+          duration_ms: 1.3481
+          type: 'test'
+          ...
+        1..4
+    ok 3 - dynamic selectors
+      ---
+      duration_ms: 9.1152
+      type: 'suite'
+      ...
+    # Subtest: defaults and optionals
+        # Subtest: strict parent applies default and does not consider missing key an extra
+        ok 1 - strict parent applies default and does not consider missing key an extra
+          ---
+          duration_ms: 1.8751
+          type: 'test'
+          ...
+        # Subtest: strict parent allows optional key to be absent
+        ok 2 - strict parent allows optional key to be absent
+          ---
+          duration_ms: 4.1406
+          type: 'test'
+          ...
+        # Subtest: strict parent rejects truly unknown extra key
+        ok 3 - strict parent rejects truly unknown extra key
+          ---
+          duration_ms: 1.4401
+          type: 'test'
+          ...
+        1..3
+    ok 4 - defaults and optionals
+      ---
+      duration_ms: 7.9557
+      type: 'suite'
+      ...
+    # Subtest: mixed strategy nesting
+        # Subtest: strict root - scoped child loose - nested unscoped child loose inside scoped
+        ok 1 - strict root - scoped child loose - nested unscoped child loose inside scoped
+          ---
+          duration_ms: 4.8193
+          type: 'test'
+          ...
+        # Subtest: strict root - scoped child strict - extra in scope rejected
+        ok 2 - strict root - scoped child strict - extra in scope rejected
+          ---
+          duration_ms: 3.5715
+          type: 'test'
+          ...
+        # Subtest: chain of strict scopes - all extra keys rejected cascade
+        ok 3 - chain of strict scopes - all extra keys rejected cascade
+          ---
+          duration_ms: 3.3612
+          type: 'test'
+          ...
+        1..3
+    ok 5 - mixed strategy nesting
+      ---
+      duration_ms: 12.1166
+      type: 'suite'
+      ...
+    1..5
+ok 42 - Advanced Schema Strategies
+  ---
+  duration_ms: 46.3983
   type: 'suite'
   ...
 # Subtest: zt.empty type identity
     # Subtest: is IRenderable<void, []>
     ok 1 - is IRenderable<void, []>
       ---
-      duration_ms: 2.4269
+      duration_ms: 1.5663
       type: 'test'
       ...
     # Subtest: left identity: empty · T  ===  T  (preserves Kargs and Output)
     ok 2 - left identity: empty · T  ===  T  (preserves Kargs and Output)
       ---
-      duration_ms: 2.2695
+      duration_ms: 2.8044
       type: 'test'
       ...
     # Subtest: right identity: T · empty  ===  T
     ok 3 - right identity: T · empty  ===  T
       ---
-      duration_ms: 1.7821
+      duration_ms: 0.8994
       type: 'test'
       ...
     1..3
-ok 40 - zt.empty type identity
+ok 43 - zt.empty type identity
   ---
-  duration_ms: 9.7987
+  duration_ms: 10.9185
   type: 'suite'
   ...
 # Subtest: zt.bind types
     # Subtest: fully applied renderable is IRenderable<void, O>
     ok 1 - fully applied renderable is IRenderable<void, O>
       ---
-      duration_ms: 3.0277
+      duration_ms: 1.0568
       type: 'test'
       ...
     # Subtest: bind of a bound renderable stays void
     ok 2 - bind of a bound renderable stays void
       ---
-      duration_ms: 0.5903
+      duration_ms: 0.4822
       type: 'test'
       ...
     1..2
-ok 41 - zt.bind types
+ok 44 - zt.bind types
   ---
-  duration_ms: 3.9366
+  duration_ms: 1.7755
   type: 'suite'
   ...
 # Subtest: zt.map types
     # Subtest: map over empty list yields identity type
     ok 1 - map over empty list yields identity type
       ---
-      duration_ms: 0.4884
+      duration_ms: 0.3904
       type: 'test'
       ...
     # Subtest: map with separator and 3 items merges outputs
     ok 2 - map with separator and 3 items merges outputs
       ---
-      duration_ms: 1.4128
+      duration_ms: 1.2179
       type: 'test'
       ...
     # Subtest: map with separator output and 3 items merges outputs with separator
     ok 3 - map with separator output and 3 items merges outputs with separator
       ---
-      duration_ms: 0.8943
+      duration_ms: 0.9078
       type: 'test'
       ...
     1..3
-ok 42 - zt.map types
+ok 45 - zt.map types
   ---
-  duration_ms: 3.2233
+  duration_ms: 3.0577
   type: 'suite'
   ...
 # Subtest: zt.join types
     # Subtest: join of two renderables merges kargs and concatenates outputs
     ok 1 - join of two renderables merges kargs and concatenates outputs
       ---
-      duration_ms: 1.4253
+      duration_ms: 1.4384
       type: 'test'
       ...
     # Subtest: join of empty list is identity type
     ok 2 - join of empty list is identity type
       ---
-      duration_ms: 0.3759
+      duration_ms: 0.3619
       type: 'test'
       ...
     # Subtest: join of single element preserves its types
     ok 3 - join of single element preserves its types
       ---
-      duration_ms: 0.6713
+      duration_ms: 0.7231
       type: 'test'
       ...
     1..3
-ok 43 - zt.join types
+ok 46 - zt.join types
   ---
-  duration_ms: 2.77
+  duration_ms: 2.871
   type: 'suite'
   ...
 # Subtest: Associativity of composition
     # Subtest: (a · b) · c  types equal  a · (b · c)
     ok 1 - (a · b) · c  types equal  a · (b · c)
       ---
-      duration_ms: 0.9889
+      duration_ms: 0.8903
       type: 'test'
       ...
     # Subtest: (a join b) join c  types equal  a join (b join c)
     ok 2 - (a join b) join c  types equal  a join (b join c)
       ---
-      duration_ms: 1.1462
+      duration_ms: 1.0141
       type: 'test'
       ...
     1..2
-ok 44 - Associativity of composition
+ok 47 - Associativity of composition
   ---
-  duration_ms: 2.3853
+  duration_ms: 2.1349
   type: 'suite'
   ...
 # Subtest: zt.if types
     # Subtest: if(false, t) has void kargs and unionized output
     ok 1 - if(false, t) has void kargs and unionized output
       ---
-      duration_ms: 0.3742
+      duration_ms: 0.3085
       type: 'test'
       ...
     # Subtest: if(true, bind(t, k)) has void kargs and correct output
     ok 2 - if(true, bind(t, k)) has void kargs and correct output
       ---
-      duration_ms: 0.7635
+      duration_ms: 0.8706
       type: 'test'
       ...
     1..2
-ok 45 - zt.if types
+ok 48 - zt.if types
   ---
-  duration_ms: 1.4033
+  duration_ms: 1.4324
   type: 'suite'
   ...
 # Subtest: zt.opaque type erasure
     # Subtest: opaque renders type as IRenderable<K, []>
     ok 1 - opaque renders type as IRenderable<K, []>
       ---
-      duration_ms: 0.2865
+      duration_ms: 0.255
       type: 'test'
       ...
     1..1
-ok 46 - zt.opaque type erasure
+ok 49 - zt.opaque type erasure
   ---
-  duration_ms: 0.4607
+  duration_ms: 0.4049
   type: 'suite'
   ...
 # Subtest: Kargs merge commutativity
     # Subtest: (a then b) merges same as (b then a)
     ok 1 - (a then b) merges same as (b then a)
       ---
-      duration_ms: 1.6189
+      duration_ms: 1.2872
       type: 'test'
       ...
     # Subtest: output order follows template order
     ok 2 - output order follows template order
       ---
-      duration_ms: 1.6282
+      duration_ms: 1.0576
       type: 'test'
       ...
     1..2
-ok 47 - Kargs merge commutativity
+ok 50 - Kargs merge commutativity
   ---
-  duration_ms: 3.4972
+  duration_ms: 2.5618
   type: 'suite'
   ...
 # Subtest: zt.t type inference
     # Subtest: static template infers void kargs and empty output
     ok 1 - static template infers void kargs and empty output
       ---
-      duration_ms: 3.0125
+      duration_ms: 1.9297
       type: 'test'
       ...
     # Subtest: primitives infer void kargs with output tuple
     ok 2 - primitives infer void kargs with output tuple
       ---
-      duration_ms: 0.9105
+      duration_ms: 0.3841
       type: 'test'
       ...
     # Subtest: selector returning primitive infers void kargs
     ok 3 - selector returning primitive infers void kargs
       ---
-      duration_ms: 0.6764
+      duration_ms: 0.3059
       type: 'test'
       ...
     # Subtest: zt.p with schema infers named karg and output
     ok 4 - zt.p with schema infers named karg and output
       ---
-      duration_ms: 1.679
+      duration_ms: 0.9731
       type: 'test'
       ...
     # Subtest: zt.p with schema + transform infers transformed output type
     ok 5 - zt.p with schema + transform infers transformed output type
       ---
-      duration_ms: 3.2437
+      duration_ms: 0.7865
       type: 'test'
       ...
     # Subtest: multiple zt.p merge kargs and output order
     ok 6 - multiple zt.p merge kargs and output order
       ---
-      duration_ms: 1.2765
+      duration_ms: 2.1482
       type: 'test'
       ...
     # Subtest: inline zod object schema infers kargs from its input
     ok 7 - inline zod object schema infers kargs from its input
       ---
-      duration_ms: 0.6356
+      duration_ms: 0.3529
       type: 'test'
       ...
     # Subtest: inline z.codec infers output from decode
     ok 8 - inline z.codec infers output from decode
       ---
-      duration_ms: 2.2996
+      duration_ms: 1.8986
       type: 'test'
       ...
     1..8
-ok 48 - zt.t type inference
+ok 51 - zt.t type inference
   ---
-  duration_ms: 20.4742
+  duration_ms: 11.0774
   type: 'suite'
   ...
 # Subtest: zt.z type inference
     # Subtest: shape kargs are intersected with inline values
     ok 1 - shape kargs are intersected with inline values
       ---
-      duration_ms: 1.7752
+      duration_ms: 1.7441
       type: 'test'
       ...
     # Subtest: shape only, no holes → kargs is shape input
     ok 2 - shape only, no holes → kargs is shape input
       ---
-      duration_ms: 0.9987
+      duration_ms: 0.618
       type: 'test'
       ...
     1..2
-ok 49 - zt.z type inference
+ok 52 - zt.z type inference
   ---
-  duration_ms: 3.1283
+  duration_ms: 2.6009
   type: 'suite'
   ...
 # Subtest: zt.p with renderable
     # Subtest: scoped renderable infers parent kargs with nested shape
     ok 1 - scoped renderable infers parent kargs with nested shape
       ---
-      duration_ms: 1.5254
+      duration_ms: 0.7221
       type: 'test'
       ...
     # Subtest: multiple scoped renderables merge kargs separately
     ok 2 - multiple scoped renderables merge kargs separately
       ---
-      duration_ms: 1.1682
+      duration_ms: 0.5178
       type: 'test'
       ...
     1..2
-ok 50 - zt.p with renderable
+ok 53 - zt.p with renderable
   ---
-  duration_ms: 2.9999
+  duration_ms: 1.3886
   type: 'suite'
   ...
 # Subtest: nested renderable type inference
     # Subtest: outer infers merged kargs from nested
     ok 1 - outer infers merged kargs from nested
       ---
-      duration_ms: 0.3958
+      duration_ms: 0.1788
       type: 'test'
       ...
     # Subtest: two nested renderables merge shapes
     ok 2 - two nested renderables merge shapes
       ---
-      duration_ms: 2.0481
+      duration_ms: 1.1182
       type: 'test'
       ...
     1..2
-ok 51 - nested renderable type inference
+ok 54 - nested renderable type inference
   ---
-  duration_ms: 2.8099
+  duration_ms: 1.4376
   type: 'suite'
   ...
 # Subtest: zt.bind types
     # Subtest: bind removes kargs
     ok 1 - bind removes kargs
       ---
-      duration_ms: 5.7029
+      duration_ms: 1.5509
       type: 'test'
       ...
     # Subtest: partially bound is not directly possible, but bind then compose
     ok 2 - partially bound is not directly possible, but bind then compose
       ---
-      duration_ms: 1.3214
+      duration_ms: 0.1303
       type: 'test'
       ...
     1..2
-ok 52 - zt.bind types
+ok 55 - zt.bind types
   ---
-  duration_ms: 7.3272
+  duration_ms: 1.8067
   type: 'suite'
   ...
 # Subtest: zt.map types
     # Subtest: list mapped with transform infers output tuple of renderable
     ok 1 - list mapped with transform infers output tuple of renderable
       ---
-      duration_ms: 2.0468
+      duration_ms: 0.8973
       type: 'test'
       ...
     # Subtest: list mapped with transform and separator with kargs infers kargs and output tuple of renderable and separator
     ok 2 - list mapped with transform and separator with kargs infers kargs and output tuple of renderable and separator
       ---
-      duration_ms: 2.6948
+      duration_ms: 1.3121
       type: 'test'
       ...
     1..2
-ok 53 - zt.map types
+ok 56 - zt.map types
   ---
-  duration_ms: 5.005
+  duration_ms: 2.3408
   type: 'suite'
   ...
 # Subtest: zt.join types
     # Subtest: join of renderables merges kargs and outputs
     ok 1 - join of renderables merges kargs and outputs
       ---
-      duration_ms: 4.1343
+      duration_ms: 0.9934
       type: 'test'
       ...
     1..1
-ok 54 - zt.join types
+ok 57 - zt.join types
   ---
-  duration_ms: 4.4028
+  duration_ms: 1.1193
   type: 'suite'
   ...
 # Subtest: zt.match types
     # Subtest: inferred kargs is union of possible kargs + discriminator
     ok 1 - inferred kargs is union of possible kargs + discriminator
       ---
-      duration_ms: 0.5412
+      duration_ms: 0.2244
       type: 'test'
       ...
     1..1
-ok 55 - zt.match types
+ok 58 - zt.match types
   ---
-  duration_ms: 0.8651
+  duration_ms: 0.3249
   type: 'suite'
   ...
 # Subtest: zt.if types
     # Subtest: if(false, t) returns void kargs, output (union with empty?)
     ok 1 - if(false, t) returns void kargs, output (union with empty?)
       ---
-      duration_ms: 0.7975
+      duration_ms: 0.1957
       type: 'test'
       ...
     # Subtest: if(true, t) behaves like t
     ok 2 - if(true, t) behaves like t
       ---
-      duration_ms: 5.8476
+      duration_ms: 0.8167
       type: 'test'
       ...
     1..2
-ok 56 - zt.if types
+ok 59 - zt.if types
   ---
-  duration_ms: 7.3316
+  duration_ms: 1.2028
   type: 'suite'
   ...
-# Subtest: zt - Zod Tag
-    # Subtest: static template
-        # Subtest: should render a template without interpolation values
-        ok 1 - should render a template without interpolation values
-          ---
-          duration_ms: 3.9188
-          type: 'test'
-          ...
-        # Subtest: should render a template with static interpolation values
-        ok 2 - should render a template with static interpolation values
-          ---
-          duration_ms: 1.2682
-          type: 'test'
-          ...
-        # Subtest: should render a template with transformed interpolation values
-        ok 3 - should render a template with transformed interpolation values
-          ---
-          duration_ms: 0.4337
-          type: 'test'
-          ...
-        1..3
-    ok 1 - static template
-      ---
-      duration_ms: 7.3982
-      type: 'suite'
-      ...
-    # Subtest: keyword argument templates
-        # Subtest: should allow inline object/codec schemas as karg params
-        ok 1 - should allow inline object/codec schemas as karg params
-          ---
-          duration_ms: 6.7166
-          type: 'test'
-          ...
-        # Subtest: should validate against zod shape definition
-        ok 2 - should validate against zod shape definition
-          ---
-          duration_ms: 3.3115
-          type: 'test'
-          ...
-        # Subtest: should merge keyword arguments when karg are present both at shape definition and inline arg
-        ok 3 - should merge keyword arguments when karg are present both at shape definition and inline arg
-          ---
-          duration_ms: 3.1538
-          type: 'test'
-          ...
-        1..3
-    ok 2 - keyword argument templates
-      ---
-      duration_ms: 13.5135
-      type: 'suite'
-      ...
-    # Subtest: nested templates
-        # Subtest: should merge nested templates
-        ok 1 - should merge nested templates
-          ---
-          duration_ms: 5.239
-          type: 'test'
-          ...
-        1..1
-    ok 3 - nested templates
-      ---
-      duration_ms: 5.4467
-      type: 'suite'
-      ...
-    # Subtest: utilities
-        # Subtest: zt.unsafe utility dangerously sets a static string content inside the template
-        ok 1 - zt.unsafe utility dangerously sets a static string content inside the template
-          ---
-          duration_ms: 0.3759
-          type: 'test'
-          ...
-        # Subtest: zt.p utility creates a named param and allows conditional rendering
-        ok 2 - zt.p utility creates a named param and allows conditional rendering
-          ---
-          duration_ms: 0.5745
-          type: 'test'
-          ...
-        # Subtest: format utilities
-            # Subtest: zt.$n utility formats interpolation as dolar index placeholders
-            ok 1 - zt.$n utility formats interpolation as dolar index placeholders
-              ---
-              duration_ms: 0.741
-              type: 'test'
-              ...
-            # Subtest: zt.atIndex utility formats interpolation as @ index placeholders
-            ok 2 - zt.atIndex utility formats interpolation as @ index placeholders
-              ---
-              duration_ms: 0.7858
-              type: 'test'
-              ...
-            # Subtest: zt.debug utility formats as String.raw would
-            ok 3 - zt.debug utility formats as String.raw would
-              ---
-              duration_ms: 0.6078
-              type: 'test'
-              ...
-            1..3
-        ok 3 - format utilities
-          ---
-          duration_ms: 2.5592
-          type: 'suite'
-          ...
-        1..3
-    ok 4 - utilities
-      ---
-      duration_ms: 3.9643
-      type: 'suite'
-      ...
-    1..4
-ok 57 - zt - Zod Tag
-  ---
-  duration_ms: 33.3927
-  type: 'suite'
-  ...
-1..57
-# tests 200
-# suites 63
-# pass 198
+1..59
+# tests 233
+# suites 75
+# pass 231
 # fail 0
 # cancelled 0
 # skipped 2
 # todo 0
-# duration_ms 6943.1873
+# duration_ms 6837.2658
 # start of coverage report
 # -----------------------------------------------------------------------------------------------------------------------------
 # file                                                  | line % | branch % | funcs % | uncovered lines
 # -----------------------------------------------------------------------------------------------------------------------------
 # dist                                                  |        |          |         | 
-#  main.js                                              |  94.78 |    88.05 |   94.29 | 26-27 187-193 215-220 291-296 308-315
+#  main.js                                              |  94.87 |    89.57 |   97.33 | 26-27 187-193 216-221 296-301 310-317
 # src                                                   |        |          |         | 
 #  __tests__                                            |        |          |         | 
-#   cli                                                 |        |          |         | 
+#   playground                                          |        |          |         | 
 #    cli-test.ts                                        |  96.15 |    92.86 |   82.14 | 81-83 122-123
 #    repo.test.ts                                       | 100.00 |    94.44 |  100.00 | 
+#    typed-tag.test.ts                                  | 100.00 |   100.00 |   97.14 | 
+#    typed-tag.type-test.ts                             | 100.00 |   100.00 |   71.43 | 
+#    user-card.type-test.ts                             |  96.15 |    77.78 |   92.86 | 119-120 132-133 141-142
 #   slop-samples.test.ts                                | 100.00 |   100.00 |  100.00 | 
 #   slop                                                |        |          |         | 
+#    code-generator.slop-test.ts                        |  98.98 |    64.91 |   89.29 | 35-37
 #    conditional-validation-boundary.slop-test.ts       | 100.00 |    84.62 |  100.00 | 
 #    email.slop-test.ts                                 |  98.26 |    88.00 |  100.00 | 170-172
 #    feature-flags.slop-test.ts                         | 100.00 |    89.66 |  100.00 | 
 #    functional-composition.slop-test.ts                | 100.00 |    94.44 |   93.75 | 
 #    graphql.slop-test.ts                               |  99.32 |    80.00 |   77.78 | 137-138 465-466
+#    multi-tenant-saas.slop-test.ts                     |  97.76 |    54.90 |   72.97 | 104-111
 #    npc-dialog-state-machine.slop-test.ts              |  99.25 |    86.46 |  100.00 | 68 144-146 359-360 364 427-428 610-611
 #    pattern-matching-function-definitions.slop-test.ts | 100.00 |    64.38 |  100.00 | 
 #    prompt-2.slop-test.ts                              |  98.14 |    80.00 |  100.00 | 16-17 19
 #    prompt.slop-test.ts                                |  97.37 |    62.50 |  100.00 | 15 19
 #    repo.slop-test.ts                                  | 100.00 |    85.19 |   97.83 | 
+#    sql-prompt-pipeline.slop-test.ts                   | 100.00 |    79.03 |   89.36 | 
 #    sql-prompt.slop-test.ts                            |  98.65 |    93.48 |   97.44 | 58 326-328 372-374
 #    sql.slop-test.ts                                   |  99.03 |    95.65 |   73.08 | 155-156 363-364
 #    stress-composition-edge-cases.slop-test.ts         | 100.00 |    91.43 |   96.67 | 
@@ -3802,12 +4218,10 @@ ok 57 - zt - Zod Tag
 #    memory.test.ts                                     | 100.00 |    94.44 |  100.00 | 
 #    pattern-matching.test.ts                           | 100.00 |    98.31 |   96.61 | 
 #    performance.test.ts                                |  94.25 |   100.00 |   94.74 | 25-28 56-61
+#    schema-strategies.test.ts                          |  99.14 |    96.39 |   89.77 | 239-241
 #    types-algebraic-properties.test.ts                 | 100.00 |   100.00 |   74.47 | 
 #    types-core-inference.test.ts                       | 100.00 |   100.00 |   52.11 | 
-#   typed-tag.test.ts                                   | 100.00 |   100.00 |   97.14 | 
-#   typed-tag.type-test.ts                              | 100.00 |   100.00 |   71.43 | 
-#   user-card.type-test.ts                              |  96.10 |    77.78 |   92.86 | 117-118 130-131 139-140
 # -----------------------------------------------------------------------------------------------------------------------------
-# all files                                             |  99.04 |    89.33 |   91.61 | 
+# all files                                             |  99.03 |    87.45 |   90.99 | 
 # -----------------------------------------------------------------------------------------------------------------------------
 # end of coverage report

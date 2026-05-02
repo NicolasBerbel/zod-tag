@@ -38,31 +38,33 @@ export function intersectShapes(
 /** Schema guard */
 export const isSchemaType = (v: unknown): v is z.ZodType => !!(v as any)?._zod
 
-export const mergeStrategies = {
+export const mergeSchemaStrategies = {
     shallow: shallowMerge,
     intersect: intersectShapes,
 }
+
+/** Merge strategy identifier */
+export type MergeSchemaStrategy = keyof typeof mergeSchemaStrategies
+
+/** Merge two shapes with given strategy */
 export const mergeShapes = <
     A extends z.ZodRawShape,
     B extends z.ZodRawShape,
-    K extends keyof typeof mergeStrategies,
->(shapeA: A, shapeB: B, strategy: K) => mergeStrategies[strategy](shapeA, shapeB);
+    K extends MergeSchemaStrategy,
+>(shapeA: A, shapeB: B, strategy: K) => mergeSchemaStrategies[strategy](shapeA, shapeB);
 
 
-type MergeOptions = {
-    mergeStrategy: keyof typeof mergeStrategies,
-    schemaStrategy: keyof typeof createSchemaStrategies,
-}
 
+/**
+ * Merges two schemas
+ * @returns tuple with [resultSchema: ZodType | undefined, isMerged: boolean]
+ */
 export const mergeSchemas = (
-    schema?: z.ZodType,
-    value?: IZodTagRenderable<any, any> | z.ZodType,
-    options?: MergeOptions,
+    schema: z.ZodType | undefined,
+    value: IZodTagRenderable<any, any> | z.ZodType | undefined,
+    mergeStrategy: MergeSchemaStrategy,
+    schemaStrategy: CreateSchemaStrategy,
 ) => {
-    const {
-        mergeStrategy = 'intersect',
-        schemaStrategy = 'loose',
-    } = options ?? {};
     let _schema = schema;
     let merged = false;
 
@@ -88,8 +90,12 @@ export const createSchemaStrategies = {
     strip: <T extends z.ZodRawShape>(s: T) => z.object(s).strip(),
 }
 
+/** Create schema strategy identifier */
+export type CreateSchemaStrategy = keyof typeof createSchemaStrategies
+
+/** Creates a schema with a given schema strategy */
 export const createSchema = <
     T extends z.ZodRawShape,
-    K extends keyof typeof createSchemaStrategies,
+    K extends CreateSchemaStrategy,
 >(shape: T, strategy: K) => createSchemaStrategies[strategy](shape);
 

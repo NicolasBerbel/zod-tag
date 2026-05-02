@@ -91,51 +91,51 @@ function test(name: string, fn: () => void) {
 // ── Math: basic operations ───────────────────────────────────────
 
 test('add: 10 + 32 = 42', () => {
-    const v = math.render({ fn: 'add', a: 10, b: 32 }) as unknown as [string[], ...unknown[]]
+    const v = math.render({ fn: 'add', a: 10, b: 32 })
     if (v[1] !== 42) throw new Error(`Expected 42, got ${v[1]}`)
 })
 
 test('sub: 100 - 7 = 93', () => {
-    const v = math.render({ fn: 'sub', a: 100, b: 7 }) as unknown as [string[], ...unknown[]]
+    const v = math.render({ fn: 'sub', a: 100, b: 7 })
     if (v[1] !== 93) throw new Error(`Expected 93`)
 })
 
 test('mul: 6 × 7 = 42', () => {
-    const v = math.render({ fn: 'mul', a: 6, b: 7 }) as unknown as [string[], ...unknown[]]
+    const v = math.render({ fn: 'mul', a: 6, b: 7 })
     if (v[1] !== 42) throw new Error(`Expected 42`)
 })
 
 test('div: 100 / 8 = 12.5', () => {
-    const v = math.render({ fn: 'div', a: 100, b: 8 }) as unknown as [string[], ...unknown[]]
+    const v = math.render({ fn: 'div', a: 100, b: 8 })
     if (v[1] !== 12.5) throw new Error(`Expected 12.5`)
 })
 
 test('pow: 2^10 = 1024', () => {
-    const v = math.render({ fn: 'pow', base: 2, exp: 10 }) as unknown as [string[], ...unknown[]]
+    const v = math.render({ fn: 'pow', base: 2, exp: 10 })
     if (v[1] !== 1024) throw new Error(`Expected 1024`)
 })
 
 test('clamp: clamps to boundaries', () => {
-    const hi = math.render({ fn: 'clamp', val: 5000, min: 0, max: 1000 }) as unknown as [string[], ...unknown[]]
-    const lo = math.render({ fn: 'clamp', val: -50, min: 0, max: 1000 }) as unknown as [string[], ...unknown[]]
-    const mid = math.render({ fn: 'clamp', val: 500, min: 0, max: 1000 }) as unknown as [string[], ...unknown[]]
+    const hi = math.render({ fn: 'clamp', val: 5000, min: 0, max: 1000 })
+    const lo = math.render({ fn: 'clamp', val: -50, min: 0, max: 1000 })
+    const mid = math.render({ fn: 'clamp', val: 500, min: 0, max: 1000 })
     if (hi[1] !== 1000) throw new Error('Upper clamp failed')
     if (lo[1] !== 0) throw new Error('Lower clamp failed')
     if (mid[1] !== 500) throw new Error('Mid clamp failed')
 })
 
 test('neg: -42', () => {
-    const v = math.render({ fn: 'neg', x: 42 }) as unknown as [string[], ...unknown[]]
+    const v = math.render({ fn: 'neg', x: 42 })
     if (v[1] !== -42) throw new Error()
 })
 
 test('abs: |-42| = 42', () => {
-    const v = math.render({ fn: 'abs', x: -42 }) as unknown as [string[], ...unknown[]]
+    const v = math.render({ fn: 'abs', x: -42 })
     if (v[1] !== 42) throw new Error()
 })
 
 test('sqrt: √144 = 12', () => {
-    const v = math.render({ fn: 'sqrt', x: 144 }) as unknown as [string[], ...unknown[]]
+    const v = math.render({ fn: 'sqrt', x: 144 })
     if (v[1] !== 12) throw new Error()
 })
 
@@ -207,7 +207,7 @@ test('pipeline: chains math operations', () => {
     const out = zt.debug(res)
     console.log(`    ${out}`)
     // Check each step's output appears (they're values in the interpolation)
-    const vals = (res as unknown as [string[], ...unknown[]]).slice(1)
+    const vals = (res).slice(1)
     if (!vals.includes(15)) throw new Error('Missing 15')
     if (!vals.includes(45)) throw new Error('Missing 45')
     if (!vals.includes(25)) throw new Error('Missing 25')

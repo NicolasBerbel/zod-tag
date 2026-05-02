@@ -35,7 +35,7 @@ export const scopedSchemaKargs = (value: any, kargs: any) => {
 
 /** Merges the scopable element current scope with given scope path and return a full scoped path */
 export const mergeScope = (value: any, scope: string[] = []) => {
-    const currentScope = getSlotScope(value) || [];
+    const currentScope = getSlotScope(value)
     return [...scope, ...currentScope];
 }
 
@@ -88,5 +88,6 @@ export const scopedRenderable = <T extends IRenderable<any, any>>(
 ) => {
     const v = renderable as any as IZodTagRenderable;
     const combinedScope = mergeScope(v, scope);
-    return createRenderable(v.strs, withScope(v.vals, scope), v.schema, combinedScope);
+    const scopedValues = withScope(v.vals, scope);
+    return createRenderable(v.strs, scopedValues, v.schema, combinedScope, v.trait, v.merge);
 }

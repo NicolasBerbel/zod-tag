@@ -144,8 +144,6 @@ describe('zt.match - varying shapes', () => {
 
 // ---------------------------------------------------------------------------
 // Suite: Match inside scoped parameters (zt.p)
-// TODO: zt.match inside zt.p
-// zt.p not properly scoping the renderable returned from zt.match
 // ---------------------------------------------------------------------------
 describe('zt.match inside zt.p', () => {
   const cityMatch = zt.match('type', {

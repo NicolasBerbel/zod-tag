@@ -57,6 +57,7 @@
     "test:memory": "node  --test --expose-gc --experimental-test-coverage src/__tests__/suite/memory.test.ts",
     "test:slop": "node --test --experimental-test-coverage src/__tests__/slop/*",
     "test:suite": "node --test --watch --experimental-test-coverage src/__tests__/suite/*",
+    "test:suite:gc": "node --test --watch --expose-gc --experimental-test-coverage src/__tests__/suite/*",
     "test:watch": "node --test --watch --experimental-test-coverage src/**/*.test.ts",
     "type-check": "tsc --noEmit",
     "build": "rolldown -c",

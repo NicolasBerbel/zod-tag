@@ -3,7 +3,7 @@
  */
 
 import z from "zod"
-import { zt } from "../../dist/main.js"
+import { zt } from '../../../dist/main.js'
 
 
 const schemaTpl = zt.z({ name: z.string() })`
