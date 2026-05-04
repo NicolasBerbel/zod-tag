@@ -1,5 +1,11 @@
-import { type ExtractKargs, type ExtractOutput } from "../types/tag.types";
-import { IRenderableOutput, type IRenderable } from "../core/renderable"
+import {
+    type ExtractKargs,
+    type ExtractOutput
+} from "../types/tag.types";
+import {
+    type IRenderable,
+    type IRenderableOutput,
+} from "../core/renderable"
 import { typedTag } from "../typed-tag"
 import { tagIdentity } from "./identity"
 import { SliceFirst } from "../types/util.types";
@@ -64,6 +70,7 @@ export function joinParams<T extends any[]>(list: T, separator = tagIdentity) {
     const t = typedTag as any;
     const sep = separator ?? tagIdentity;
     return list.reduce((acc, cur) => {
-        return (acc ? t`${acc}${sep}${cur}` : t`${cur}`)
-    }, null)
+        if (cur === tagIdentity) return acc;
+        return (acc) ? t`${acc}${sep}${cur}` : t`${cur}`
+    }, null) ?? tagIdentity
 }

@@ -4,12 +4,12 @@ import {
 } from "../types/tag.types";
 import { compile } from "./compile";
 import { withSource } from "./source";
-import { interpolate } from "./interpolate";
-import { extractScopedKargs } from "./scope";
 import {
     type CreateSchemaStrategy,
     type MergeSchemaStrategy
 } from "./schema";
+import { interpolateChunks } from "./interpolate-chunks";
+import { ZtChunk, collectChunks } from "./chunks";
 
 /** Type guard for renderable instances */
 export const isRenderable = (v: unknown): v is IRenderable<any, any> => (
@@ -33,6 +33,11 @@ export type DEFAULT_TRAIT = typeof DEFAULT_TRAIT;
 export const DEFAULT_MERGE = 'intersect' as const satisfies MergeSchemaStrategy;
 export type DEFAULT_MERGE = typeof DEFAULT_MERGE;
 
+/** Identity singleton wrapper */
+const Identity = [null!] as [IRenderable<void, []>]
+
+const freeze = Object.freeze
+
 /**
  * @param fn a function to be executed on rendering
  */
@@ -49,42 +54,52 @@ export function createRenderable<
     trait: Trait = DEFAULT_TRAIT as any,
     merge: Merge = DEFAULT_MERGE as any,
 ) {
+    // identity check
+    const isEmpty = !schema && strs.length === 1 && strs[0] === '';
+    if (isEmpty && Identity[0]) return Identity[0] as any as IRenderable<Kargs, Output>
+
+    // getters
     let _strs = strs.slice() as string[]
     let _vals = vals.slice();
     let _schema = schema;
     let __compiled = false;
+    let _scope = freeze(scope.slice());
 
     // construct with stack
     const renderable = withSource({
-        get trait() { return trait },
-        get merge() { return merge },
-        get scope() { return scope },
+        [RENDERABLE_SYMBOL]: true,
+        trait,
+        merge,
+        get scope() { return _scope },
         get schema() { return _schema },
         get strs() { return _strs },
         get vals() { return _vals },
         get __compiled() { return __compiled }
-    }) as any as IRenderable<Kargs, Output>;
-    renderable[RENDERABLE_SYMBOL] = true;
+    }) as IZodTagRenderable;
 
     // precompile the renderable
     if (vals.length) {
         [_strs, _vals, _schema] = compile(renderable);
     }
+    __compiled = true;
 
     // assign interpolation
-    __compiled = true;
-    renderable.render = (kargs: Kargs) => {
-        const scopedKargs = extractScopedKargs(kargs, scope)
-        return interpolate(renderable, scopedKargs) as any
-    }
+    (renderable as any).render = (kargs: Kargs) => collectChunks(interpolateChunks(renderable, kargs));
+    (renderable as any).stream = (kargs: Kargs) => interpolateChunks(renderable, kargs);
 
     // assert immutability
-    Object.freeze(_strs)
-    Object.freeze(_vals)
-    Object.freeze(renderable)
-    return renderable
-}
+    freeze(_strs)
+    freeze(_vals)
+    freeze(renderable)
 
+    // save identity singleton
+    if (isEmpty && !Identity[0]) {
+        Identity[0] = renderable as any
+        freeze(Identity);
+    }
+
+    return renderable as any as IRenderable<Kargs, Output>
+}
 
 /**
  * Renderable interface represents a fn value that processes a interpolation.
@@ -99,12 +114,17 @@ export interface IRenderable<
     /** Resulting interpolation output values */
     Output extends unknown[],
 > {
-    [RENDERABLE_SYMBOL]: true;
+    readonly [RENDERABLE_SYMBOL]: true;
 
     /**
-     * Process input kwargs
+     * Process input kwargs into immutable interpolation tuple
      */
-    render: (kargs: Kargs) => [strs: string[], ...vals: Output];
+    readonly render: (kargs: Kargs) => [strs: string[], ...vals: Output];
+
+    /**
+     * Process input kwargs into immutable interpolation chunk tuples
+     */
+    readonly stream: (kargs: Kargs) => Generator<ZtChunk, void>
 }
 
 /**
@@ -116,12 +136,13 @@ export interface IZodTagRenderable<
     Trait extends ZtTrait = any,
     Merge extends ZtMerge = any,
 > extends IRenderable<Kargs, Output> {
+    __compiled: boolean,
     trait: Trait,
     merge: Merge,
     strs: string[];
     vals: unknown[]
     schema?: z.ZodType;
-    scope?: string[];
+    scope: string[];
 }
 
 /** Infers the keyword arguments of a renderable */

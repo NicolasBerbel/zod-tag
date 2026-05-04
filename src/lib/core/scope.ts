@@ -2,7 +2,6 @@ import {
     type IRenderable,
     type IZodTagRenderable,
     createRenderable,
-    isRenderable,
     isZTRenderable
 } from "./renderable";
 import { isSchemaType } from "./schema";
@@ -39,42 +38,40 @@ export const mergeScope = (value: any, scope: string[] = []) => {
     return [...scope, ...currentScope];
 }
 
+export const applyScope = (v: any, scope: string[], withSelectors = false) => {
+    let _v = v;
+    if (isZTRenderable(v)) {
+        // create scoped renderable
+        _v = scopedRenderable(v, scope);
+    } else if (isSchemaType(v)) {
+        // create scoped schema
+        _v = v.clone();
+        Object.defineProperty(_v, '__ztScope', {
+            value: mergeScope(v, scope),
+            configurable: false,
+            enumerable: false,
+            writable: false,
+        });
+    } else if (typeof v === 'function' && withSelectors) {
+        // create scoped selector (only for selectors flattened at compilation phase)
+        _v = (kargs: any) => {
+            const scopedKargs = extractScopedKargs(kargs, scope);
+            const r = v(scopedKargs)
+            return r;
+        }
+    }
+    return _v;
+}
+
 /**
- * Scopes values under keyword namespace
+ * Scopes values under namespace path
  *
  * @param vals Values tuple
  * @param scope scoped namespace key
  */
 export const withScope = (vals: any[], scope: string[] = [], withSelectors = false) => {
-    if (!scope?.length) return vals;
-
-    return vals.map(v => {
-        let _v = v as any;
-
-        if (isZTRenderable(v)) {
-            // create scoped renderable
-            _v = scopedRenderable(v, scope);
-        } else if (isSchemaType(v)) {
-            // create scoped schema
-            _v = v.clone();
-            Object.defineProperty(_v, '__ztScope', {
-                value: mergeScope(v, scope),
-                configurable: false,
-                enumerable: false,
-                writable: false,
-            });
-        } else if (typeof v === 'function' && withSelectors) {
-            // create scoped selector (only for selectors flattened at compilation phase)
-            _v = (kargs: any) => {
-                const scopedKargs = extractScopedKargs(kargs, scope);
-                const r = v(scopedKargs)
-                // When precompiled selectors dynamically return a IRenderable this child has to be rescoped.
-                if (isRenderable(r)) return scopedRenderable(r, scope)
-                return r;
-            }
-        }
-        return _v;
-    });
+    if (!scope.length) return vals;
+    return vals.map(v => applyScope(v, scope, withSelectors));
 };
 
 /**

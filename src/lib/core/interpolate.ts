@@ -1,16 +1,9 @@
 import { type KargsType } from "../types/tag.types";
 import {
-    type IZodTagRenderable,
     type IRenderable,
-    isZTRenderable,
 } from "./renderable"
-import { scopedSchemaKargs } from "./scope";
-import {
-    type InterpolationOperation,
-    InterpolationError,
-} from "./interpolation-error"
-import { spliceInterpolation } from "./splice";
-import { isSchemaType } from "./schema";
+import { collectChunks } from "./chunks";
+import { interpolateChunks } from "./interpolate-chunks";
 
 /**
  * Collapses with renderable interpolation strings and values with given kargs:
@@ -18,73 +11,5 @@ import { isSchemaType } from "./schema";
  * @param karg Keyword arguments object
  */
 export function interpolate<K extends KargsType>(renderable: IRenderable<K, any>, karg: K) {
-    const { strs, vals, schema } = renderable as any as IZodTagRenderable;
-
-    let kargs: K = karg;
-    if (schema) {
-        const parsed = schema.safeDecode(karg)
-        if (parsed.error) {
-            throw InterpolationError.for(parsed.error, {
-                renderer: renderable,
-                index: -1,
-                op: 'root-schema',
-                strings: strs,
-                value: schema,
-            });
-        }
-        kargs = parsed.data as K
-    }
-
-    const _values = vals.slice()
-    const _strings = strs.slice()
-
-    let i = -1;
-    let value;
-    let op: InterpolationOperation = null!;
-    try {
-        for (; i < _values.length; i++) {
-            value = _values[i]
-
-            if (isZTRenderable(value)) {
-                /** Transform nested renderables: recursively merges inner renderables */
-                op = 'renderable'
-                if (!(value as any).__compiled) throw InterpolationError.for(new Error('uncompiled renderer violation!'), {
-                    index: i,
-                    op,
-                    renderer: renderable,
-                    strings: _strings,
-                    value,
-                })
-
-                const [_s, ..._v] = value.render(kargs)
-                spliceInterpolation(i, _strings, _values, _s, _v)
-                i--;
-            } else if (isSchemaType(value)) {
-                const schema = value;
-                // Object types decodes kargs
-                op = 'karg-schema'
-
-                // TODO: maybe we should extract keys for strict mode?
-                // const keys = Object.keys(getSlotShape(value) ?? {})
-                _values[i] = schema.decode(scopedSchemaKargs(value, kargs))
-                i--;
-            } else if (typeof value === 'function') {
-                /** Transform function values: if value is a function its called with karg object to determine the actual interpolation value */
-                op = 'selector'
-                _values[i] = value(kargs)
-                i--;
-            }
-        }
-    } catch (e) {
-        throw InterpolationError.for(e, {
-            index: i,
-            op: op as InterpolationOperation,
-            renderer: renderable,
-            strings: _strings,
-            value,
-        });
-    }
-
-    Object.freeze(_strings)
-    return Object.freeze([_strings, ..._values] as const)
+    return collectChunks(interpolateChunks(renderable, karg))
 }

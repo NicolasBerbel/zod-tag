@@ -5,14 +5,22 @@ import {
     type IRenderable,
     type ZtTrait,
     DEFAULT_TRAIT,
+    createRenderable,
 } from "../core/renderable";
-import { typedTag } from "../typed-tag";
 import { getSlotShape } from "../core/slot";
 import { createSchema } from "../core/schema";
+import { bindKargs } from "./bind-kargs";
+
+type MatchSchemas<
+    C extends Record<string, IRenderable<any, any>>,
+    Discriminator extends string
+> = {
+    [K in keyof C]: z.ZodObject<IRenderableKargs<C[K]> & { [D in Discriminator]: K }>
+}[keyof C]
 
 export function patternMatch<
     Discriminator extends string,
-    Cases extends Record<string, IRenderable<any, any>>,
+    Cases extends Record<string, IRenderable<any, any[]>>,
     Trait extends ZtTrait = DEFAULT_TRAIT,
 >(
     discriminator: Discriminator,
@@ -24,10 +32,10 @@ export function patternMatch<
         return createSchema({ ...shape, [discriminator]: z.literal(key) }, trait)
     })
 
-    const union = z.discriminatedUnion(discriminator, unionSchemas as any)
-        .transform((e) => cases[e[discriminator]])
+    const union = z.discriminatedUnion(discriminator, unionSchemas as [MatchSchemas<Cases, Discriminator>])
+        .transform((e: any) => bindKargs(cases[e[discriminator]], e))
 
-    return typedTag`${(e: any) => union.decode(e)}` as (
+    return createRenderable(['', ''], [union.decode]) as (
         IRenderable<
             {
                 [K in keyof Cases]: {
@@ -38,7 +46,9 @@ export function patternMatch<
                     : never
                 }
             }[keyof Cases],
-            IRenderableOutput<Cases[keyof Cases]>
+            {
+                [K in keyof Cases]: IRenderableOutput<Cases[K]>
+            }[keyof Cases]
         >
     )
 }

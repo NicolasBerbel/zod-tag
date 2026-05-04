@@ -2,7 +2,7 @@
 
 ## ⚠️ This library is experimental. APIs may change without notice. Use at your own risk!
 
-> The fact is that I've put a loop inside another as they tell us not to do and the resulting is becoming surprisingly fun to experiment with! (Also they were right... I didn't needed the nested one :])
+> The fact is that I've put a loop inside another as they tell us not to do and the resulting is becoming surprisingly fun to experiment with! (Also they were right... I didn't needed the nested one :]). Ok i'm looping my head here!
 
 This is a experimental library that aims to provide templating composition and type/runtime safe interpolation for tagged template literals by leveraging Zod's validation ecosystem.
 

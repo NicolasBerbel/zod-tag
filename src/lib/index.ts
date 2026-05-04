@@ -1,3 +1,4 @@
+export { type ZtChunk } from './core/chunks'
 export { interpolate } from './core/interpolate'
 export { InterpolationError } from './core/interpolation-error'
 

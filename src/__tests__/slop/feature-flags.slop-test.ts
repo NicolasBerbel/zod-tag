@@ -83,7 +83,7 @@ ${e => {
             featureFlag,
             flag => ({
                 featureName: flag.featureName,
-                flagType: 'boolean' as const, // could be inferred from registry
+                flagType: 'boolean', // could be inferred from registry
                 value: flag.value,
                 rolloutPercentage: flag.rolloutPercentage,
                 rolloutStrategy: flag.rolloutStrategy,
@@ -96,8 +96,8 @@ ${e => {
 `
 
 /**
- * This is important!
- * TODO: we need a kind of zt.opaque(renderer) that drops inference of output tuple, that rises the ts inference wall higher
+ * This is important for ts compile if tuple inference complexity expodes on complex templates
+ * if a renderer is to complex use zt.opaque(renderer) this drops inference of output tuple
  */
 const safeEnvironmentBlock = zt.opaque(environmentBlock)
 // const safeEnvironmentBlock = zt.opaque(environmentBlock)
@@ -127,11 +127,11 @@ ${e => zt.if(e.description, zt.t`
 `)}
 ${zt.p('development', environmentBlock)}
 ${zt.p('staging', environmentBlock)}
-${zt.p('production', environmentBlock) /* <- featureFlagManifest : IRenderable<Karg, [...] | ... 14422 more ... | [...]>  */}
-${zt.p('staging:2', zt.opaque(environmentBlock))}
-${zt.p('production:2', zt.opaque(environmentBlock))}
-${zt.p('production:3', safeEnvironmentBlock)}
-${zt.p('production:4', safeEnvironmentBlock)}
+${zt.p('production', environmentBlock)}
+${zt.p('staging:2', environmentBlock)}
+${zt.p('production:2', environmentBlock)}
+${zt.p('production:3', environmentBlock)}
+${zt.p('production:4', environmentBlock)}
 `
 
 // ============================================================================

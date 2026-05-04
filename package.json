@@ -59,6 +59,7 @@
     "test:suite": "node --test --watch --experimental-test-coverage src/__tests__/suite/*",
     "test:suite:gc": "node --test --watch --expose-gc --experimental-test-coverage src/__tests__/suite/*",
     "test:watch": "node --test --watch --experimental-test-coverage src/**/*.test.ts",
+    "play": "node --watch src/__tests__/play.ts",
     "type-check": "tsc --noEmit",
     "build": "rolldown -c",
     "dev": "rolldown -c --watch"

@@ -45,8 +45,8 @@ export function typedParam(
     select: any = ((e: any) => e) as any,
 ) {
     if (isSchemaType(child)) {
-        const shape = getSlotShape(child) ?? { [scope]: child }
-        return (schemaTag as any)(shape)`${(e: any) => select(e[scope])}`
+        const ztz = (schemaTag as any)
+        return ztz({ [scope]: child })`${(e: any) => select(e[scope])}`
     }
 
     return scopedRenderable(child, [scope]);

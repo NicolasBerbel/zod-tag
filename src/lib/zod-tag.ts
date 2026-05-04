@@ -10,6 +10,7 @@ import { mapKargs } from "./zt/map-kargs";
 import { tagIdentity } from "./zt/identity";
 import { opaque } from "./zt/opaque";
 import { patternMatch } from "./zt/pattern-match";
+import { collectChunks } from "./core/chunks";
 
 /**
  * Zod Tag
@@ -81,7 +82,19 @@ export const zt = typedTag as (typeof typedTag) & {
      *  
      * This means a empty structural string
      * 
-     * It is the foundation of everything
+     * It is the foundation of everything, this allows conditional:
+     * ```ts
+     * value ? zt.t`some structure` : zt.empty // <- either add structure or collapses into 'void'
+     * ```
+     * 
+     * `zt.empty` is a singleton, it shares the same reference between all instances of empty renderables without schema:
+     * @example
+     * ```ts
+     * zt.empty === zt`` // true
+     * zt.empty === zt.t`` // true
+     * zt.empty === createRenderable([''], []) // true
+     * zt.empty === zt.z({ guard: z.boolean() })`` // false - the schema serves as a inline guard clause for the whole template
+     * ```
      */
     empty: typeof tagIdentity,
 
@@ -193,6 +206,13 @@ export const zt = typedTag as (typeof typedTag) & {
     unsafe: typeof unsafeStatic,
 
     /**
+     * Iterates a `ZtChunk` generator and returns a immutable interpolation tuple with [strings, ...values]
+     * 
+     * The `renderable.render()` method is basically `zt.collect(renderable.stream())`
+     */
+    collect: typeof collectChunks,
+
+    /**
      * Creates a function that transforms the values with the map fn and reduces the interpolation to a string.
      * 
      * The returned function simply calls String.raw with the interpolation strings and the transformed values
@@ -251,6 +271,7 @@ zt.if = ifCondition
 // Core utils
 zt.opaque = opaque;
 zt.unsafe = unsafeStatic;
+zt.collect = collectChunks;
 
 // Debug utils (should be namespaced / exported out)
 zt.raw = stringRaw

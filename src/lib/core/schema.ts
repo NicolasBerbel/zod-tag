@@ -53,8 +53,6 @@ export const mergeShapes = <
     K extends MergeSchemaStrategy,
 >(shapeA: A, shapeB: B, strategy: K) => mergeSchemaStrategies[strategy](shapeA, shapeB);
 
-
-
 /**
  * Merges two schemas
  * @returns tuple with [resultSchema: ZodType | undefined, isMerged: boolean]

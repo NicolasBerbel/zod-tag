@@ -38,9 +38,9 @@ export class InterpolationError extends Error {
             op,
             index: i,
             value: _value,
-            strings
         } = context;
         const renderer = context.renderer as any as IZodTagRenderable
+        const strings = renderer.strs;
         const schemaType = (_value as ZodType)?._zod?.def?.type;
 
         let valueType = schemaType ? `${op}(${schemaType})` : op;

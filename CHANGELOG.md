@@ -10,11 +10,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Strict mode for zt.z: `zt.z.strict`, `zt.z.strip` schema strategies complementing default loose strategy
+    - **Important limitation**: new kargs that are inserted by dynamic evaluated holes (selectors and schemas) are not collected into strict parent schemas at compile time, this means strict and strip modes have limitations over free composability.
+    - use `zt.p` to scope strict/strip mode schemas and renderables 
+    - prefer `strict` and `strip` at leaf renderables that you can scope with `zt.p` or top level renderables with previously known final schemas.
 - Tests covering strict/strip/loose modes edge cases
+- `zt.empty` singleton for stable reference on empty renderable without schema (zt.t`` === zt.empty)
+- New public API's:
+    - `renderable.stream(kargs)`: returns a generator that yields `ZtChunk`'s
+    - `zt.collect(stream)`: collects a `Generator<ZtChunk>` into a immutable [string[], ...values] tuple
 
 ### Changed
 
 - Renamed 'cli' tests directory for more aligned 'playground'
+- Refactor of the interpolation engine from array splice to generator
+
+### Fixed
+
+- Output tuple type definitions for `zt.match`:
+    - note: union type explosion is under better control for complex branching with pattern match
+    - note 2: feature-flags slop test doesn't need `zt.opaque` anymore
+- Separators at `zt.join` and `zt.map` now dont duplicate when lists return `zt.empty`
+- Fixed `zt.p` loss of schema transforms for scoped inline object schemas
 
 ## [0.0.7] - 2026-05-01
 
