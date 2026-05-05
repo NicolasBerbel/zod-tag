@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - prefer `strict` and `strip` at leaf renderables that you can scope with `zt.p` or top level renderables with previously known final schemas.
 - Tests covering strict/strip/loose modes edge cases
 - `zt.empty` singleton for stable reference on empty renderable without schema (zt.t`` === zt.empty)
+- Dedicated paths for static structural renderables without schemas
 - New public API's:
     - `renderable.stream(kargs)`: returns a generator that yields `ZtChunk`'s
     - `zt.collect(stream)`: collects a `Generator<ZtChunk>` into a immutable [string[], ...values] tuple
@@ -23,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Renamed 'cli' tests directory for more aligned 'playground'
 - Refactor of the interpolation engine from array splice to generator
+- Refactor of the compilation pipeline from array splice to generator
+- `zt.map` over large lists (> 250 length) switches to lazy evaluation of bound renderarables at render time, lists <= 250 length didn't change.
 
 ### Fixed
 
@@ -31,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - note 2: feature-flags slop test doesn't need `zt.opaque` anymore
 - Separators at `zt.join` and `zt.map` now dont duplicate when lists return `zt.empty`
 - Fixed `zt.p` loss of schema transforms for scoped inline object schemas
+- Enhanced performance of `zt.join` given the high recursive nature of the reducer pattern
 
 ## [0.0.7] - 2026-05-01
 

@@ -8,8 +8,9 @@ import {
     type CreateSchemaStrategy,
     type MergeSchemaStrategy
 } from "./schema";
+import { type ZtChunk } from "./chunks";
 import { interpolateChunks } from "./interpolate-chunks";
-import { ZtChunk, collectChunks } from "./chunks";
+import { interpolate } from "./interpolate";
 
 /** Type guard for renderable instances */
 export const isRenderable = (v: unknown): v is IRenderable<any, any> => (
@@ -27,16 +28,53 @@ export type ZtTrait = CreateSchemaStrategy;
 /** Zod Tag merge strategy */
 export type ZtMerge = MergeSchemaStrategy;
 
+/** The schema creation strategy */
 export const DEFAULT_TRAIT = 'loose' as const satisfies CreateSchemaStrategy;
 export type DEFAULT_TRAIT = typeof DEFAULT_TRAIT;
 
+/** Schema merge strategy */
 export const DEFAULT_MERGE = 'intersect' as const satisfies MergeSchemaStrategy;
 export type DEFAULT_MERGE = typeof DEFAULT_MERGE;
 
 /** Identity singleton wrapper */
 const Identity = [null!] as [IRenderable<void, []>]
 
+/** Object.freeze util */
 const freeze = Object.freeze
+
+
+/**
+ * creates a renderable that only have one single structure string
+ */
+const createStruct = (strs: [string]) => {
+    const chunk = freeze(strs)
+    const output = freeze([chunk])
+    const r: IZodTagRenderable<void, []> = {
+        [RENDERABLE_SYMBOL]: true,
+        trait: DEFAULT_TRAIT,
+        merge: DEFAULT_MERGE,
+        scope: freeze([] as any),
+        schema: undefined,
+        strs: chunk as any,
+        vals: freeze([]) as any,
+        __static: output as any,
+        __dynamic: false,
+        __compiled: true,
+        render: () => output as any,
+        stream: function* () { yield chunk; },
+    };
+
+    freeze(r)
+
+    // save identity singleton
+    if (strs[0] === '' && !Identity[0]) {
+        Identity[0] = r as any
+        freeze(Identity);
+    }
+
+    return r as any as IRenderable<void, []>
+}
+
 
 /**
  * @param fn a function to be executed on rendering
@@ -53,17 +91,21 @@ export function createRenderable<
     scope: string[] = [],
     trait: Trait = DEFAULT_TRAIT as any,
     merge: Merge = DEFAULT_MERGE as any,
-) {
-    // identity check
-    const isEmpty = !schema && strs.length === 1 && strs[0] === '';
-    if (isEmpty && Identity[0]) return Identity[0] as any as IRenderable<Kargs, Output>
+): IRenderable<Kargs, Output> {
+    // static and identity check
+    const isStruct = !schema && strs.length === 1;
+    const isIdentity = isStruct && strs[0] === '';
+    if (isIdentity && Identity[0]) return Identity[0] as any
+    if (isStruct) return createStruct(strs as [string]) as any
 
     // getters
     let _strs = strs.slice() as string[]
     let _vals = vals.slice();
     let _schema = schema;
-    let __compiled = false;
     let _scope = freeze(scope.slice());
+    let __static = undefined as any;
+    let __dynamic = !!schema;
+    let __compiled = false;
 
     // construct with stack
     const renderable = withSource({
@@ -74,31 +116,27 @@ export function createRenderable<
         get schema() { return _schema },
         get strs() { return _strs },
         get vals() { return _vals },
+        get __static() { return __static },
+        get __dynamic() { return __dynamic },
         get __compiled() { return __compiled }
     }) as IZodTagRenderable;
 
     // precompile the renderable
-    if (vals.length) {
-        [_strs, _vals, _schema] = compile(renderable);
-    }
+    if (vals.length) [_strs, _vals, _schema, __dynamic] = compile(renderable);
     __compiled = true;
 
+    // static
+    if (!__dynamic) __static = freeze([_strs, ..._vals]);
+
     // assign interpolation
-    (renderable as any).render = (kargs: Kargs) => collectChunks(interpolateChunks(renderable, kargs));
+    (renderable as any).render = (kargs: Kargs) => interpolate(renderable, kargs);
     (renderable as any).stream = (kargs: Kargs) => interpolateChunks(renderable, kargs);
 
     // assert immutability
     freeze(_strs)
     freeze(_vals)
     freeze(renderable)
-
-    // save identity singleton
-    if (isEmpty && !Identity[0]) {
-        Identity[0] = renderable as any
-        freeze(Identity);
-    }
-
-    return renderable as any as IRenderable<Kargs, Output>
+    return renderable as any
 }
 
 /**
@@ -137,6 +175,8 @@ export interface IZodTagRenderable<
     Merge extends ZtMerge = any,
 > extends IRenderable<Kargs, Output> {
     __compiled: boolean,
+    __dynamic: boolean,
+    __static?: [string[], ...Output];
     trait: Trait,
     merge: Merge,
     strs: string[];
@@ -152,3 +192,6 @@ export type IRenderableKargs<T> =
 /** Infers the output values of a renderable */
 export type IRenderableOutput<T> =
     T extends IRenderable<any, infer A> ? A : never
+
+/** Infers the result tuple of a renderable */
+export type IRenderableResult<T> = T extends IRenderable<any, any> ? [string[], ...IRenderableOutput<T>] : never

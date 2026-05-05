@@ -3,10 +3,11 @@ import {
     type ExtractOutput
 } from "../types/tag.types";
 import {
+    createRenderable,
+    IRenderableKargs,
     type IRenderable,
     type IRenderableOutput,
 } from "../core/renderable"
-import { typedTag } from "../typed-tag"
 import { tagIdentity } from "./identity"
 import { SliceFirst } from "../types/util.types";
 
@@ -57,6 +58,20 @@ export function joinParams<
  * @param list List of renderables to be combined
  * @param separator renderable separator
  */
+export function joinParams<T extends IRenderable<any, any>>(
+    list: T[],
+    separator?: IRenderable<void, []>
+): IRenderable<
+    IRenderableKargs<T> extends never ? void : IRenderableKargs<T>,
+    IRenderableOutput<T> extends never ? [] : IRenderableOutput<T>
+>
+
+/**
+ * Join a list of parameterized values with given separator
+ * 
+ * @param list List of renderables to be combined
+ * @param separator renderable separator
+ */
 export function joinParams<T extends any[]>(
     list: T,
     separator?: IRenderable<void, []>
@@ -67,10 +82,23 @@ export function joinParams<T extends any[]>(
  */
 export function joinParams<T extends any[]>(list: T, separator = tagIdentity) {
     if (!list.length) return tagIdentity
-    const t = typedTag as any;
     const sep = separator ?? tagIdentity;
-    return list.reduce((acc, cur) => {
-        if (cur === tagIdentity) return acc;
-        return (acc) ? t`${acc}${sep}${cur}` : t`${cur}`
-    }, null) ?? tagIdentity
+    const strs = [];
+    const vals = [];
+    for (let i = 0; i < list.length; i++) {
+        const cur = list[i]
+        if (cur === tagIdentity) continue;
+        if (!vals.length) {
+            strs.push('', '');
+            vals.push(cur);
+        } else if (sep !== tagIdentity) {
+            strs.push('', '');
+            vals.push(sep, cur);
+        } else {
+            strs.push('');
+            vals.push(cur);
+        }
+    }
+    if (!vals.length) return tagIdentity;
+    return createRenderable(strs, vals)
 }

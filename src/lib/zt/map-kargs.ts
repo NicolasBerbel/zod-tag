@@ -54,13 +54,13 @@ export function mapKargs<
     mapFn: MapFn,
     separator: Sep = tagIdentity as Sep,
 ) {
+    const bind = list.length > 250 ? bindKargs.r : bindKargs;
     const items = list.map(
-        (item, index, _list) => bindKargs(renderable, mapFn(item, index, _list as any))
+        (item, index, _list) => bind(renderable, mapFn(item, index, _list as any))
     );
-    return joinParams(
-        items,
-        separator
-    ) as any as List extends [] ? IRenderable<void, []> : IRenderable<
+    const r = joinParams(items, separator);
+
+    return r as any as List extends [] ? IRenderable<void, []> : IRenderable<
         IRenderableKargs<Sep>,
         MapOutput<List, Target, Sep>
     >

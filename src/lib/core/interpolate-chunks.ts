@@ -1,7 +1,6 @@
 import { type KargsType } from "../types/tag.types";
 import {
     type IZodTagRenderable,
-    type IRenderable,
     isZTRenderable,
 } from "./renderable"
 import { extractScopedKargs, scopedSchemaKargs } from "./scope";
@@ -10,7 +9,7 @@ import {
     InterpolationError,
 } from "./interpolation-error"
 import { isSchemaType } from "./schema";
-import { ZtChunk } from "./chunks";
+import { staticChildChunks, ZtChunk } from "./chunks";
 
 /**
  * Resolves dynamic schemas and selectors
@@ -41,11 +40,36 @@ export const resolveSlot = (value: any, k: KargsType) => {
  * ends with tuple with single string, the closing structure: [string]
  */
 export function* interpolateChunks<
-    R extends IRenderable<K, any>,
+    R extends IZodTagRenderable<K, any>,
     K extends KargsType
 >(renderable: R, input: K): Generator<ZtChunk, void> {
-    const { strs, vals, schema, scope } = renderable as any as IZodTagRenderable;
+    const {
+        strs,
+        vals,
+        schema,
+        scope,
+        __compiled,
+        __dynamic,
+    } = renderable as any as IZodTagRenderable;
 
+    // Ensure compiled
+    if (!__compiled)
+        throw InterpolationError.for('interpolation on uncompiled renderable', {
+            value: renderable,
+            index: -1,
+            strings: strs,
+            renderer: renderable,
+            op: "renderable"
+        });
+
+    // Bypass processing for static renderables
+    if (!__dynamic) {
+        const last = yield* staticChildChunks(renderable)
+        yield Object.freeze([last])
+        return;
+    }
+
+    // Validate kargs compiled
     let kargs: K = extractScopedKargs(input, scope);
     if (schema) {
         const parsed = schema.safeDecode(input)
@@ -64,7 +88,6 @@ export function* interpolateChunks<
     let i = 0;
     let value;
     let op: InterpolationOperation = null!;
-
     // current first structural string
     let buffer = strs[0];
     try {
@@ -74,14 +97,11 @@ export function* interpolateChunks<
 
             /* This means we have a dynamic nested template */
             if (isZTRenderable(value)) {
-                if (!value.__compiled)
-                    throw InterpolationError.for('uncompiled nested renderable', {
-                        value,
-                        index: i,
-                        strings: [],
-                        renderer: renderable,
-                        op: "renderable"
-                    })
+                // Bypass processing static children
+                if (!value.__dynamic) {
+                    buffer = yield* staticChildChunks(value, buffer, strs[i + 1])
+                    continue;
+                }
 
                 const scopedKargs = extractScopedKargs(kargs, value.scope)
                 // track child head structure
@@ -115,7 +135,7 @@ export function* interpolateChunks<
             }
         }
     } catch (e) {
-        throw InterpolationError.for(e, { index: i, op, renderer: renderable, strings: [], value })
+        throw InterpolationError.for(e, { index: i, op, renderer: renderable, strings: strs, value })
     }
 
     /**

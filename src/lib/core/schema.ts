@@ -1,5 +1,5 @@
 import z from "zod"
-import { type IZodTagRenderable } from "./renderable"
+import { IRenderable, isZTRenderable, type IZodTagRenderable } from "./renderable"
 import { getSlotSchema, getSlotScope, getSlotShape } from "./slot"
 import { buildScopedShape } from "./scope"
 
@@ -71,6 +71,8 @@ export const mergeSchemas = (
         const slotSchema = getSlotSchema(value)
         const nestedScope = getSlotScope(value)
         const scopedShape = nestedScope?.length ? buildScopedShape(slotSchema, nestedScope) : slotShape;
+        // What if schema is a union or discriminated union?
+        // getSlotShape is not smart for this inspection
         const newShape = mergeShapes(getSlotShape(schema), scopedShape, mergeStrategy)
 
         if (Object.keys(newShape).length > 0) {
@@ -96,4 +98,3 @@ export const createSchema = <
     T extends z.ZodRawShape,
     K extends CreateSchemaStrategy,
 >(shape: T, strategy: K) => createSchemaStrategies[strategy](shape);
-

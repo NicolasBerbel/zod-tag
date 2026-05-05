@@ -41,8 +41,8 @@ describe('Memory footprint', () => {
                 zt.t`static-${i}`;
             }
         });
-        console.log(`'creating 10k static renderables uses bounded memory': delta ${MB(delta)} MB`)
-        ok(delta < SMALL, `delta ${MB(delta)} MB`);
+        console.log(`'creating 10k static renderables uses bounded memory': delta ${(delta)} B`)
+        ok(delta < SMALL, `delta ${(delta)} B`);
     });
 
     runIfGC('rendering the same template repeatedly does not leak memory', () => {
@@ -53,8 +53,8 @@ describe('Memory footprint', () => {
         const delta = measureHeapDelta(() => {
             for (let i = 0; i < 10_000; i++) tpl.render({ n: i });
         });
-        console.log(`'rendering the same template repeatedly does not leak memory': delta ${MB(delta)} MB`)
-        ok(delta < SMALL * 2, `10k renders delta ${MB(delta)} MB`);
+        console.log(`'rendering the same template repeatedly does not leak memory': delta ${(delta)} B`)
+        ok(delta < SMALL * 2, `10k renders delta ${(delta)} B`);
     });
 
     runIfGC('large flat template with 10k values uses memory proportional to output size', () => {
@@ -72,8 +72,8 @@ describe('Memory footprint', () => {
         forceCollect();
         const after = heapUsed();
         const growth = after - before;
-        console.log(`'large flat template with 10k values uses memory proportional to output size': growth ${MB(growth)} MB`)
-        ok(growth < REASONABLE, `memory growth ${MB(growth)} MB`);
+        console.log(`'large flat template with 10k values uses memory proportional to output size': growth ${(growth)} B`)
+        ok(growth < REASONABLE, `memory growth ${(growth)} B`);
         ok(result.length === N + 1, `unexpected result length ${result.length}`);
     });
 

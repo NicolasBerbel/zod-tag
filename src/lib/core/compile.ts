@@ -1,19 +1,11 @@
+import z from "zod";
 import {
     type IRenderable,
     type IZodTagRenderable,
-    isZTRenderable,
 } from "./renderable"
-import {
-    type InterpolationOperation,
-    InterpolationError
-} from "./interpolation-error"
-import { spliceInterpolation } from "./splice"
-import {
-    type CreateSchemaStrategy,
-    type MergeSchemaStrategy,
-    mergeSchemas,
-} from "./schema"
-import { withScope } from "./scope"
+import { compileChunks } from "./compile-chunks";
+
+type CompileResult = [strs: string[], vals: unknown[], schema: z.ZodType | undefined, dynamic: boolean]
 
 /**
  * The compile step iterates through each slot preflattening the renderable with each nested renderable found
@@ -24,57 +16,29 @@ import { withScope } from "./scope"
  * What can we skip in the interpolation step?
  * - Already known static primitives can be saved and skipped later?
  */
-export function compile<T extends IRenderable<any, any>>(_renderable: T) {
+export function compile<T extends IRenderable<any, any>>(_renderable: T): CompileResult {
     const renderable = _renderable as any as IZodTagRenderable
-    const { vals, strs,
-        merge: mergeStrategy,
-        trait: schemaStrategy,
-    } = renderable
-    const _values = vals.slice()
-    const _strings = strs.slice()
+    const { vals: _vals, schema } = renderable
 
-    let _schema = renderable.schema;
+    let _schema = schema;
+    let _dynamic = !!schema;
 
-    let i = 0;
-    let value;
-    let op: InterpolationOperation = null!;
-    try {
-        for (; i < _values.length; i++) {
-            value = _values[i];
-            if (isZTRenderable(value)) {
-                /** Transform nested renderables: recursively merges inner renderables */
-                op = 'renderable'
-                const { strs: _s, vals: _v, } = value
-                if (!(value as any).__compiled)
-                    throw InterpolationError.for(new Error('uncompiled nested pre-compile violation!'), {
-                        index: i,
-                        op,
-                        renderer: renderable,
-                        strings: _strings,
-                        value,
-                    })
+    // compile and collect
+    const strs: string[] = [];
+    const vals = [] as unknown[];
+    for (const chunk of compileChunks(renderable)) {
+        // Always have structure at index 0
+        strs.push(chunk[0]);
 
-                // TODO: could improve by collecting shape before compile?
-                // real parse for us is js native tagged template literals [str[], ...v] <- our AST?
-                // collectSchema|"parse" -> compile -> interpolate
-                const [mergedSchema] = mergeSchemas(_schema, value, mergeStrategy, schemaStrategy)
-                _schema = mergedSchema;
+        // Every chunk but the last one contains a value at index 1
+        if (chunk.length === 2) vals.push(chunk[1]);
 
-                const scopedValues = withScope(_v, value.scope, true)
-                spliceInterpolation(i, _strings, _values, _s, scopedValues)
-                i--;
-            }
+        // Parsed result with schema + flags
+        if (chunk.length === 4) {
+            _schema = chunk[2];
+            _dynamic = chunk[3];
         }
-    } catch (e) {
-        throw InterpolationError.for(e, {
-            index: i,
-            op: op as InterpolationOperation,
-            renderer: renderable,
-            strings: _strings,
-            value,
-        });
     }
 
-    return [_strings, _values, _schema] as const
-
+    return [strs, vals, _schema, _dynamic]
 }

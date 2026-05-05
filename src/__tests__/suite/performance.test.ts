@@ -20,8 +20,14 @@ describe('Creation performance', () => {
     const FAST = 10;      // ms for small-scale operations
     const REASONABLE = 50; // ms for medium-scale
 
-    // not there yet
-    it.skip('creates many tiny static renderables quickly', () => {
+    it(`creates 1000 tiny static renderables < ${FAST * 5}ms`, () => {
+        const elapsed = measure(() => {
+            for (let i = 0; i < 1000; i++) zt.t`hello`;
+        });
+        ok(elapsed < FAST * 5, `1000 static creations took ${elapsed}ms`);
+    });
+
+    it(`creates many tiny static renderables quickly (5000x < ${FAST * 5}ms)`, () => {
         const elapsed = measure(() => {
             for (let i = 0; i < 5000; i++) zt.t`hello`;
         });
@@ -39,26 +45,67 @@ describe('Creation performance', () => {
         ok(elapsed < REASONABLE, `1000 primitives creation took ${elapsed}ms`);
     });
 
-    it('creates deeply nested renderables (10 levels) without explosion', () => {
+    it('creates deeply nested static renderables (100 levels) without explosion', () => {
         const elapsed = measure(() => {
             let tpl = zt.t`leaf`;
-            for (let depth = 0; depth < 10; depth++) {
+            for (let depth = 0; depth < 100; depth++) {
                 tpl = zt.t`(${tpl})`;
             }
             // force pre-compilation by rendering once (creation automatically compiles)
             tpl.render();
         });
-        ok(elapsed < REASONABLE, `10-level nest creation + compile took ${elapsed}ms`);
+        ok(elapsed < REASONABLE, `100-level nest creation + compile took ${elapsed}ms`);
     });
 
-    // not there yet
-    it.skip('zt.map over 500 items creates quickly', () => {
+
+    it('creates deeply nested dynamic renderables (100 levels) without explosion', () => {
+        const elapsed = measure(() => {
+            let tpl = zt.t`${() => zt.t`leaf`}`;
+            for (let depth = 0; depth < 100; depth++) {
+                tpl = zt.t`(${tpl})`;
+            }
+            // force pre-compilation by rendering once (creation automatically compiles)
+            tpl.render();
+        });
+        ok(elapsed < REASONABLE, `100-level nest creation + compile took ${elapsed}ms`);
+    });
+
+
+    it(`zt.map over 250 items creates quickly (< ${REASONABLE}ms`, () => {
+        const item = zt.z({ x: z.number() })`${(e) => e.x}`;
+        const data = Array.from({ length: 250 }, (_, i) => ({ x: i }));
+        const elapsed = measure(() => {
+            zt.map(data, item, (d) => d, zt.t`, `);
+        });
+        ok(elapsed < REASONABLE, `zt.map 250 items creation took ${elapsed}ms`);
+    });
+
+    it(`zt.map over 250 items creates and render quickly (< ${REASONABLE}ms`, () => {
+        const item = zt.z({ x: z.number() })`${(e) => e.x}`;
+        const data = Array.from({ length: 250 }, (_, i) => ({ x: i }));
+        const elapsed = measure(() => {
+            zt.map(data, item, (d) => d, zt.t`, `).render();
+        });
+        ok(elapsed < REASONABLE, `zt.map 250 items creation took ${elapsed}ms`);
+    });
+
+    it(`zt.map over 500 items creates quickly (< ${REASONABLE}ms`, () => {
         const item = zt.z({ x: z.number() })`${(e) => e.x}`;
         const data = Array.from({ length: 500 }, (_, i) => ({ x: i }));
         const elapsed = measure(() => {
             zt.map(data, item, (d) => d, zt.t`, `);
         });
         ok(elapsed < REASONABLE, `zt.map 500 items creation took ${elapsed}ms`);
+    });
+
+
+    it(`zt.map over 500 items creates and render quickly (< ${REASONABLE * 2}ms`, () => {
+        const item = zt.z({ x: z.number() })`${(e) => e.x}`;
+        const data = Array.from({ length: 500 }, (_, i) => ({ x: i }));
+        const elapsed = measure(() => {
+            zt.map(data, item, (d) => d, zt.t`, `).render();
+        });
+        ok(elapsed < REASONABLE * 2, `zt.map 500 items creation took ${elapsed}ms`);
     });
 });
 
