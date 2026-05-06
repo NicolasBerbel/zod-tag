@@ -7,12 +7,14 @@ import {
 } from "./renderable";
 import { isSchemaType, mergeSchemas } from "./schema";
 import { applyScope } from "./scope";
+import { isAsyncSchema } from "./async";
 
 type CompiledResultChunk = [
     finalStructure: string,
     nothing: undefined,
     schema: z.ZodType | undefined,
-    isDynamic: boolean
+    isDynamic: boolean,
+    isAsync: boolean,
 ]
 
 /**
@@ -30,6 +32,7 @@ export function* compileChunks(
 
     let _schema = schema
     let _dynamic = !!schema;
+    let _async = isAsyncSchema(schema);
 
     let i = 0
     let buffer = strs[0]
@@ -52,8 +55,10 @@ export function* compileChunks(
                     continue
                 }
 
-                // has dynamic child
+                // dynamic flag
                 _dynamic = true;
+                // async flag
+                if (value.__async) _async = true;
 
                 // merge schemas
                 const [mergedSchema] = mergeSchemas(_schema, value, merge, trait)
@@ -71,9 +76,14 @@ export function* compileChunks(
                 /* Tail concat */
                 buffer += inner + strs[i + 1];
             } else {
-                if (typeof value === 'function' || isSchemaType(value)) {
+                // dynamic flag
+                const isSchema = isSchemaType(value)
+                if (typeof value === 'function' || isSchema) {
                     _dynamic = true;
                 }
+                // async flag
+                const isAsync = isSchema && isAsyncSchema(value)
+                if (isAsync) _async = true;
 
                 // dynamic or primitive = yield struct+val
                 yield [buffer, value];
@@ -90,5 +100,5 @@ export function* compileChunks(
         });
     }
 
-    yield [buffer, , _schema, _dynamic]
+    yield [buffer, , _schema, _dynamic, _async]
 }

@@ -4,8 +4,9 @@ import {
     type IRenderable,
     type IRenderableResult,
 } from "./renderable"
-import { collectChunks, } from "./chunks";
+import { collectChunks, collectChunksAsync } from "./chunks";
 import { interpolateChunks } from "./interpolate-chunks";
+import { interpolateChunksAsync } from "./interpolate-chunks-async";
 
 /**
  * Collapses with renderable interpolation strings and values with given kargs:
@@ -16,4 +17,15 @@ export function interpolate<R extends IRenderable<K, O>, K extends KargsType, O 
     const r = renderable as any as IZodTagRenderable
     if (r.__static) return r.__static as IRenderableResult<R>
     return collectChunks(interpolateChunks(r, karg)) as IRenderableResult<R>
+}
+
+/**
+ * Collapses with renderable interpolation strings and values with given kargs:
+ * @param renderable target renderable
+ * @param karg Keyword arguments object
+ */
+export function interpolateAsync<R extends IRenderable<K, O>, K extends KargsType, O extends any[]>(renderable: R, karg: K) {
+    const r = renderable as any as IZodTagRenderable
+    if (r.__static) return r.__static as IRenderableResult<R>
+    return collectChunksAsync(interpolateChunksAsync(r, karg)) as Promise<IRenderableResult<R>>
 }

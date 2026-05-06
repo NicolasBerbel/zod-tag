@@ -8,6 +8,6 @@ export default defineConfig({
   plugins: [dts()],
   output: {
     dir: 'dist',
-    format: 'es',
+    format: 'es'
   }
 });

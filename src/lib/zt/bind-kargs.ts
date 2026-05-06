@@ -1,5 +1,7 @@
+import z from "zod";
 import {
     createRenderable,
+    type IZodTagRenderable,
     type IRenderable,
     type IRenderableKargs,
     type IRenderableOutput
@@ -20,6 +22,15 @@ export const bindRenderKargs = <
 export const bindKargs = <
     T extends IRenderable<any, any>,
 >(renderable: T, kargs: IRenderableKargs<T>) => {
+    if ((renderable as any as IZodTagRenderable).__async) {
+        return createRenderable<void, IRenderableOutput<T>>(['', ''], [
+            () => z.transform(async () => {
+                const [strs, ...vals] = await renderable.renderAsync(kargs);
+                return createRenderable(strs, vals)
+            })
+        ], undefined, undefined, undefined, undefined, true)
+    }
+
     const [strs, ...vals] = renderable.render(kargs);
     return createRenderable<void, IRenderableOutput<T>>(strs, vals)
 }

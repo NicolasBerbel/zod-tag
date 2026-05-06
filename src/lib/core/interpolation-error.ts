@@ -33,7 +33,10 @@ export class InterpolationError extends Error {
         renderer: IRenderable<any, any>,
         op: InterpolationOperation,
     }) {
-        const _e = exception as any
+        const _e = (
+            typeof exception === 'string' ? new Error(exception) : exception
+        ) as any;
+
         const {
             op,
             index: i,
@@ -61,7 +64,7 @@ export class InterpolationError extends Error {
                 break;
         }
         const scope = _value?.__ztScope || renderer.scope;
-        if (scope) operationMessage += ` at scope "${scope.join('.')}"`
+        if (scope.length) operationMessage += ` at scope "${scope.join('.')}"`
         const operation = `${valueType}[${i}]`
 
         const before = InterpolationError.format(strings.slice(0, i + 1), 0);

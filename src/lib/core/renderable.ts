@@ -10,7 +10,8 @@ import {
 } from "./schema";
 import { type ZtChunk } from "./chunks";
 import { interpolateChunks } from "./interpolate-chunks";
-import { interpolate } from "./interpolate";
+import { interpolate, interpolateAsync } from "./interpolate";
+import { interpolateChunksAsync } from "./interpolate-chunks-async";
 
 /** Type guard for renderable instances */
 export const isRenderable = (v: unknown): v is IRenderable<any, any> => (
@@ -59,9 +60,12 @@ const createStruct = (strs: [string]) => {
         vals: freeze([]) as any,
         __static: output as any,
         __dynamic: false,
+        __async: false,
         __compiled: true,
         render: () => output as any,
+        renderAsync: async () => output as any,
         stream: function* () { yield chunk; },
+        streamAsync: async function* () { yield chunk; },
     };
 
     freeze(r)
@@ -91,6 +95,7 @@ export function createRenderable<
     scope: string[] = [],
     trait: Trait = DEFAULT_TRAIT as any,
     merge: Merge = DEFAULT_MERGE as any,
+    asyncConfig = false,
 ): IRenderable<Kargs, Output> {
     // static and identity check
     const isStruct = !schema && strs.length === 1;
@@ -105,6 +110,7 @@ export function createRenderable<
     let _scope = freeze(scope.slice());
     let __static = undefined as any;
     let __dynamic = !!schema;
+    let __async = asyncConfig;
     let __compiled = false;
 
     // construct with stack
@@ -118,11 +124,12 @@ export function createRenderable<
         get vals() { return _vals },
         get __static() { return __static },
         get __dynamic() { return __dynamic },
+        get __async() { return asyncConfig || __async },
         get __compiled() { return __compiled }
     }) as IZodTagRenderable;
 
     // precompile the renderable
-    if (vals.length) [_strs, _vals, _schema, __dynamic] = compile(renderable);
+    if (vals.length) [_strs, _vals, _schema, __dynamic, __async] = compile(renderable);
     __compiled = true;
 
     // static
@@ -130,7 +137,9 @@ export function createRenderable<
 
     // assign interpolation
     (renderable as any).render = (kargs: Kargs) => interpolate(renderable, kargs);
+    (renderable as any).renderAsync = async (kargs: Kargs) => interpolateAsync(renderable, kargs);
     (renderable as any).stream = (kargs: Kargs) => interpolateChunks(renderable, kargs);
+    (renderable as any).streamAsync = (kargs: Kargs) => interpolateChunksAsync(renderable, kargs);
 
     // assert immutability
     freeze(_strs)
@@ -155,14 +164,24 @@ export interface IRenderable<
     readonly [RENDERABLE_SYMBOL]: true;
 
     /**
-     * Process input kwargs into immutable interpolation tuple
+     * Synchronously process input kwargs into immutable interpolation tuple
      */
     readonly render: (kargs: Kargs) => [strs: string[], ...vals: Output];
 
     /**
-     * Process input kwargs into immutable interpolation chunk tuples
+     * Asynchronously process input kwargs into immutable interpolation tuple
      */
+    readonly renderAsync: (kargs: Kargs) => Promise<[strs: string[], ...vals: Output]>;
+
+    /**
+     * Process input kwargs into immutable interpolation chunk tuples
+    */
     readonly stream: (kargs: Kargs) => Generator<ZtChunk, void>
+
+    /**
+     * Process input kwargs into immutable interpolation tuple
+     */
+    readonly streamAsync: (kargs: Kargs) => AsyncGenerator<ZtChunk, void>
 }
 
 /**
@@ -175,6 +194,7 @@ export interface IZodTagRenderable<
     Merge extends ZtMerge = any,
 > extends IRenderable<Kargs, Output> {
     __compiled: boolean,
+    __async: boolean,
     __dynamic: boolean,
     __static?: [string[], ...Output];
     trait: Trait,

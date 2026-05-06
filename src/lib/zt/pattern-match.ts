@@ -4,6 +4,7 @@ import {
     type IRenderableOutput,
     type IRenderable,
     type ZtTrait,
+    type IZodTagRenderable,
     DEFAULT_TRAIT,
     createRenderable,
 } from "../core/renderable";
@@ -27,15 +28,23 @@ export function patternMatch<
     cases: Cases,
     trait: Trait = DEFAULT_TRAIT as any,
 ) {
-    const unionSchemas = Object.entries(cases).map(([key, renderable]) => {
+    let _isAsync = false;
+    const unionSchemas = [] as z.ZodType[];
+    for (const key in cases) {
+        const renderable = cases[key] as any as IZodTagRenderable;
+        if (renderable.__async) _isAsync = true;
         const shape = getSlotShape(renderable) ?? {}
-        return createSchema({ ...shape, [discriminator]: z.literal(key) }, trait)
-    })
+        unionSchemas.push(createSchema({ ...shape, [discriminator]: z.literal(key) }, trait))
+    }
 
-    const union = z.discriminatedUnion(discriminator, unionSchemas as [MatchSchemas<Cases, Discriminator>])
-        .transform((e: any) => bindKargs(cases[e[discriminator]], e))
+    const union = z.discriminatedUnion(
+        discriminator,
+        unionSchemas as [MatchSchemas<Cases, Discriminator>]
+    ).transform((e: any) => bindKargs(cases[e[discriminator]], e))
 
-    return createRenderable(['', ''], [union.decode]) as (
+    const child = _isAsync ? (e: any) => z.transform(async () => union.decodeAsync(e)) : (e: any) => union.decode(e);
+
+    const r = createRenderable(['', ''], [child], undefined, undefined, undefined, undefined, _isAsync) as (
         IRenderable<
             {
                 [K in keyof Cases]: {
@@ -51,5 +60,7 @@ export function patternMatch<
             }[keyof Cases]
         >
     )
+
+    return r;
 }
 

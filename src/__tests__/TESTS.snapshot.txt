@@ -1,5 +1,5 @@
 
-> zod-tag@0.0.7 test
+> zod-tag@0.0.8 test
 > node --test --expose-gc --experimental-test-coverage src/**/*.test.ts
 
 TAP version 13
@@ -8,19 +8,19 @@ TAP version 13
         # Subtest: getById
         ok 1 - getById
           ---
-          duration_ms: 10.1319
+          duration_ms: 9.739
           type: 'test'
           ...
         1..1
     ok 1 - Users
       ---
-      duration_ms: 11.5264
+      duration_ms: 11.2317
       type: 'suite'
       ...
     1..1
 ok 1 - Repository
   ---
-  duration_ms: 12.5807
+  duration_ms: 12.36
   type: 'suite'
   ...
 # Subtest: zt - Zod Tag
@@ -28,115 +28,121 @@ ok 1 - Repository
         # Subtest: should render a template without interpolation values
         ok 1 - should render a template without interpolation values
           ---
-          duration_ms: 3.9746
+          duration_ms: 3.903
           type: 'test'
           ...
         # Subtest: should render a template with static interpolation values
         ok 2 - should render a template with static interpolation values
           ---
-          duration_ms: 0.6178
+          duration_ms: 0.4606
           type: 'test'
           ...
         # Subtest: should render a template with transformed interpolation values
         ok 3 - should render a template with transformed interpolation values
           ---
-          duration_ms: 0.6845
+          duration_ms: 0.3899
           type: 'test'
           ...
         1..3
     ok 1 - static template
       ---
-      duration_ms: 7.0008
+      duration_ms: 6.429
       type: 'suite'
       ...
     # Subtest: keyword argument templates
         # Subtest: should allow inline object/codec schemas as karg params
         ok 1 - should allow inline object/codec schemas as karg params
           ---
-          duration_ms: 7.7048
+          duration_ms: 6.8497
           type: 'test'
           ...
         # Subtest: should validate against zod shape definition
         ok 2 - should validate against zod shape definition
           ---
-          duration_ms: 3.8512
+          duration_ms: 2.8625
           type: 'test'
           ...
         # Subtest: should merge keyword arguments when karg are present both at shape definition and inline arg
         ok 3 - should merge keyword arguments when karg are present both at shape definition and inline arg
           ---
-          duration_ms: 5.7991
+          duration_ms: 6.4244
           type: 'test'
           ...
         1..3
     ok 2 - keyword argument templates
       ---
-      duration_ms: 17.7164
+      duration_ms: 16.4177
       type: 'suite'
       ...
     # Subtest: nested templates
         # Subtest: should merge nested templates
         ok 1 - should merge nested templates
           ---
-          duration_ms: 5.5851
+          duration_ms: 5.6756
           type: 'test'
           ...
         1..1
     ok 3 - nested templates
       ---
-      duration_ms: 5.8611
+      duration_ms: 5.8491
       type: 'suite'
       ...
     # Subtest: utilities
         # Subtest: zt.unsafe utility dangerously sets a static string content inside the template
         ok 1 - zt.unsafe utility dangerously sets a static string content inside the template
           ---
-          duration_ms: 0.3976
+          duration_ms: 0.3666
           type: 'test'
           ...
         # Subtest: zt.p utility creates a named param and allows conditional rendering
         ok 2 - zt.p utility creates a named param and allows conditional rendering
           ---
-          duration_ms: 0.5832
+          duration_ms: 0.5849
           type: 'test'
           ...
         # Subtest: format utilities
             # Subtest: zt.$n utility formats interpolation as dolar index placeholders
             ok 1 - zt.$n utility formats interpolation as dolar index placeholders
               ---
-              duration_ms: 0.6457
+              duration_ms: 0.7158
               type: 'test'
               ...
             # Subtest: zt.atIndex utility formats interpolation as @ index placeholders
             ok 2 - zt.atIndex utility formats interpolation as @ index placeholders
               ---
-              duration_ms: 0.5479
+              duration_ms: 0.5722
               type: 'test'
               ...
             # Subtest: zt.debug utility formats as String.raw would
             ok 3 - zt.debug utility formats as String.raw would
               ---
-              duration_ms: 0.5474
+              duration_ms: 0.5673
               type: 'test'
               ...
             1..3
         ok 3 - format utilities
           ---
-          duration_ms: 2.0766
+          duration_ms: 2.2003
           type: 'suite'
           ...
         1..3
     ok 4 - utilities
       ---
-      duration_ms: 3.5444
+      duration_ms: 3.6255
       type: 'suite'
       ...
     1..4
 ok 2 - zt - Zod Tag
   ---
-  duration_ms: 35.4832
+  duration_ms: 33.7297
   type: 'suite'
   ...
+# ════════════════════════════════════════════════════════════════════════════════
+#   ASYNC CHAT AGENT — Multi-turn Tool-Calling
+# ════════════════════════════════════════════════════════════════════════════════
+# CALC(2+3, 2)
+#   ✓ calculate tool (sync) renders with render()
+#   ✓ search tool (async) throws on render()
 # ═══════════════════════════════════════
 #   Universal Code Generator - Stress
 # ═══════════════════════════════════════
@@ -189,7 +195,7 @@ ok 2 - zt - Zod Tag
 #         permissions: str
 #     
 #   ✓ Python entity with inheritance
-#   Rendered 50 entities in 216.7ms (4.33422ms/entity)
+#   Rendered 50 entities in 247.2ms (4.943501999999999ms/entity)
 #   Values: 500, Strings length: 501
 #   ✓ large data set - 50 entities with 10 fields each
 #   ✓ empty entities array produces no entity code
@@ -411,7 +417,7 @@ ok 2 - zt - Zod Tag
 # ▶ VALUES (flag values, percentages, dates):
 #   [0] my-saas-platform
 #   [1] 2.4.1
-#   [2] 2026-05-05T03:17:41.817Z
+#   [2] 2026-05-06T01:12:04.456Z
 #   [3] Feature flags for Q3 2026 release
 #   [4] boolean
 #   [5] true
@@ -538,7 +544,7 @@ ok 2 - zt - Zod Tag
 # \# Feature Flags Manifest
 # \# Project: my-saas-platform
 # \# Version: 2.4.1
-# \# Generated: 2026-05-05T03:17:41.817Z
+# \# Generated: 2026-05-06T01:12:04.456Z
 # \# ============================================================================
 # \# Feature flags for Q3 2026 release
 # \# development environment
@@ -1537,7 +1543,7 @@ ok 2 - zt - Zod Tag
 # ╚══════════════════════════════════════════════════╝
 #   ✓ NPC dialog screen without weather/rep
 # ─── Performance ───
-#     Rendered 220 dialogs in 48.9ms (0.22ms each)
+#     Rendered 220 dialogs in 41.1ms (0.19ms each)
 #   ✓ render all 26+ states 10 times each
 # ─── Structure vs Values ───
 #   ✓ NPC names are in values array
@@ -1645,6 +1651,777 @@ ok 2 - zt - Zod Tag
 # ---
 # [User Question]
 # Please explain: How do TypeScript template literal types work?
+# ════════════════════════════════════════════════════════════════════════════════
+#   SEC 10-K FILING SYSTEM — Structure/Value Integrity Demonstration
+# ════════════════════════════════════════════════════════════════════════════════
+#   Document generated with 70 structure strings and 69 values
+#   ✓ complete 10-K filing renders with all sections
+#   ✓ companyname appears as value in header, structure in business description
+#   ✓ financial figures are VALUES, not concatenated into structure
+#   ✓ trading symbol is STRUCTURE (zt.unsafe), not a value
+# ================================================================================
+#                        UNITED STATES
+#            SECURITIES AND EXCHANGE COMMISSION
+#                  Washington, D.C. 20549
+# ================================================================================
+#                         FORM 10-K
+# ☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE
+#    SECURITIES EXCHANGE ACT OF 1934
+# For the fiscal year ended December 31, 2025
+# Commission File Number: 001-38492
+# COMPANYNAME TECHNOLOGIES, INC.
+# (Exact name of registrant as specified in its charter)
+# State of Incorporation: DE
+# IRS Employer ID:  12-3456789
+# Securities registered pursuant to Section 12(b) of the Act:
+# Title of each class: Common Stock, par value $0.001 per share
+# Trading Symbol: CSFT
+# Name of exchange on which registered: NASDAQ
+# Shares outstanding as of December 31, 2025: 142.500.000
+# Closing price on December 31, 2025: $87.43
+# ================================================================================
+#                             TABLE OF CONTENTS
+# ================================================================================
+# ITEM 1. BUSINESS
+# General
+# CompanyName Technologies, Inc. (the "Company") was incorporated in the State of DE 
+# on January 15, 2015. The Company's fiscal year ends on December 30.
+# As of the fiscal year ended 2025, the Company had 2547 
+# full-time employees. The Company operates under SIC code 7372.
+# ITEM 1A. RISK FACTORS
+# The following risk factors could materially affect the Company's business, 
+# financial condition, and results of operations:
+# COMPETITION RISKS
+# ─────────────────
+# ■ Intense Competition in Cloud Software Market Could Adversely Affect Operating Results
+# The market for cloud-based enterprise software is intensely competitive and rapidly evolving. The Company faces competition from established enterprise software vendors, emerging startups, and in-house development efforts by potential customers. If the Company cannot compete effectively, its business, financial condition, and results of operations could be materially and adversely affected.
+# CYBERSECURITY RISKS
+# ───────────────────
+# ■ Security Breaches Could Result in Significant Liability and Harm to Reputation
+# The Company processes and stores sensitive customer data, including proprietary business information and personal data. A cybersecurity incident affecting the Companys systems or those of third-party service providers could result in unauthorized access to, or loss or disclosure of, this information. Such an incident could lead to claims, litigation, regulatory investigations, and damage to the Companys reputation, each of which could materially adversely affect the business.
+# REGULATORY RISKS
+# ────────────────
+# ◆ Evolving Data Privacy Regulations Could Increase Compliance Costs
+# The Company is subject to various data protection laws and regulations globally, including GDPR in Europe, CCPA in California, and similar laws in other jurisdictions. Compliance with these regulations is complex and costly, and failure to comply could result in significant fines and penalties. Changes to these laws or new interpretations could require material changes to the Companys products and business practices.
+# OPERATIONAL RISKS
+# ─────────────────
+# ◆ Reliance on Third-Party Cloud Infrastructure Providers
+# The Company relies on third-party cloud infrastructure providers to host its services. Any disruption in these services, whether due to technical failures, financial difficulties, or termination of relationships, could result in service interruptions for the Companys customers. While the Company maintains backup procedures, prolonged outages could result in customer dissatisfaction and revenue loss.
+# SUPPLY CHAIN RISKS
+# ──────────────────
+# ● Dependence on Key Technology Partners and Open Source Software
+# The Companys platform integrates with and depends on various third-party technologies, including open source software. Changes to licensing terms, discontinuation of support, or security vulnerabilities in these dependencies could require significant engineering resources to address. The Company also relies on APIs and integrations with major platform providers, which could be modified or deprecated.
+# ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS OF
+# FINANCIAL CONDITION AND RESULTS OF OPERATIONS
+# Overview
+# The following discussion summarizes the significant factors affecting the Company's 
+# consolidated operating results, financial condition, and liquidity for the fiscal 
+# year ended December 31, 2025. This discussion should be read in conjunction with 
+# the Consolidated Financial Statements and related notes included in Item 8.
+# Results of Operations
+# Total revenue was $1.247,5 million, representing 
+# a increase of 
+# 23.4% compared to the prior year. 
+# Net income was $187,3 million, a 
+# improvement of 
+# 31.2% year-over-year.
+# Gross margin was 76.3% of revenue. Operating 
+# expenses totaled $689,2 million, including 
+# research and development expenses of $342,7 million.
+# Liquidity and Capital Resources
+# As of December 31, 2025, the Company had cash and cash equivalents of 
+# $892,4 million and total debt of 
+# $450 million.
+# Key Business Events
+# • Launched CompanyName AI Platform, adding AI/ML capabilities to existing product suite
+# • Expanded operations into Asia-Pacific region with new data centers in Tokyo and Singapore
+# • Completed migration of 95% of customers to next-generation infrastructure
+# ITEM 8. OTHER MATERIAL EVENTS
+# On 3/14/2025, the Company completed the acquisition 
+# of TargetCompany, Inc. for a total 
+# purchase price of $340 million. The acquisition 
+# resulted in goodwill of $245,7 million.
+# ────────────────────────────────────────────────────────────
+# On 8/21/2025, the Company detected a 
+# data breach incident affecting its systems.
+# Approximately 12.500 records may have been affected.
+# The Company has notified affected customers and regulatory authorities as required 
+# by applicable law.
+# The Company incurred approximately $3,2 million 
+# in investigation and remediation costs.
+# The incident has been fully resolved.
+# ITEM 9. SIGNATURES
+# Pursuant to the requirements of Section 13 or 15(d) of the Securities Exchange Act 
+# of 1934, the registrant has duly caused this report to be signed on its behalf by 
+# the undersigned, thereunto duly authorized.
+# Doe John
+# CEO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# John Doe
+# CFO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# ================================================================================
+#                             END OF FORM 10-K
+# ================================================================================
+#   ✓ material events use discriminated union for different event types
+# ================================================================================
+#                        UNITED STATES
+#            SECURITIES AND EXCHANGE COMMISSION
+#                  Washington, D.C. 20549
+# ================================================================================
+#                         FORM 10-K
+# ☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE
+#    SECURITIES EXCHANGE ACT OF 1934
+# For the fiscal year ended December 31, 2025
+# Commission File Number: 001-38492
+# COMPANYNAME TECHNOLOGIES, INC.
+# (Exact name of registrant as specified in its charter)
+# State of Incorporation: DE
+# IRS Employer ID:  12-3456789
+# Securities registered pursuant to Section 12(b) of the Act:
+# Title of each class: Common Stock, par value $0.001 per share
+# Trading Symbol: CSFT
+# Name of exchange on which registered: NASDAQ
+# Shares outstanding as of December 31, 2025: 142.500.000
+# Closing price on December 31, 2025: $87.43
+# ================================================================================
+#                             TABLE OF CONTENTS
+# ================================================================================
+# ITEM 1. BUSINESS
+# General
+# CompanyName Technologies, Inc. (the "Company") was incorporated in the State of DE 
+# on January 15, 2015. The Company's fiscal year ends on December 30.
+# As of the fiscal year ended 2025, the Company had 2547 
+# full-time employees. The Company operates under SIC code 7372.
+# ITEM 1A. RISK FACTORS
+# The following risk factors could materially affect the Company's business, 
+# financial condition, and results of operations:
+# COMPETITION RISKS
+# ─────────────────
+# ■ Intense Competition in Cloud Software Market Could Adversely Affect Operating Results
+# The market for cloud-based enterprise software is intensely competitive and rapidly evolving. The Company faces competition from established enterprise software vendors, emerging startups, and in-house development efforts by potential customers. If the Company cannot compete effectively, its business, financial condition, and results of operations could be materially and adversely affected.
+# CYBERSECURITY RISKS
+# ───────────────────
+# ■ Security Breaches Could Result in Significant Liability and Harm to Reputation
+# The Company processes and stores sensitive customer data, including proprietary business information and personal data. A cybersecurity incident affecting the Companys systems or those of third-party service providers could result in unauthorized access to, or loss or disclosure of, this information. Such an incident could lead to claims, litigation, regulatory investigations, and damage to the Companys reputation, each of which could materially adversely affect the business.
+# REGULATORY RISKS
+# ────────────────
+# ◆ Evolving Data Privacy Regulations Could Increase Compliance Costs
+# The Company is subject to various data protection laws and regulations globally, including GDPR in Europe, CCPA in California, and similar laws in other jurisdictions. Compliance with these regulations is complex and costly, and failure to comply could result in significant fines and penalties. Changes to these laws or new interpretations could require material changes to the Companys products and business practices.
+# OPERATIONAL RISKS
+# ─────────────────
+# ◆ Reliance on Third-Party Cloud Infrastructure Providers
+# The Company relies on third-party cloud infrastructure providers to host its services. Any disruption in these services, whether due to technical failures, financial difficulties, or termination of relationships, could result in service interruptions for the Companys customers. While the Company maintains backup procedures, prolonged outages could result in customer dissatisfaction and revenue loss.
+# SUPPLY CHAIN RISKS
+# ──────────────────
+# ● Dependence on Key Technology Partners and Open Source Software
+# The Companys platform integrates with and depends on various third-party technologies, including open source software. Changes to licensing terms, discontinuation of support, or security vulnerabilities in these dependencies could require significant engineering resources to address. The Company also relies on APIs and integrations with major platform providers, which could be modified or deprecated.
+# ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS OF
+# FINANCIAL CONDITION AND RESULTS OF OPERATIONS
+# Overview
+# The following discussion summarizes the significant factors affecting the Company's 
+# consolidated operating results, financial condition, and liquidity for the fiscal 
+# year ended December 31, 2025. This discussion should be read in conjunction with 
+# the Consolidated Financial Statements and related notes included in Item 8.
+# Results of Operations
+# Total revenue was $1.247,5 million, representing 
+# a increase of 
+# 23.4% compared to the prior year. 
+# Net income was $187,3 million, a 
+# improvement of 
+# 31.2% year-over-year.
+# Gross margin was 76.3% of revenue. Operating 
+# expenses totaled $689,2 million, including 
+# research and development expenses of $342,7 million.
+# Liquidity and Capital Resources
+# As of December 31, 2025, the Company had cash and cash equivalents of 
+# $892,4 million and total debt of 
+# $450 million.
+# Key Business Events
+# • Launched CompanyName AI Platform, adding AI/ML capabilities to existing product suite
+# • Expanded operations into Asia-Pacific region with new data centers in Tokyo and Singapore
+# • Completed migration of 95% of customers to next-generation infrastructure
+# ITEM 8. OTHER MATERIAL EVENTS
+# On 5/31/2025, Smith v. CompanyName Technologies, Inc. 
+# was filed in U.S. District Court for the District of Delaware (Case No. 1:25-cv-00842). The Company 
+# believes the claims are without merit and intends to defend vigorously. 
+# The potential liability is estimated at $75 million.
+# ITEM 9. SIGNATURES
+# Pursuant to the requirements of Section 13 or 15(d) of the Securities Exchange Act 
+# of 1934, the registrant has duly caused this report to be signed on its behalf by 
+# the undersigned, thereunto duly authorized.
+# Doe John
+# CEO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# John Doe
+# CFO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# ================================================================================
+#                             END OF FORM 10-K
+# ================================================================================
+#   ✓ different event types have different required fields
+# ================================================================================
+#                        UNITED STATES
+#            SECURITIES AND EXCHANGE COMMISSION
+#                  Washington, D.C. 20549
+# ================================================================================
+#                         FORM 10-K
+# ☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE
+#    SECURITIES EXCHANGE ACT OF 1934
+# For the fiscal year ended December 31, 2025
+# Commission File Number: 001-38492
+# COMPANYNAME TECHNOLOGIES, INC.
+# (Exact name of registrant as specified in its charter)
+# State of Incorporation: DE
+# IRS Employer ID:  12-3456789
+# Securities registered pursuant to Section 12(b) of the Act:
+# Title of each class: Common Stock, par value $0.001 per share
+# Trading Symbol: CSFT
+# Name of exchange on which registered: NASDAQ
+# Shares outstanding as of December 31, 2025: 142.500.000
+# Closing price on December 31, 2025: $87.43
+# ================================================================================
+#                             TABLE OF CONTENTS
+# ================================================================================
+# ITEM 1. BUSINESS
+# General
+# CompanyName Technologies, Inc. (the "Company") was incorporated in the State of DE 
+# on January 15, 2015. The Company's fiscal year ends on December 30.
+# As of the fiscal year ended 2025, the Company had 2547 
+# full-time employees. The Company operates under SIC code 7372.
+# Emerging Growth Company Status
+# The Company qualifies as an "emerging growth company" as defined in the Jumpstart 
+# Our Business Startups (JOBS) Act and has elected to take advantage of certain 
+# reduced reporting requirements.
+# ITEM 1A. RISK FACTORS
+# The following risk factors could materially affect the Company's business, 
+# financial condition, and results of operations:
+# COMPETITION RISKS
+# ─────────────────
+# ■ Intense Competition in Cloud Software Market Could Adversely Affect Operating Results
+# The market for cloud-based enterprise software is intensely competitive and rapidly evolving. The Company faces competition from established enterprise software vendors, emerging startups, and in-house development efforts by potential customers. If the Company cannot compete effectively, its business, financial condition, and results of operations could be materially and adversely affected.
+# CYBERSECURITY RISKS
+# ───────────────────
+# ■ Security Breaches Could Result in Significant Liability and Harm to Reputation
+# The Company processes and stores sensitive customer data, including proprietary business information and personal data. A cybersecurity incident affecting the Companys systems or those of third-party service providers could result in unauthorized access to, or loss or disclosure of, this information. Such an incident could lead to claims, litigation, regulatory investigations, and damage to the Companys reputation, each of which could materially adversely affect the business.
+# REGULATORY RISKS
+# ────────────────
+# ◆ Evolving Data Privacy Regulations Could Increase Compliance Costs
+# The Company is subject to various data protection laws and regulations globally, including GDPR in Europe, CCPA in California, and similar laws in other jurisdictions. Compliance with these regulations is complex and costly, and failure to comply could result in significant fines and penalties. Changes to these laws or new interpretations could require material changes to the Companys products and business practices.
+# OPERATIONAL RISKS
+# ─────────────────
+# ◆ Reliance on Third-Party Cloud Infrastructure Providers
+# The Company relies on third-party cloud infrastructure providers to host its services. Any disruption in these services, whether due to technical failures, financial difficulties, or termination of relationships, could result in service interruptions for the Companys customers. While the Company maintains backup procedures, prolonged outages could result in customer dissatisfaction and revenue loss.
+# SUPPLY CHAIN RISKS
+# ──────────────────
+# ● Dependence on Key Technology Partners and Open Source Software
+# The Companys platform integrates with and depends on various third-party technologies, including open source software. Changes to licensing terms, discontinuation of support, or security vulnerabilities in these dependencies could require significant engineering resources to address. The Company also relies on APIs and integrations with major platform providers, which could be modified or deprecated.
+# ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS OF
+# FINANCIAL CONDITION AND RESULTS OF OPERATIONS
+# Overview
+# The following discussion summarizes the significant factors affecting the Company's 
+# consolidated operating results, financial condition, and liquidity for the fiscal 
+# year ended December 31, 2025. This discussion should be read in conjunction with 
+# the Consolidated Financial Statements and related notes included in Item 8.
+# Results of Operations
+# Total revenue was $1.247,5 million, representing 
+# a increase of 
+# 23.4% compared to the prior year. 
+# Net income was $187,3 million, a 
+# improvement of 
+# 31.2% year-over-year.
+# Gross margin was 76.3% of revenue. Operating 
+# expenses totaled $689,2 million, including 
+# research and development expenses of $342,7 million.
+# Liquidity and Capital Resources
+# As of December 31, 2025, the Company had cash and cash equivalents of 
+# $892,4 million and total debt of 
+# $450 million.
+# Key Business Events
+# • Launched CompanyName AI Platform, adding AI/ML capabilities to existing product suite
+# • Expanded operations into Asia-Pacific region with new data centers in Tokyo and Singapore
+# • Completed migration of 95% of customers to next-generation infrastructure
+# ITEM 8. OTHER MATERIAL EVENTS
+# On 3/14/2025, the Company completed the acquisition 
+# of TargetCompany, Inc. for a total 
+# purchase price of $340 million. The acquisition 
+# resulted in goodwill of $245,7 million.
+# ────────────────────────────────────────────────────────────
+# On 8/21/2025, the Company detected a 
+# data breach incident affecting its systems.
+# Approximately 12.500 records may have been affected.
+# The Company has notified affected customers and regulatory authorities as required 
+# by applicable law.
+# The Company incurred approximately $3,2 million 
+# in investigation and remediation costs.
+# The incident has been fully resolved.
+# ITEM 9. SIGNATURES
+# Pursuant to the requirements of Section 13 or 15(d) of the Securities Exchange Act 
+# of 1934, the registrant has duly caused this report to be signed on its behalf by 
+# the undersigned, thereunto duly authorized.
+# Doe John
+# CEO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# John Doe
+# CFO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# ================================================================================
+#                             END OF FORM 10-K
+# ================================================================================
+# ================================================================================
+#                        UNITED STATES
+#            SECURITIES AND EXCHANGE COMMISSION
+#                  Washington, D.C. 20549
+# ================================================================================
+#                         FORM 10-K
+# ☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE
+#    SECURITIES EXCHANGE ACT OF 1934
+# For the fiscal year ended December 31, 2025
+# Commission File Number: 001-38492
+# COMPANYNAME TECHNOLOGIES, INC.
+# (Exact name of registrant as specified in its charter)
+# State of Incorporation: DE
+# IRS Employer ID:  12-3456789
+# Securities registered pursuant to Section 12(b) of the Act:
+# Title of each class: Common Stock, par value $0.001 per share
+# Trading Symbol: CSFT
+# Name of exchange on which registered: NASDAQ
+# Shares outstanding as of December 31, 2025: 142.500.000
+# Closing price on December 31, 2025: $87.43
+# ================================================================================
+#                             TABLE OF CONTENTS
+# ================================================================================
+# ITEM 1. BUSINESS
+# General
+# CompanyName Technologies, Inc. (the "Company") was incorporated in the State of DE 
+# on January 15, 2015. The Company's fiscal year ends on December 30.
+# As of the fiscal year ended 2025, the Company had 2547 
+# full-time employees. The Company operates under SIC code 7372.
+# ITEM 1A. RISK FACTORS
+# The following risk factors could materially affect the Company's business, 
+# financial condition, and results of operations:
+# COMPETITION RISKS
+# ─────────────────
+# ■ Intense Competition in Cloud Software Market Could Adversely Affect Operating Results
+# The market for cloud-based enterprise software is intensely competitive and rapidly evolving. The Company faces competition from established enterprise software vendors, emerging startups, and in-house development efforts by potential customers. If the Company cannot compete effectively, its business, financial condition, and results of operations could be materially and adversely affected.
+# CYBERSECURITY RISKS
+# ───────────────────
+# ■ Security Breaches Could Result in Significant Liability and Harm to Reputation
+# The Company processes and stores sensitive customer data, including proprietary business information and personal data. A cybersecurity incident affecting the Companys systems or those of third-party service providers could result in unauthorized access to, or loss or disclosure of, this information. Such an incident could lead to claims, litigation, regulatory investigations, and damage to the Companys reputation, each of which could materially adversely affect the business.
+# REGULATORY RISKS
+# ────────────────
+# ◆ Evolving Data Privacy Regulations Could Increase Compliance Costs
+# The Company is subject to various data protection laws and regulations globally, including GDPR in Europe, CCPA in California, and similar laws in other jurisdictions. Compliance with these regulations is complex and costly, and failure to comply could result in significant fines and penalties. Changes to these laws or new interpretations could require material changes to the Companys products and business practices.
+# OPERATIONAL RISKS
+# ─────────────────
+# ◆ Reliance on Third-Party Cloud Infrastructure Providers
+# The Company relies on third-party cloud infrastructure providers to host its services. Any disruption in these services, whether due to technical failures, financial difficulties, or termination of relationships, could result in service interruptions for the Companys customers. While the Company maintains backup procedures, prolonged outages could result in customer dissatisfaction and revenue loss.
+# SUPPLY CHAIN RISKS
+# ──────────────────
+# ● Dependence on Key Technology Partners and Open Source Software
+# The Companys platform integrates with and depends on various third-party technologies, including open source software. Changes to licensing terms, discontinuation of support, or security vulnerabilities in these dependencies could require significant engineering resources to address. The Company also relies on APIs and integrations with major platform providers, which could be modified or deprecated.
+# ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS OF
+# FINANCIAL CONDITION AND RESULTS OF OPERATIONS
+# Overview
+# The following discussion summarizes the significant factors affecting the Company's 
+# consolidated operating results, financial condition, and liquidity for the fiscal 
+# year ended December 31, 2025. This discussion should be read in conjunction with 
+# the Consolidated Financial Statements and related notes included in Item 8.
+# Results of Operations
+# Total revenue was $1.247,5 million, representing 
+# a increase of 
+# 23.4% compared to the prior year. 
+# Net income was $187,3 million, a 
+# improvement of 
+# 31.2% year-over-year.
+# Gross margin was 76.3% of revenue. Operating 
+# expenses totaled $689,2 million, including 
+# research and development expenses of $342,7 million.
+# Liquidity and Capital Resources
+# As of December 31, 2025, the Company had cash and cash equivalents of 
+# $892,4 million and total debt of 
+# $450 million.
+# Key Business Events
+# • Launched CompanyName AI Platform, adding AI/ML capabilities to existing product suite
+# • Expanded operations into Asia-Pacific region with new data centers in Tokyo and Singapore
+# • Completed migration of 95% of customers to next-generation infrastructure
+# ITEM 8. OTHER MATERIAL EVENTS
+# On 3/14/2025, the Company completed the acquisition 
+# of TargetCompany, Inc. for a total 
+# purchase price of $340 million. The acquisition 
+# resulted in goodwill of $245,7 million.
+# ────────────────────────────────────────────────────────────
+# On 8/21/2025, the Company detected a 
+# data breach incident affecting its systems.
+# Approximately 12.500 records may have been affected.
+# The Company has notified affected customers and regulatory authorities as required 
+# by applicable law.
+# The Company incurred approximately $3,2 million 
+# in investigation and remediation costs.
+# The incident has been fully resolved.
+# ITEM 9. SIGNATURES
+# Pursuant to the requirements of Section 13 or 15(d) of the Securities Exchange Act 
+# of 1934, the registrant has duly caused this report to be signed on its behalf by 
+# the undersigned, thereunto duly authorized.
+# Doe John
+# CEO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# John Doe
+# CFO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# ================================================================================
+#                             END OF FORM 10-K
+# ================================================================================
+#   ✓ emerging growth status controls conditional section
+# ================================================================================
+#                        UNITED STATES
+#            SECURITIES AND EXCHANGE COMMISSION
+#                  Washington, D.C. 20549
+# ================================================================================
+#                         FORM 10-K
+# ☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE
+#    SECURITIES EXCHANGE ACT OF 1934
+# For the fiscal year ended December 31, 2025
+# Commission File Number: 001-38492
+# COMPANYNAME TECHNOLOGIES, INC.
+# (Exact name of registrant as specified in its charter)
+# State of Incorporation: DE
+# IRS Employer ID:  12-3456789
+# Securities registered pursuant to Section 12(b) of the Act:
+# Title of each class: Common Stock, par value $0.001 per share
+# Trading Symbol: CSFT
+# Name of exchange on which registered: NASDAQ
+# Shares outstanding as of December 31, 2025: 142.500.000
+# Closing price on December 31, 2025: $87.43
+# ================================================================================
+#                             TABLE OF CONTENTS
+# ================================================================================
+# ITEM 1. BUSINESS
+# General
+# CompanyName Technologies, Inc. (the "Company") was incorporated in the State of DE 
+# on January 15, 2015. The Company's fiscal year ends on December 30.
+# As of the fiscal year ended 2025, the Company had 2547 
+# full-time employees. The Company operates under SIC code 7372.
+# ITEM 1A. RISK FACTORS
+# The following risk factors could materially affect the Company's business, 
+# financial condition, and results of operations:
+# COMPETITION RISKS
+# ─────────────────
+# ■ Intense Competition in Cloud Software Market Could Adversely Affect Operating Results
+# The market for cloud-based enterprise software is intensely competitive and rapidly evolving. The Company faces competition from established enterprise software vendors, emerging startups, and in-house development efforts by potential customers. If the Company cannot compete effectively, its business, financial condition, and results of operations could be materially and adversely affected.
+# CYBERSECURITY RISKS
+# ───────────────────
+# ■ Security Breaches Could Result in Significant Liability and Harm to Reputation
+# The Company processes and stores sensitive customer data, including proprietary business information and personal data. A cybersecurity incident affecting the Companys systems or those of third-party service providers could result in unauthorized access to, or loss or disclosure of, this information. Such an incident could lead to claims, litigation, regulatory investigations, and damage to the Companys reputation, each of which could materially adversely affect the business.
+# REGULATORY RISKS
+# ────────────────
+# ◆ Evolving Data Privacy Regulations Could Increase Compliance Costs
+# The Company is subject to various data protection laws and regulations globally, including GDPR in Europe, CCPA in California, and similar laws in other jurisdictions. Compliance with these regulations is complex and costly, and failure to comply could result in significant fines and penalties. Changes to these laws or new interpretations could require material changes to the Companys products and business practices.
+# OPERATIONAL RISKS
+# ─────────────────
+# ◆ Reliance on Third-Party Cloud Infrastructure Providers
+# The Company relies on third-party cloud infrastructure providers to host its services. Any disruption in these services, whether due to technical failures, financial difficulties, or termination of relationships, could result in service interruptions for the Companys customers. While the Company maintains backup procedures, prolonged outages could result in customer dissatisfaction and revenue loss.
+# SUPPLY CHAIN RISKS
+# ──────────────────
+# ● Dependence on Key Technology Partners and Open Source Software
+# The Companys platform integrates with and depends on various third-party technologies, including open source software. Changes to licensing terms, discontinuation of support, or security vulnerabilities in these dependencies could require significant engineering resources to address. The Company also relies on APIs and integrations with major platform providers, which could be modified or deprecated.
+# ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS OF
+# FINANCIAL CONDITION AND RESULTS OF OPERATIONS
+# Overview
+# The following discussion summarizes the significant factors affecting the Company's 
+# consolidated operating results, financial condition, and liquidity for the fiscal 
+# year ended December 31, 2025. This discussion should be read in conjunction with 
+# the Consolidated Financial Statements and related notes included in Item 8.
+# Results of Operations
+# Total revenue was $1.247,5 million, representing 
+# a increase of 
+# 23.4% compared to the prior year. 
+# Net income was $187,3 million, a 
+# improvement of 
+# 31.2% year-over-year.
+# Gross margin was 76.3% of revenue. Operating 
+# expenses totaled $689,2 million, including 
+# research and development expenses of $342,7 million.
+# Liquidity and Capital Resources
+# As of December 31, 2025, the Company had cash and cash equivalents of 
+# $892,4 million and total debt of 
+# $450 million.
+# Key Business Events
+# • Launched CompanyName AI Platform, adding AI/ML capabilities to existing product suite
+# • Expanded operations into Asia-Pacific region with new data centers in Tokyo and Singapore
+# • Completed migration of 95% of customers to next-generation infrastructure
+# ITEM 8. OTHER MATERIAL EVENTS
+# No material events to report for the fiscal year ended December 31, 2025.
+# ITEM 9. SIGNATURES
+# Pursuant to the requirements of Section 13 or 15(d) of the Securities Exchange Act 
+# of 1934, the registrant has duly caused this report to be signed on its behalf by 
+# the undersigned, thereunto duly authorized.
+# Doe John
+# CEO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# John Doe
+# CFO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# ================================================================================
+#                             END OF FORM 10-K
+# ================================================================================
+#   ✓ no material events shows appropriate message
+#   ✓ invalid state of incorporation rejected
+#   ✓ negative revenue rejected
+#   ✓ invalid exchange listing rejected
+#   ✓ risk factors required (min 1)
+#   ✓ structure hash remains stable across renders with same template
+# ================================================================================
+#                        UNITED STATES
+#            SECURITIES AND EXCHANGE COMMISSION
+#                  Washington, D.C. 20549
+# ================================================================================
+#                         FORM 10-K
+# ☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE
+#    SECURITIES EXCHANGE ACT OF 1934
+# For the fiscal year ended December 31, 2025
+# Commission File Number: 001-38492
+# COMPANYNAME TECHNOLOGIES, INC.
+# (Exact name of registrant as specified in its charter)
+# State of Incorporation: DE
+# IRS Employer ID:  12-3456789
+# Securities registered pursuant to Section 12(b) of the Act:
+# Title of each class: Common Stock, par value $0.001 per share
+# Trading Symbol: CSFT
+# Name of exchange on which registered: NASDAQ
+# Shares outstanding as of December 31, 2025: 142.500.000
+# Closing price on December 31, 2025: $87.43
+# ================================================================================
+#                             TABLE OF CONTENTS
+# ================================================================================
+# ITEM 1. BUSINESS
+# General
+# CompanyName Technologies, Inc. (the "Company") was incorporated in the State of DE 
+# on January 15, 2015. The Company's fiscal year ends on December 30.
+# As of the fiscal year ended 2025, the Company had 2547 
+# full-time employees. The Company operates under SIC code 7372.
+# ITEM 1A. RISK FACTORS
+# The following risk factors could materially affect the Company's business, 
+# financial condition, and results of operations:
+# COMPETITION RISKS
+# ─────────────────
+# ■ Intense Competition in Cloud Software Market Could Adversely Affect Operating Results
+# The market for cloud-based enterprise software is intensely competitive and rapidly evolving. The Company faces competition from established enterprise software vendors, emerging startups, and in-house development efforts by potential customers. If the Company cannot compete effectively, its business, financial condition, and results of operations could be materially and adversely affected.
+# CYBERSECURITY RISKS
+# ───────────────────
+# ■ Security Breaches Could Result in Significant Liability and Harm to Reputation
+# The Company processes and stores sensitive customer data, including proprietary business information and personal data. A cybersecurity incident affecting the Companys systems or those of third-party service providers could result in unauthorized access to, or loss or disclosure of, this information. Such an incident could lead to claims, litigation, regulatory investigations, and damage to the Companys reputation, each of which could materially adversely affect the business.
+# REGULATORY RISKS
+# ────────────────
+# ◆ Evolving Data Privacy Regulations Could Increase Compliance Costs
+# The Company is subject to various data protection laws and regulations globally, including GDPR in Europe, CCPA in California, and similar laws in other jurisdictions. Compliance with these regulations is complex and costly, and failure to comply could result in significant fines and penalties. Changes to these laws or new interpretations could require material changes to the Companys products and business practices.
+# OPERATIONAL RISKS
+# ─────────────────
+# ◆ Reliance on Third-Party Cloud Infrastructure Providers
+# The Company relies on third-party cloud infrastructure providers to host its services. Any disruption in these services, whether due to technical failures, financial difficulties, or termination of relationships, could result in service interruptions for the Companys customers. While the Company maintains backup procedures, prolonged outages could result in customer dissatisfaction and revenue loss.
+# SUPPLY CHAIN RISKS
+# ──────────────────
+# ● Dependence on Key Technology Partners and Open Source Software
+# The Companys platform integrates with and depends on various third-party technologies, including open source software. Changes to licensing terms, discontinuation of support, or security vulnerabilities in these dependencies could require significant engineering resources to address. The Company also relies on APIs and integrations with major platform providers, which could be modified or deprecated.
+# ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS OF
+# FINANCIAL CONDITION AND RESULTS OF OPERATIONS
+# Overview
+# The following discussion summarizes the significant factors affecting the Company's 
+# consolidated operating results, financial condition, and liquidity for the fiscal 
+# year ended December 31, 2025. This discussion should be read in conjunction with 
+# the Consolidated Financial Statements and related notes included in Item 8.
+# Results of Operations
+# Total revenue was $1.247,5 million, representing 
+# a increase of 
+# 23.4% compared to the prior year. 
+# Net income was $187,3 million, a 
+# improvement of 
+# 31.2% year-over-year.
+# Gross margin was 76.3% of revenue. Operating 
+# expenses totaled $689,2 million, including 
+# research and development expenses of $342,7 million.
+# Liquidity and Capital Resources
+# As of December 31, 2025, the Company had cash and cash equivalents of 
+# $892,4 million and total debt of 
+# $450 million.
+# Key Business Events
+# • Launched CompanyName AI Platform, adding AI/ML capabilities to existing product suite
+# • Expanded operations into Asia-Pacific region with new data centers in Tokyo and Singapore
+# • Completed migration of 95% of customers to next-generation infrastructure
+# ITEM 8. OTHER MATERIAL EVENTS
+# On 3/14/2025, the Company completed the acquisition 
+# of TargetCompany, Inc. for a total 
+# purchase price of $340 million. The acquisition 
+# resulted in goodwill of $245,7 million.
+# ────────────────────────────────────────────────────────────
+# On 8/21/2025, the Company detected a 
+# data breach incident affecting its systems.
+# Approximately 12.500 records may have been affected.
+# The Company has notified affected customers and regulatory authorities as required 
+# by applicable law.
+# The Company incurred approximately $3,2 million 
+# in investigation and remediation costs.
+# The incident has been fully resolved.
+# ITEM 9. SIGNATURES
+# Pursuant to the requirements of Section 13 or 15(d) of the Securities Exchange Act 
+# of 1934, the registrant has duly caused this report to be signed on its behalf by 
+# the undersigned, thereunto duly authorized.
+# Doe John
+# CEO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# John Doe
+# CFO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# ================================================================================
+#                             END OF FORM 10-K
+# ================================================================================
+#   ✓ filing submission verifies structure integrity
+#   ✓ audit confirms structure integrity and value count
+#   ✓ zt.$n correctly parameterizes the entire filing
+# ================================================================================
+#                        UNITED STATES
+#            SECURITIES AND EXCHANGE COMMISSION
+#                  Washington, D.C. 20549
+# ================================================================================
+#                         FORM 10-K
+# ☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE
+#    SECURITIES EXCHANGE ACT OF 1934
+# For the fiscal year ended December 31, 2025
+# Commission File Number: 001-38492
+# COMPANYNAME TECHNOLOGIES, INC.
+# (Exact name of registrant as specified in its charter)
+# State of Incorporation: DE
+# IRS Employer ID:  12-3456789
+# Securities registered pursuant to Section 12(b) of the Act:
+# Title of each class: Common Stock, par value $0.001 per share
+# Trading Symbol: CSFT
+# Name of exchange on which registered: NASDAQ
+# Shares outstanding as of December 31, 2025: 142.500.000
+# Closing price on December 31, 2025: $87.43
+# ================================================================================
+#                             TABLE OF CONTENTS
+# ================================================================================
+# ITEM 1. BUSINESS
+# General
+# CompanyName Technologies, Inc. (the "Company") was incorporated in the State of DE 
+# on January 15, 2015. The Company's fiscal year ends on December 30.
+# As of the fiscal year ended 2025, the Company had 2547 
+# full-time employees. The Company operates under SIC code 7372.
+# ITEM 1A. RISK FACTORS
+# The following risk factors could materially affect the Company's business, 
+# financial condition, and results of operations:
+# COMPETITION RISKS
+# ─────────────────
+# ■ Intense Competition in Cloud Software Market Could Adversely Affect Operating Results
+# The market for cloud-based enterprise software is intensely competitive and rapidly evolving. The Company faces competition from established enterprise software vendors, emerging startups, and in-house development efforts by potential customers. If the Company cannot compete effectively, its business, financial condition, and results of operations could be materially and adversely affected.
+# CYBERSECURITY RISKS
+# ───────────────────
+# ■ Security Breaches Could Result in Significant Liability and Harm to Reputation
+# The Company processes and stores sensitive customer data, including proprietary business information and personal data. A cybersecurity incident affecting the Companys systems or those of third-party service providers could result in unauthorized access to, or loss or disclosure of, this information. Such an incident could lead to claims, litigation, regulatory investigations, and damage to the Companys reputation, each of which could materially adversely affect the business.
+# REGULATORY RISKS
+# ────────────────
+# ◆ Evolving Data Privacy Regulations Could Increase Compliance Costs
+# The Company is subject to various data protection laws and regulations globally, including GDPR in Europe, CCPA in California, and similar laws in other jurisdictions. Compliance with these regulations is complex and costly, and failure to comply could result in significant fines and penalties. Changes to these laws or new interpretations could require material changes to the Companys products and business practices.
+# OPERATIONAL RISKS
+# ─────────────────
+# ◆ Reliance on Third-Party Cloud Infrastructure Providers
+# The Company relies on third-party cloud infrastructure providers to host its services. Any disruption in these services, whether due to technical failures, financial difficulties, or termination of relationships, could result in service interruptions for the Companys customers. While the Company maintains backup procedures, prolonged outages could result in customer dissatisfaction and revenue loss.
+# SUPPLY CHAIN RISKS
+# ──────────────────
+# ● Dependence on Key Technology Partners and Open Source Software
+# The Companys platform integrates with and depends on various third-party technologies, including open source software. Changes to licensing terms, discontinuation of support, or security vulnerabilities in these dependencies could require significant engineering resources to address. The Company also relies on APIs and integrations with major platform providers, which could be modified or deprecated.
+# ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS OF
+# FINANCIAL CONDITION AND RESULTS OF OPERATIONS
+# Overview
+# The following discussion summarizes the significant factors affecting the Company's 
+# consolidated operating results, financial condition, and liquidity for the fiscal 
+# year ended December 31, 2025. This discussion should be read in conjunction with 
+# the Consolidated Financial Statements and related notes included in Item 8.
+# Results of Operations
+# Total revenue was $1.247,5 million, representing 
+# a increase of 
+# 23.4% compared to the prior year. 
+# Net income was $187,3 million, a 
+# improvement of 
+# 31.2% year-over-year.
+# Gross margin was 76.3% of revenue. Operating 
+# expenses totaled $689,2 million, including 
+# research and development expenses of $342,7 million.
+# Liquidity and Capital Resources
+# As of December 31, 2025, the Company had cash and cash equivalents of 
+# $892,4 million and total debt of 
+# $450 million.
+# Key Business Events
+# • Launched CompanyName AI Platform, adding AI/ML capabilities to existing product suite
+# • Expanded operations into Asia-Pacific region with new data centers in Tokyo and Singapore
+# • Completed migration of 95% of customers to next-generation infrastructure
+# ITEM 8. OTHER MATERIAL EVENTS
+# On 3/14/2025, the Company completed the acquisition 
+# of TargetCompany, Inc. for a total 
+# purchase price of $340 million. The acquisition 
+# resulted in goodwill of $245,7 million.
+# ────────────────────────────────────────────────────────────
+# On 8/21/2025, the Company detected a 
+# data breach incident affecting its systems.
+# Approximately 12.500 records may have been affected.
+# The Company has notified affected customers and regulatory authorities as required 
+# by applicable law.
+# The Company incurred approximately $3,2 million 
+# in investigation and remediation costs.
+# The incident has been fully resolved.
+# ITEM 9. SIGNATURES
+# Pursuant to the requirements of Section 13 or 15(d) of the Securities Exchange Act 
+# of 1934, the registrant has duly caused this report to be signed on its behalf by 
+# the undersigned, thereunto duly authorized.
+# Doe John
+# CEO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# John Doe
+# CFO
+# Date: 2/27/2026
+# ────────────────────────────────────────
+# ================================================================================
+#                             END OF FORM 10-K
+# ================================================================================
+#   ✓ zt.debug renders complete readable document
+#   FOREIGN PRIVATE ISSUER DISCLOSURE
+#   
+#   CompanyName Technologies, Inc. is a foreign private issuer 
+#   organized under the laws of Cayman Islands.
+#   
+#   ✓ same data can render for different filing jurisdictions
+#   ✓ same template structure works across fiscal years
+#   Rendered 100 10-K filings in 380ms (3.8ms each)
+#   ✓ 100 consecutive filings render without degradation
+# ════════════════════════════════════════════════════════════════════════════════
+#   RESULTS: 20 passed, 0 failed
+# ════════════════════════════════════════════════════════════════════════════════
+# REGULATORY FILING SYSTEM — KEY PROPERTIES DEMONSTRATED:
+# ──────────────────────────────────────────────────────
+# ✓ Structure/value boundary is cryptographically verifiable
+# ✓ Financial data NEVER appears in structure strings (regulatory requirement)
+# ✓ Company identifiers (trading symbols) ARE structure via zt.unsafe (validated)
+# ✓ Different event types (acquisition vs lawsuit vs cyber) use matched schemas
+# ✓ Conditional sections (emerging growth, material events) compose safely
+# ✓ Validation catches invalid filings BEFORE submission (negative revenue, etc.)
+# ✓ Structure hash enables pre/post-submission integrity verification
+# ✓ Audit trail proves value isolation for compliance
+# ✓ Multi-jurisdiction variants reuse validated data
+# ✓ Same template structure works across fiscal years
+# ✓ 100+ consecutive filings render performantly
 # CREATE TABLE IF NOT EXISTS users (
 #     id TEXT PRIMARY KEY,
 #     name TEXT NOT NULL,
@@ -1675,7 +2452,7 @@ ok 2 - zt - Zod Tag
 #     INSERT INTO users 
 #       (id, name, email, role)
 #     VALUES (
-#       'eb681a99-3084-4efb-8387-e0216c95'/*+4 bytes*/,
+#       'b68f2d12-28a6-4966-b614-d3dcbd75'/*+4 bytes*/,
 #       'Diana Prince', 
 #       'diana@example.com', 
 #       'admin'
@@ -1683,12 +2460,12 @@ ok 2 - zt - Zod Tag
 #     RETURNING *
 #   
 #    Created: {
-#   id: 'eb681a99-3084-4efb-8387-e0216c957f9f',
+#   id: 'b68f2d12-28a6-4966-b614-d3dcbd7557b4',
 #   name: 'Diana Prince',
 #   email: 'diana@example.com',
 #   role: 'admin',
-#   created_at: '2026-05-05 03:17:42',
-#   updated_at: '2026-05-05 03:17:42'
+#   created_at: '2026-05-06 01:12:05',
+#   updated_at: '2026-05-06 01:12:05'
 # }
 # 2. FIND USER BY ID:
 #     SELECT * FROM users
@@ -1699,8 +2476,8 @@ ok 2 - zt - Zod Tag
 #   name: 'Alice Johnson',
 #   email: 'alice@example.com',
 #   role: 'admin',
-#   created_at: '2026-05-05 03:17:42',
-#   updated_at: '2026-05-05 03:17:42'
+#   created_at: '2026-05-06 01:12:05',
+#   updated_at: '2026-05-06 01:12:05'
 # }
 #    SQL: 
 #     SELECT * FROM users
@@ -1734,7 +2511,7 @@ ok 2 - zt - Zod Tag
 #     role: 'guest'
 #   },
 #   {
-#     id: 'eb681a99-3084-4efb-8387-e0216c957f9f',
+#     id: 'b68f2d12-28a6-4966-b614-d3dcbd7557b4',
 #     name: 'Diana Prince',
 #     email: 'diana@example.com',
 #     role: 'admin'
@@ -1751,19 +2528,19 @@ ok 2 - zt - Zod Tag
 #     INSERT INTO posts 
 #       (id, user_id, title, content)
 #     VALUES (
-#       '142fca68-52f5-44aa-9670-a3fe8c39'/*+4 bytes*/,
-#       'eb681a99-3084-4efb-8387-e0216c95'/*+4 bytes*/,
+#       'b15a567e-bf45-4fc6-9dfb-a6df1fca'/*+4 bytes*/,
+#       'b68f2d12-28a6-4966-b614-d3dcbd75'/*+4 bytes*/,
 #       'Working with zod-tag',
 #       'This library is amazing for type'/*+10 bytes*/
 #     )
 #     RETURNING *
 #   
 #    Created post: {
-#   id: '142fca68-52f5-44aa-9670-a3fe8c39b5ea',
-#   user_id: 'eb681a99-3084-4efb-8387-e0216c957f9f',
+#   id: 'b15a567e-bf45-4fc6-9dfb-a6df1fcae75d',
+#   user_id: 'b68f2d12-28a6-4966-b614-d3dcbd7557b4',
 #   title: 'Working with zod-tag',
 #   content: 'This library is amazing for type-safe SQL!',
-#   created_at: '2026-05-05 03:17:42'
+#   created_at: '2026-05-06 01:12:05'
 # }
 # 5. FIND POSTS BY USER:
 #     SELECT * FROM posts
@@ -1776,14 +2553,14 @@ ok 2 - zt - Zod Tag
 #     user_id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
 #     title: 'First Post',
 #     content: 'Hello world!',
-#     created_at: '2026-05-05 03:17:42'
+#     created_at: '2026-05-06 01:12:05'
 #   },
 #   {
 #     id: 'c25303ab-f869-424a-bd2f-2a0629e8ef91',
 #     user_id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
 #     title: 'Second Post',
 #     content: 'Zod is awesome',
-#     created_at: '2026-05-05 03:17:42'
+#     created_at: '2026-05-06 01:12:05'
 #   }
 # ]
 # 6. UPDATE USER:
@@ -1801,8 +2578,8 @@ ok 2 - zt - Zod Tag
 #   name: 'Bob Smith',
 #   email: 'bob@example.com',
 #   role: 'admin',
-#   created_at: '2026-05-05 03:17:42',
-#   updated_at: '2026-05-05 03:17:42'
+#   created_at: '2026-05-06 01:12:05',
+#   updated_at: '2026-05-06 01:12:05'
 # }
 # 7. SEARCH USERS (name contains "a", role = admin):
 #     SELECT * FROM users
@@ -1819,16 +2596,16 @@ ok 2 - zt - Zod Tag
 #     name: 'Alice Johnson',
 #     email: 'alice@example.com',
 #     role: 'admin',
-#     created_at: '2026-05-05 03:17:42',
-#     updated_at: '2026-05-05 03:17:42'
+#     created_at: '2026-05-06 01:12:05',
+#     updated_at: '2026-05-06 01:12:05'
 #   },
 #   {
-#     id: 'eb681a99-3084-4efb-8387-e0216c957f9f',
+#     id: 'b68f2d12-28a6-4966-b614-d3dcbd7557b4',
 #     name: 'Diana Prince',
 #     email: 'diana@example.com',
 #     role: 'admin',
-#     created_at: '2026-05-05 03:17:42',
-#     updated_at: '2026-05-05 03:17:42'
+#     created_at: '2026-05-06 01:12:05',
+#     updated_at: '2026-05-06 01:12:05'
 #   }
 # ]
 #    SQL: 
@@ -1851,24 +2628,24 @@ ok 2 - zt - Zod Tag
 #     name: 'Carol Davis',
 #     email: 'carol@example.com',
 #     role: 'guest',
-#     created_at: '2026-05-05 03:17:42',
-#     updated_at: '2026-05-05 03:17:42'
+#     created_at: '2026-05-06 01:12:05',
+#     updated_at: '2026-05-06 01:12:05'
 #   },
 #   {
 #     id: 'cf4f5b2b-6c13-42ba-b6dd-53d6f5e75825',
 #     name: 'Bob Smith',
 #     email: 'bob@example.com',
 #     role: 'admin',
-#     created_at: '2026-05-05 03:17:42',
-#     updated_at: '2026-05-05 03:17:42'
+#     created_at: '2026-05-06 01:12:05',
+#     updated_at: '2026-05-06 01:12:05'
 #   },
 #   {
 #     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
 #     name: 'Alice Johnson',
 #     email: 'alice@example.com',
 #     role: 'admin',
-#     created_at: '2026-05-05 03:17:42',
-#     updated_at: '2026-05-05 03:17:42'
+#     created_at: '2026-05-06 01:12:05',
+#     updated_at: '2026-05-06 01:12:05'
 #   }
 # ]
 #    SQL: 
@@ -1904,7 +2681,7 @@ ok 2 - zt - Zod Tag
 #     post_id: 'edc9bc8b-5f0c-4b95-8d77-7e629c918755',
 #     title: 'First Post',
 #     content: 'Hello world!',
-#     post_created_at: '2026-05-05 03:17:42'
+#     post_created_at: '2026-05-06 01:12:05'
 #   },
 #   {
 #     id: 'd577d021-1d38-4769-a27a-3a3a03d3425c',
@@ -1914,7 +2691,7 @@ ok 2 - zt - Zod Tag
 #     post_id: 'c25303ab-f869-424a-bd2f-2a0629e8ef91',
 #     title: 'Second Post',
 #     content: 'Zod is awesome',
-#     post_created_at: '2026-05-05 03:17:42'
+#     post_created_at: '2026-05-06 01:12:05'
 #   }
 # ]
 #    SQL: 
@@ -1934,7 +2711,7 @@ ok 2 - zt - Zod Tag
 #   
 # 10. DELETE USER:
 #     DELETE FROM users
-#     WHERE id = 'eb681a99-3084-4efb-8387-e0216c95'/*+4 bytes*/
+#     WHERE id = 'b68f2d12-28a6-4966-b614-d3dcbd75'/*+4 bytes*/
 #     RETURNING id
 #   
 #    Deleted user ID: { changes: 1, lastInsertRowid: 4 }
@@ -1964,7 +2741,7 @@ ok 2 - zt - Zod Tag
 # ═══════════════════════════════════════
 #   SQL + Prompt Engineering Pipeline
 # ═══════════════════════════════════════
-#   Config "quick-security-scan" saved with id 1ea3a45a-8460-4b7b-82e6-ffa547879f85
+#   Config "quick-security-scan" saved with id ee212e24-b56e-42f0-9f6f-043bfa619a80
 #   ✓ save and retrieve a strict prompt config
 #   ✓ strict config insertion rejects invalid severity
 #   Prompt generated with 5 parameterized values
@@ -1973,7 +2750,7 @@ ok 2 - zt - Zod Tag
 #   ✓ strict prompt rejects unknown extra key
 #   Generated 2 reviews
 #   ✓ batch review generation via zt.map
-#   100 configs + prompt render in 9ms
+#   100 configs + prompt render in 8ms
 #   ✓ performance: insert 100 configs and render prompt
 #   ✓ missing config throws
 # ═══════════════════════════════════
@@ -1985,31 +2762,31 @@ ok 2 - zt - Zod Tag
 # ═══════════════════════════════════════════
 # ─── Saving Prompt Configurations ───
 # ✓ Config "quick-security-scan" saved: {
-#   id: '661ac135-a7a2-4719-ba92-b075d7a4216b',
+#   id: 'cd3ab916-a2ac-42b8-8c03-c0954f7f54fa',
 #   name: 'quick-security-scan',
 #   persona: 'pedantic-reviewer',
 #   format: 'checklist',
 #   severity: 'strict',
 #   focus_areas: 'security,error-handling',
-#   created_at: '2026-05-05 03:17:42'
+#   created_at: '2026-05-06 01:12:05'
 # }
 # ✓ Config "mentor-code-review" saved: {
-#   id: 'b25c1bc3-3519-4d3a-a3a5-90e95d733466',
+#   id: 'faa2d9bd-de0b-4b6a-ab24-99de4c483797',
 #   name: 'mentor-code-review',
 #   persona: 'mentor',
 #   format: 'bullets',
 #   severity: 'gentle',
 #   focus_areas: 'readability,performance,architecture',
-#   created_at: '2026-05-05 03:17:42'
+#   created_at: '2026-05-06 01:12:05'
 # }
 # ✓ Config "architecture-audit" saved: {
-#   id: 'd9bb840c-e279-4618-a238-7829f90a105c',
+#   id: 'd74087fe-c031-4cdc-bea8-60a714c5a2b6',
 #   name: 'architecture-audit',
 #   persona: 'senior-dev',
 #   format: 'diff',
 #   severity: 'strict',
 #   focus_areas: 'architecture,performance,testing',
-#   created_at: '2026-05-05 03:17:42'
+#   created_at: '2026-05-06 01:12:05'
 # }
 # ─── Executing Code Reviews ───
 # preparing... {
@@ -2024,8 +2801,8 @@ ok 2 - zt - Zod Tag
 #     '    )\\n' +
 #     '    ',
 #   args: [
-#     '89c93156-2866-4760-aaba-450d0a262b85',
-#     '661ac135-a7a2-4719-ba92-b075d7a4216b',
+#     'b623ec09-f26e-4181-99bb-a7bdf68c89e8',
+#     'cd3ab916-a2ac-42b8-8c03-c0954f7f54fa',
 #     'Python',
 #     'def process_payment(user_input):\\n' +
 #       '    query = "SELECT * FROM users WHERE id = " + user_input\\n' +
@@ -2099,8 +2876,8 @@ ok 2 - zt - Zod Tag
 #     '    )\\n' +
 #     '    ',
 #   args: [
-#     '071a57a3-9957-49bd-9d23-74d88cbf6551',
-#     'b25c1bc3-3519-4d3a-a3a5-90e95d733466',
+#     '4ff46a2b-bfc1-4dbd-b30b-752f6fc5935b',
+#     'faa2d9bd-de0b-4b6a-ab24-99de4c483797',
 #     'TypeScript',
 #     'function add(a, b) {\\n    return a + b;\\n}',
 #     '\\n' +
@@ -2171,7 +2948,7 @@ ok 2 - zt - Zod Tag
 #   [5]: "fn main() { println!(\\"hello\\"); }"
 # ─── Execution History ───
 # History for "quick-security-scan" (1 entries):
-#   1. [2026-05-05 03:17:42] Python - def process_payment(user_input):
+#   1. [2026-05-06 01:12:05] Python - def process_payment(user_input):
 #     query = "SELECT * FROM ...
 # ═══════════════════════════════════════════
 #   Key Takeaways:
@@ -2284,7 +3061,7 @@ ok 2 - zt - Zod Tag
 #   ✓ zt.map: single element with separator
 #   ✓ zt.map: two elements with separator
 # ─── 2E: Performance ───
-#     Rendered 500 items in 41.9ms
+#     Rendered 500 items in 20.6ms
 #   ✓ performance: 500 items via zt.map with separator
 #   ✓ state isolation: repeated renders with different data
 # ═══════════════════════════════════════
@@ -2323,12 +3100,15 @@ ok 2 - zt - Zod Tag
 #   vals: [Getter],
 #   __static: [Getter],
 #   __dynamic: [Getter],
+#   __async: [Getter],
 #   __compiled: [Getter],
 #   __templateSource: {
 #     stack: '    at file:///./zod-tag/src/__tests__/playground/typed-tag.type-test.ts:32:15'
 #   },
 #   render: [Function (anonymous)],
+#   renderAsync: [AsyncFunction (anonymous)],
 #   stream: [Function (anonymous)],
+#   streamAsync: [Function (anonymous)],
 #   [Symbol(IRenderable)]: true
 # }
 # [
@@ -2352,7 +3132,7 @@ ok 2 - zt - Zod Tag
 #     '\\n\\n'
 #   ],
 #   '05/05/2026',
-#   1777951062383,
+#   1778029925585,
 #   5,
 #   'John Doe',
 #   19,
@@ -2361,7 +3141,7 @@ ok 2 - zt - Zod Tag
 #   'Say hello!'
 # ] 
 #     Date: 05/05/2026
-#     Timestamp: 1777951062383
+#     Timestamp: 1778029925585
 #     Date: 5
 #     ----- USER CARD -----
 #     
@@ -2380,1322 +3160,1356 @@ ok 2 - zt - Zod Tag
 # DELETE: 
 # DELETE FROM users WHERE id = $0
 # Subtest: slop tests - does the slop-test files run?
-    # Subtest: code-generator.slop-test.ts
-    ok 1 - code-generator.slop-test.ts
+    # Subtest: chat-agent.slop-test.ts
+    ok 1 - chat-agent.slop-test.ts
       ---
-      duration_ms: 448.0472
+      duration_ms: 192.9385
+      type: 'test'
+      ...
+    # Subtest: code-generator.slop-test.ts
+    ok 2 - code-generator.slop-test.ts
+      ---
+      duration_ms: 303.8676
       type: 'test'
       ...
     # Subtest: conditional-validation-boundary.slop-test.ts
-    ok 2 - conditional-validation-boundary.slop-test.ts
+    ok 3 - conditional-validation-boundary.slop-test.ts
       ---
-      duration_ms: 30.9032
+      duration_ms: 37.7755
       type: 'test'
       ...
     # Subtest: email.slop-test.ts
-    ok 3 - email.slop-test.ts
+    ok 4 - email.slop-test.ts
       ---
-      duration_ms: 20.4457
+      duration_ms: 18.5533
       type: 'test'
       ...
     # Subtest: feature-flags.slop-test.ts
-    ok 4 - feature-flags.slop-test.ts
+    ok 5 - feature-flags.slop-test.ts
       ---
-      duration_ms: 43.5941
+      duration_ms: 52.0598
       type: 'test'
       ...
     # Subtest: functional-composition.slop-test.ts
-    ok 5 - functional-composition.slop-test.ts
+    ok 6 - functional-composition.slop-test.ts
       ---
-      duration_ms: 26.6595
+      duration_ms: 39.7665
       type: 'test'
       ...
     # Subtest: graphql.slop-test.ts
-    ok 6 - graphql.slop-test.ts
+    ok 7 - graphql.slop-test.ts
       ---
-      duration_ms: 32.8899
+      duration_ms: 33.1188
       type: 'test'
       ...
     # Subtest: multi-tenant-saas.slop-test.ts
-    ok 7 - multi-tenant-saas.slop-test.ts
+    ok 8 - multi-tenant-saas.slop-test.ts
       ---
-      duration_ms: 29.7735
+      duration_ms: 40.5323
       type: 'test'
       ...
     # Subtest: npc-dialog-state-machine.slop-test.ts
-    ok 8 - npc-dialog-state-machine.slop-test.ts
+    ok 9 - npc-dialog-state-machine.slop-test.ts
       ---
-      duration_ms: 153.9501
+      duration_ms: 158.5556
       type: 'test'
       ...
     # Subtest: pattern-matching-function-definitions.slop-test.ts
-    ok 9 - pattern-matching-function-definitions.slop-test.ts
+    ok 10 - pattern-matching-function-definitions.slop-test.ts
       ---
-      duration_ms: 26.7325
+      duration_ms: 30.9326
       type: 'test'
       ...
     # Subtest: prompt-2.slop-test.ts
-    ok 10 - prompt-2.slop-test.ts
+    ok 11 - prompt-2.slop-test.ts
       ---
-      duration_ms: 9.6356
+      duration_ms: 10.9963
       type: 'test'
       ...
     # Subtest: prompt.slop-test.ts
-    ok 11 - prompt.slop-test.ts
+    ok 12 - prompt.slop-test.ts
       ---
-      duration_ms: 10.3661
+      duration_ms: 7.6808
+      type: 'test'
+      ...
+    # Subtest: regulatory-filing.slop-test.ts
+    ok 13 - regulatory-filing.slop-test.ts
+      ---
+      duration_ms: 576.5365
       type: 'test'
       ...
     # Subtest: repo.slop-test.ts
-    ok 12 - repo.slop-test.ts
+    ok 14 - repo.slop-test.ts
       ---
-      duration_ms: 58.6802
+      duration_ms: 50.1248
       type: 'test'
       ...
     # Subtest: sql-prompt-pipeline.slop-test.ts
-    ok 13 - sql-prompt-pipeline.slop-test.ts
+    ok 15 - sql-prompt-pipeline.slop-test.ts
       ---
-      duration_ms: 26.5392
+      duration_ms: 22.9091
       type: 'test'
       ...
     # Subtest: sql-prompt.slop-test.ts
-    ok 14 - sql-prompt.slop-test.ts
+    ok 16 - sql-prompt.slop-test.ts
       ---
-      duration_ms: 21.7442
+      duration_ms: 16.2419
       type: 'test'
       ...
     # Subtest: sql.slop-test.ts
-    ok 15 - sql.slop-test.ts
+    ok 17 - sql.slop-test.ts
       ---
-      duration_ms: 21.4424
+      duration_ms: 14.369
       type: 'test'
       ...
     # Subtest: stress-composition-edge-cases.slop-test.ts
-    ok 16 - stress-composition-edge-cases.slop-test.ts
+    ok 18 - stress-composition-edge-cases.slop-test.ts
       ---
-      duration_ms: 74.924
+      duration_ms: 48.9874
       type: 'test'
       ...
     # Subtest: zt-match.slop-test.ts
-    ok 17 - zt-match.slop-test.ts
+    ok 19 - zt-match.slop-test.ts
       ---
-      duration_ms: 23.8337
+      duration_ms: 22.048
       type: 'test'
       ...
     # Subtest: typed-tag.type-test.ts
-    ok 18 - typed-tag.type-test.ts
+    ok 20 - typed-tag.type-test.ts
       ---
-      duration_ms: 9.8162
+      duration_ms: 10.5371
       type: 'test'
       ...
     # Subtest: user-card.type-test.ts
-    ok 19 - user-card.type-test.ts
+    ok 21 - user-card.type-test.ts
       ---
-      duration_ms: 30.5049
+      duration_ms: 10.6787
       type: 'test'
       ...
     # Subtest: cli-test.ts
-    ok 20 - cli-test.ts
+    ok 22 - cli-test.ts
       ---
-      duration_ms: 11.511
+      duration_ms: 8.8553
       type: 'test'
       ...
-    1..20
+    1..22
 ok 3 - slop tests - does the slop-test files run?
   ---
-  duration_ms: 1115.2693
+  duration_ms: 1712.7404
   type: 'suite'
   ...
-# Media of 11.230433333333334 ms to render each frame of the cli test
+# SEARCH("hello") -> results would go here
+#   ✓ search tool with valid API key renders via renderAsync
+#   ✓ search tool with invalid API key rejects
+#   ✓ toolCallTemplate is async because it contains async branches
+# CALC(10/2, 2)
+#   ✓ toolCallTemplate.renderAsync with calculate (sync) tool
+# [SYSTEM] You are a helpful assistant.
+# [USER] Search for weather
+# [TOOL] 
+# SEARCH("weather") -> results would go here
+#   ✓ chatTurnTemplate with async tool requires renderAsync
+# SEARCH("hello") -> results would go here
+#   ✓ zt.bind async renderable + renderAsync
+#   ✓ streamAsync yields correct chunks for async tool
+#   ✓ async parent with sync child yields correct stream
+#   ✓ clear InterpolationError message on sync render of async
+#   ✓ async validation failure gives clear error
+#     Rendered 20 async calls in 16ms
+#   ✓ batched async renders are stable
+# ════════════════════════════════════════════════════════════════════════════════
+#   RESULTS: 13 passed, 0 failed
+# ════════════════════════════════════════════════════════════════════════════════
+# Media of 9.794597500000002 ms to render each frame of the cli test
 # Subtest: Identity (zt.empty)
     # Subtest: empty · template == template (left identity)
     ok 1 - empty · template == template (left identity)
       ---
-      duration_ms: 4.9414
+      duration_ms: 5.0006
       type: 'test'
       ...
     # Subtest: template · empty == template (right identity)
     ok 2 - template · empty == template (right identity)
       ---
-      duration_ms: 0.5043
+      duration_ms: 0.5085
       type: 'test'
       ...
     # Subtest: empty renders to an empty string array
     ok 3 - empty renders to an empty string array
       ---
-      duration_ms: 0.3748
+      duration_ms: 0.3423
       type: 'test'
       ...
     # Subtest: composing empty with a static template yields identical output
     ok 4 - composing empty with a static template yields identical output
       ---
-      duration_ms: 0.6115
+      duration_ms: 0.5265
       type: 'test'
       ...
     1..4
 ok 4 - Identity (zt.empty)
   ---
-  duration_ms: 10.4399
+  duration_ms: 8.3984
   type: 'suite'
   ...
 # Subtest: Associativity
     # Subtest: (a · b) · c == a · (b · c) for concatenation via zt.t
     ok 1 - (a · b) · c == a · (b · c) for concatenation via zt.t
       ---
-      duration_ms: 0.8375
+      duration_ms: 0.7852
       type: 'test'
       ...
     # Subtest: (a join b) join c == a join (b join c) using zt.join
     ok 2 - (a join b) join c == a join (b join c) using zt.join
       ---
-      duration_ms: 2.0816
+      duration_ms: 3.6266
       type: 'test'
       ...
     1..2
 ok 5 - Associativity
   ---
-  duration_ms: 3.1826
+  duration_ms: 5.368
   type: 'suite'
   ...
 # Subtest: Bind · render law
     # Subtest: bind(t, k).render() == t.render(k)
     ok 1 - bind(t, k).render() == t.render(k)
       ---
-      duration_ms: 1.4868
+      duration_ms: 1.3967
       type: 'test'
       ...
     # Subtest: bind with empty kargs still works
     ok 2 - bind with empty kargs still works
       ---
-      duration_ms: 0.3321
+      duration_ms: 0.4878
       type: 'test'
       ...
     1..2
 ok 6 - Bind · render law
   ---
-  duration_ms: 2.087
+  duration_ms: 2.1673
   type: 'suite'
   ...
 # Subtest: Map properties
     # Subtest: empty list returns identity
     ok 1 - empty list returns identity
       ---
-      duration_ms: 4.5117
+      duration_ms: 2.9958
       type: 'test'
       ...
     # Subtest: single item renders without separator
     ok 2 - single item renders without separator
       ---
-      duration_ms: 0.93
+      duration_ms: 0.964
       type: 'test'
       ...
     # Subtest: map with identity mapFn produces join of individually bound items
     ok 3 - map with identity mapFn produces join of individually bound items
       ---
-      duration_ms: 1.197
+      duration_ms: 2.4932
       type: 'test'
       ...
     # Subtest: map with separator is equivalent to join of references
     ok 4 - map with separator is equivalent to join of references
       ---
-      duration_ms: 1.7069
+      duration_ms: 1.4427
       type: 'test'
       ...
     1..4
 ok 7 - Map properties
   ---
-  duration_ms: 8.9459
+  duration_ms: 8.2935
   type: 'suite'
   ...
 # Subtest: Join monoidal properties
     # Subtest: join of empty list is zt.empty
     ok 1 - join of empty list is zt.empty
       ---
-      duration_ms: 0.3446
+      duration_ms: 0.3203
       type: 'test'
       ...
     # Subtest: join of a single element list returns that element
     ok 2 - join of a single element list returns that element
       ---
-      duration_ms: 1.378
+      duration_ms: 2.4422
       type: 'test'
       ...
     # Subtest: join of list with default separator (identity) composes without gaps
     ok 3 - join of list with default separator (identity) composes without gaps
       ---
-      duration_ms: 0.6213
+      duration_ms: 0.6221
       type: 'test'
       ...
     1..3
 ok 8 - Join monoidal properties
   ---
-  duration_ms: 2.958
+  duration_ms: 3.6583
   type: 'suite'
   ...
 # Subtest: Conditional identity
     # Subtest: zt.if(false, t) is equivalent to zt.empty
     ok 1 - zt.if(false, t) is equivalent to zt.empty
       ---
-      duration_ms: 7.7742
+      duration_ms: 1.6664
       type: 'test'
       ...
     # Subtest: zt.if(true, t) yields t
     ok 2 - zt.if(true, t) yields t
       ---
-      duration_ms: 1.5165
+      duration_ms: 9.8068
       type: 'test'
       ...
     1..2
 ok 9 - Conditional identity
   ---
-  duration_ms: 10.8576
+  duration_ms: 11.757
   type: 'suite'
   ...
 # Subtest: Opaque runtime identity
     # Subtest: zt.opaque preserves the same rendered output
     ok 1 - zt.opaque preserves the same rendered output
       ---
-      duration_ms: 2.8925
+      duration_ms: 1.1888
       type: 'test'
       ...
     # Subtest: opaque renderable can still be used in composition
     ok 2 - opaque renderable can still be used in composition
       ---
-      duration_ms: 1.7322
+      duration_ms: 0.6493
       type: 'test'
       ...
     1..2
 ok 10 - Opaque runtime identity
   ---
-  duration_ms: 5.3037
+  duration_ms: 2.0906
   type: 'suite'
   ...
 # Subtest: zt.unsafe
     # Subtest: embeds validated value as static string, not in values
     ok 1 - embeds validated value as static string, not in values
       ---
-      duration_ms: 5.8846
+      duration_ms: 7.7844
       type: 'test'
       ...
     # Subtest: fails at creation time if value fails schema validation
     ok 2 - fails at creation time if value fails schema validation
       ---
-      duration_ms: 2.1762
+      duration_ms: 2.0232
       type: 'test'
       ...
     # Subtest: accepts other primitive types (number, boolean)
     ok 3 - accepts other primitive types (number, boolean)
       ---
-      duration_ms: 1.6212
+      duration_ms: 0.9384
       type: 'test'
       ...
     # Subtest: is structural - value never appears in the values array of parent
     ok 4 - is structural - value never appears in the values array of parent
       ---
-      duration_ms: 1.1797
+      duration_ms: 1.3391
       type: 'test'
       ...
     # Subtest: can be used inside conditional or mapped contexts
     ok 5 - can be used inside conditional or mapped contexts
       ---
-      duration_ms: 0.8932
+      duration_ms: 0.9526
       type: 'test'
       ...
     1..5
 ok 11 - zt.unsafe
   ---
-  duration_ms: 14.066
+  duration_ms: 15.8181
   type: 'suite'
   ...
 # Subtest: zt.bind
     # Subtest: fully bound renderable requires no kargs (void input)
     ok 1 - fully bound renderable requires no kargs (void input)
       ---
-      duration_ms: 5.3701
+      duration_ms: 6.7236
       type: 'test'
       ...
     # Subtest: bound renderable can be composed without adding kargs to parent
     ok 2 - bound renderable can be composed without adding kargs to parent
       ---
-      duration_ms: 0.6778
+      duration_ms: 0.7724
       type: 'test'
       ...
     # Subtest: binding with invalid kargs throws at bind time
     ok 3 - binding with invalid kargs throws at bind time
       ---
-      duration_ms: 1.8048
+      duration_ms: 2.0187
       type: 'test'
       ...
     # Subtest: bind produces an IRenderable that is itself bindable
     ok 4 - bind produces an IRenderable that is itself bindable
       ---
-      duration_ms: 0.5794
+      duration_ms: 0.7584
       type: 'test'
       ...
     1..4
 ok 12 - zt.bind
   ---
-  duration_ms: 8.8709
+  duration_ms: 10.7525
   type: 'suite'
   ...
 # Subtest: zt.map
     # Subtest: empty array returns identity (zt.empty)
     ok 1 - empty array returns identity (zt.empty)
       ---
-      duration_ms: 0.5296
+      duration_ms: 0.5749
       type: 'test'
       ...
     # Subtest: single item renders without separator
     ok 2 - single item renders without separator
       ---
-      duration_ms: 1.1102
+      duration_ms: 1.2172
       type: 'test'
       ...
     # Subtest: multiple items with separator join correctly
     ok 3 - multiple items with separator join correctly
       ---
-      duration_ms: 0.7848
+      duration_ms: 0.9149
       type: 'test'
       ...
     # Subtest: validates each mapped item's kargs against the renderable schema
     ok 4 - validates each mapped item's kargs against the renderable schema
       ---
-      duration_ms: 0.8421
+      duration_ms: 0.8498
       type: 'test'
       ...
     1..4
 ok 13 - zt.map
   ---
-  duration_ms: 3.6447
+  duration_ms: 3.9606
   type: 'suite'
   ...
 # Subtest: zt.join
     # Subtest: joins list of renderables with separator
     ok 1 - joins list of renderables with separator
       ---
-      duration_ms: 2.1433
+      duration_ms: 2.091
       type: 'test'
       ...
     # Subtest: joins list of primitives using separator (zt.join on any[])
     ok 2 - joins list of primitives using separator (zt.join on any[])
       ---
-      duration_ms: 0.4833
+      duration_ms: 0.5417
       type: 'test'
       ...
     # Subtest: empty list returns identity
     ok 3 - empty list returns identity
       ---
-      duration_ms: 0.2505
+      duration_ms: 0.2603
       type: 'test'
       ...
     1..3
 ok 14 - zt.join
   ---
-  duration_ms: 3.2132
+  duration_ms: 3.4034
   type: 'suite'
   ...
 # Subtest: zt.if
     # Subtest: true condition yields the template
     ok 1 - true condition yields the template
       ---
-      duration_ms: 0.4141
+      duration_ms: 0.4632
       type: 'test'
       ...
     # Subtest: false condition yields empty identity
     ok 2 - false condition yields empty identity
       ---
-      duration_ms: 0.2537
+      duration_ms: 0.2688
       type: 'test'
       ...
     # Subtest: truthy non-boolean values treated as true
     ok 3 - truthy non-boolean values treated as true
       ---
-      duration_ms: 0.2225
+      duration_ms: 0.2553
       type: 'test'
       ...
     # Subtest: falsy values (null, undefined, 0) yield identity
     ok 4 - falsy values (null, undefined, 0) yield identity
       ---
-      duration_ms: 0.276
+      duration_ms: 0.2911
       type: 'test'
       ...
     1..4
 ok 15 - zt.if
   ---
-  duration_ms: 1.5141
+  duration_ms: 1.6602
   type: 'suite'
   ...
 # Subtest: zt.match
     # Subtest: routes to correct branch based on discriminator
     ok 1 - routes to correct branch based on discriminator
       ---
-      duration_ms: 3.8527
+      duration_ms: 4.069
       type: 'test'
       ...
     # Subtest: lose schema: extra keys from other branches are not rejected
     ok 2 - lose schema: extra keys from other branches are not rejected
       ---
-      duration_ms: 0.8419
+      duration_ms: 0.8191
       type: 'test'
       ...
     # Subtest: missing required kargs for the matched branch throws
     ok 3 - missing required kargs for the matched branch throws
       ---
-      duration_ms: 0.8437
+      duration_ms: 0.8324
       type: 'test'
       ...
     # Subtest: invalid discriminator throws
     ok 4 - invalid discriminator throws
       ---
-      duration_ms: 0.6541
+      duration_ms: 0.7252
       type: 'test'
       ...
     # Subtest: nested match via selector returns inner renderable correctly
     ok 5 - nested match via selector returns inner renderable correctly
       ---
-      duration_ms: 6.7898
+      duration_ms: 6.4415
       type: 'test'
       ...
     1..5
 ok 16 - zt.match
   ---
-  duration_ms: 13.5005
+  duration_ms: 13.3917
   type: 'suite'
   ...
 # Subtest: zt.opaque
     # Subtest: renders identical content to the original renderable
     ok 1 - renders identical content to the original renderable
       ---
-      duration_ms: 1.1874
+      duration_ms: 1.1396
       type: 'test'
       ...
     # Subtest: opaque hides the output type at TS level but preserves runtime behavior
     ok 2 - opaque hides the output type at TS level but preserves runtime behavior
       ---
-      duration_ms: 0.4827
+      duration_ms: 0.4301
       type: 'test'
       ...
     1..2
 ok 17 - zt.opaque
   ---
-  duration_ms: 1.9319
+  duration_ms: 1.7946
   type: 'suite'
   ...
 # Subtest: Structural vs values boundary
     # Subtest: user-supplied primitive values are never concatenated into string segments
     ok 1 - user-supplied primitive values are never concatenated into string segments
       ---
-      duration_ms: 1.1916
+      duration_ms: 1.2336
       type: 'test'
       ...
     # Subtest: zt.unsafe injects validated content as static, not as a value
     ok 2 - zt.unsafe injects validated content as static, not as a value
       ---
-      duration_ms: 1.143
+      duration_ms: 0.8835
       type: 'test'
       ...
     # Subtest: nested renderable structure is flattened, but dynamic parts become values
     ok 3 - nested renderable structure is flattened, but dynamic parts become values
       ---
-      duration_ms: 1.5851
+      duration_ms: 2.2113
       type: 'test'
       ...
     1..3
 ok 18 - Structural vs values boundary
   ---
-  duration_ms: 4.2712
+  duration_ms: 5.7881
   type: 'suite'
   ...
 # Subtest: Schema composition edge cases
     # Subtest: two sibling zt.z with same key and compatible schema intersect gracefully
     ok 1 - two sibling zt.z with same key and compatible schema intersect gracefully
       ---
-      duration_ms: 3.7518
+      duration_ms: 3.7734
       type: 'test'
       ...
     # Subtest: sibling zt.z with conflicting types cause validation failure
     ok 2 - sibling zt.z with conflicting types cause validation failure
       ---
-      duration_ms: 3.3178
+      duration_ms: 3.6615
       type: 'test'
       ...
     # Subtest: scoped parameter (zt.p) merges schema under namespace
     ok 3 - scoped parameter (zt.p) merges schema under namespace
       ---
-      duration_ms: 2.4874
+      duration_ms: 2.666
       type: 'test'
       ...
     # Subtest: unscoped renderable schema merges with zt.z parent schema
     ok 4 - unscoped renderable schema merges with zt.z parent schema
       ---
-      duration_ms: 1.8701
+      duration_ms: 2.0929
       type: 'test'
       ...
     1..4
 ok 19 - Schema composition edge cases
   ---
-  duration_ms: 11.9939
+  duration_ms: 12.6024
   type: 'suite'
   ...
 # Subtest: zt.join with parameterised separator
     # Subtest: separator collects its own kargs and merges with item kargs
     ok 1 - separator collects its own kargs and merges with item kargs
       ---
-      duration_ms: 8.5886
+      duration_ms: 9.9734
       type: 'test'
       ...
     # Subtest: separator kargs are required during rendering
     ok 2 - separator kargs are required during rendering
       ---
-      duration_ms: 5.5385
+      duration_ms: 6.0103
       type: 'test'
       ...
     # Subtest: separator kargs are part of the parent renderable kargs type
     ok 3 - separator kargs are part of the parent renderable kargs type
       ---
-      duration_ms: 1.7909
+      duration_ms: 1.4366
       type: 'test'
       ...
     1..3
 ok 20 - zt.join with parameterised separator
   ---
-  duration_ms: 18.1443
+  duration_ms: 19.8762
   type: 'suite'
   ...
 # Subtest: zt.match under strict/strip parents
     # Subtest: strict parent rejects extra keys from non-selected branch
     ok 1 - strict parent rejects extra keys from non-selected branch
       ---
-      duration_ms: 3.2898
+      duration_ms: 1.9669
       type: 'test'
       ...
     # Subtest: strict parent allows only keys required by selected branch (no extras)
     ok 2 - strict parent allows only keys required by selected branch (no extras)
       ---
-      duration_ms: 1.3991
+      duration_ms: 1.3452
       type: 'test'
       ...
     # Subtest: strip parent silently removes extra keys from non-selected branch
     ok 3 - strip parent silently removes extra keys from non-selected branch
       ---
-      duration_ms: 4.0339
+      duration_ms: 1.9742
       type: 'test'
       ...
     # Subtest: strip parent still enforces required keys of selected branch
     ok 4 - strip parent still enforces required keys of selected branch
       ---
-      duration_ms: 0.9874
+      duration_ms: 1.0299
       type: 'test'
       ...
     1..4
 ok 21 - zt.match under strict/strip parents
   ---
-  duration_ms: 10.3329
+  duration_ms: 6.7363
   type: 'suite'
   ...
 # Subtest: zt.bind with extra keys on loose schema
     # Subtest: bind succeeds when extra keys are present (loose schema)
     ok 1 - bind succeeds when extra keys are present (loose schema)
       ---
-      duration_ms: 1.0172
+      duration_ms: 1.041
       type: 'test'
       ...
     # Subtest: composing the bound renderable still isolates the extra key
     ok 2 - composing the bound renderable still isolates the extra key
       ---
-      duration_ms: 0.7149
+      duration_ms: 0.7327
       type: 'test'
       ...
     1..2
 ok 22 - zt.bind with extra keys on loose schema
   ---
-  duration_ms: 1.9335
+  duration_ms: 1.9851
   type: 'suite'
   ...
 # Subtest: nested zt.if within zt.map
     # Subtest: conditionally renders items based on a predicate inside map
     ok 1 - conditionally renders items based on a predicate inside map
       ---
-      duration_ms: 1.3576
+      duration_ms: 1.3907
       type: 'test'
       ...
     # Subtest: mapFn returning zt.if(false, item) removes the item entirely
     ok 2 - mapFn returning zt.if(false, item) removes the item entirely
       ---
-      duration_ms: 3.1573
+      duration_ms: 2.9402
       type: 'test'
       ...
     # Subtest: zt.if inside zt.map with varying schemas can still merge
     ok 3 - zt.if inside zt.map with varying schemas can still merge
       ---
-      duration_ms: 5.2551
+      duration_ms: 12.3995
       type: 'test'
       ...
     1..3
 ok 23 - nested zt.if within zt.map
   ---
-  duration_ms: 10.0675
+  duration_ms: 17.0524
   type: 'suite'
   ...
 # Subtest: zt.match single-branch output type
     # Subtest: renders the single branch correctly
     ok 1 - renders the single branch correctly
       ---
-      duration_ms: 2.1446
+      duration_ms: 2.6858
       type: 'test'
       ...
     # Subtest: output type is the branchs output (not a union with never)
     ok 2 - output type is the branchs output (not a union with never)
       ---
-      duration_ms: 0.4965
+      duration_ms: 0.7309
       type: 'test'
       ...
     1..2
 ok 24 - zt.match single-branch output type
   ---
-  duration_ms: 2.8765
+  duration_ms: 3.6989
   type: 'suite'
   ...
 # Subtest: Static templates
     # Subtest: zt.t with no interpolations → single string, no values
     ok 1 - zt.t with no interpolations → single string, no values
       ---
-      duration_ms: 4.3865
+      duration_ms: 3.9856
       type: 'test'
       ...
     # Subtest: zt.t with only static text (multiple lines)
     ok 2 - zt.t with only static text (multiple lines)
       ---
-      duration_ms: 0.3613
+      duration_ms: 0.4106
       type: 'test'
       ...
     # Subtest: render() has stable output
     ok 3 - render() has stable output
       ---
-      duration_ms: 0.3253
+      duration_ms: 1.2274
       type: 'test'
       ...
     # Subtest: zod-tag identity (zt.empty) renders to empty string
     ok 4 - zod-tag identity (zt.empty) renders to empty string
       ---
-      duration_ms: 3.121
+      duration_ms: 0.3107
       type: 'test'
       ...
     1..4
 ok 25 - Static templates
   ---
-  duration_ms: 11.1157
+  duration_ms: 8.1705
   type: 'suite'
   ...
 # Subtest: Primitive value interpolation
     # Subtest: produces correct strings and values arrays
     ok 1 - produces correct strings and values arrays
       ---
-      duration_ms: 0.545
+      duration_ms: 0.4839
       type: 'test'
       ...
     # Subtest: primitive values are not structurally part of strings
     ok 2 - primitive values are not structurally part of strings
       ---
-      duration_ms: 0.3891
+      duration_ms: 0.3244
       type: 'test'
       ...
     # Subtest: supports boolean and null
     ok 3 - supports boolean and null
       ---
-      duration_ms: 0.5486
+      duration_ms: 0.6471
       type: 'test'
       ...
     # Subtest: supports undefined as a value
     ok 4 - supports undefined as a value
       ---
-      duration_ms: 0.4343
+      duration_ms: 0.5507
       type: 'test'
       ...
     # Subtest: adjacent primitive values create empty string boundaries
     ok 5 - adjacent primitive values create empty string boundaries
       ---
-      duration_ms: 0.42
+      duration_ms: 0.6008
       type: 'test'
       ...
     1..5
 ok 26 - Primitive value interpolation
   ---
-  duration_ms: 3.9588
+  duration_ms: 3.1193
   type: 'suite'
   ...
 # Subtest: Selector functions (kargs)
     # Subtest: selector can return a renderable (composed inside)
     ok 1 - selector can return a renderable (composed inside)
       ---
-      duration_ms: 1.3453
+      duration_ms: 1.5062
       type: 'test'
       ...
     1..1
 ok 27 - Selector functions (kargs)
   ---
-  duration_ms: 1.5475
+  duration_ms: 1.7301
   type: 'suite'
   ...
 # Subtest: Inline Zod schemas
     # Subtest: z.object({...}) validates and unwraps value
     ok 1 - z.object({...}) validates and unwraps value
       ---
-      duration_ms: 3.0667
+      duration_ms: 2.4363
       type: 'test'
       ...
     # Subtest: z.codec() as inline schema validates string value directly
     ok 2 - z.codec() as inline schema validates string value directly
       ---
-      duration_ms: 4.196
+      duration_ms: 3.1926
       type: 'test'
       ...
     # Subtest: inline schema validation failure throws InterpolationError
     ok 3 - inline schema validation failure throws InterpolationError
       ---
-      duration_ms: 4.4596
+      duration_ms: 4.7863
       type: 'test'
       ...
     # Subtest: multiple inline schemas with different keys merges kargs
     ok 4 - multiple inline schemas with different keys merges kargs
       ---
-      duration_ms: 1.7051
+      duration_ms: 1.6554
       type: 'test'
       ...
     1..4
 ok 28 - Inline Zod schemas
   ---
-  duration_ms: 16.329
+  duration_ms: 15.6132
   type: 'suite'
   ...
 # Subtest: zt.p - scoped parameters
     # Subtest: zt.p with schema scopes under name and transforms
     ok 1 - zt.p with schema scopes under name and transforms
       ---
-      duration_ms: 2.5366
+      duration_ms: 5.0548
       type: 'test'
       ...
     # Subtest: zt.p with renderable scopes its kargs
     ok 2 - zt.p with renderable scopes its kargs
       ---
-      duration_ms: 2.0656
+      duration_ms: 1.9327
       type: 'test'
       ...
     # Subtest: zt.p with schema and no transform uses identity
     ok 3 - zt.p with schema and no transform uses identity
       ---
-      duration_ms: 1.6016
+      duration_ms: 1.64
       type: 'test'
       ...
     # Subtest: zt.p with schema validation fails
     ok 4 - zt.p with schema validation fails
       ---
-      duration_ms: 1.8208
+      duration_ms: 3.6171
       type: 'test'
       ...
     # Subtest: multiple zt.p with different names compose
     ok 5 - multiple zt.p with different names compose
       ---
-      duration_ms: 2.1365
+      duration_ms: 3.183
       type: 'test'
       ...
     1..5
 ok 29 - zt.p - scoped parameters
   ---
-  duration_ms: 10.6462
+  duration_ms: 15.9225
   type: 'suite'
   ...
 # Subtest: Nested renderable composition
     # Subtest: nested renderable is flattened into parent strings
     ok 1 - nested renderable is flattened into parent strings
       ---
-      duration_ms: 1.3516
+      duration_ms: 1.3688
       type: 'test'
       ...
     # Subtest: nested renderable with its own kargs requires those kargs at parent
     ok 2 - nested renderable with its own kargs requires those kargs at parent
       ---
-      duration_ms: 1.4864
+      duration_ms: 1.3656
       type: 'test'
       ...
     # Subtest: schema from nested renderable is merged into parent schema
     ok 3 - schema from nested renderable is merged into parent schema
       ---
-      duration_ms: 0.8792
+      duration_ms: 0.9494
       type: 'test'
       ...
     # Subtest: two nested renderables with overlapping kargs merge schemas
     ok 4 - two nested renderables with overlapping kargs merge schemas
       ---
-      duration_ms: 2.2765
+      duration_ms: 2.593
       type: 'test'
       ...
     # Subtest: deeply nested renderables (3 levels) compose correctly
     ok 5 - deeply nested renderables (3 levels) compose correctly
       ---
-      duration_ms: 2.3272
+      duration_ms: 3.0425
       type: 'test'
       ...
     # Subtest: nested renderable can be rendered standalone and still works when nested
     ok 6 - nested renderable can be rendered standalone and still works when nested
       ---
-      duration_ms: 0.9912
+      duration_ms: 0.8915
       type: 'test'
       ...
     1..6
 ok 30 - Nested renderable composition
   ---
-  duration_ms: 9.8767
+  duration_ms: 10.7699
   type: 'suite'
   ...
 # Subtest: Schema validation
     # Subtest: zt.z with shape enforces kargs
     ok 1 - zt.z with shape enforces kargs
       ---
-      duration_ms: 2.5749
+      duration_ms: 2.5785
       type: 'test'
       ...
     # Subtest: zt.z with shape uses defaults
     ok 2 - zt.z with shape uses defaults
       ---
-      duration_ms: 1.7033
+      duration_ms: 5.6249
       type: 'test'
       ...
     # Subtest: schema intersection when two zt.z are composed
     ok 3 - schema intersection when two zt.z are composed
       ---
-      duration_ms: 2.9308
+      duration_ms: 3.1859
       type: 'test'
       ...
     # Subtest: schema with transform works
     ok 4 - schema with transform works
       ---
-      duration_ms: 2.3592
+      duration_ms: 7.7849
       type: 'test'
       ...
     1..4
 ok 31 - Schema validation
   ---
-  duration_ms: 10.0073
+  duration_ms: 19.5495
   type: 'suite'
   ...
 # Subtest: Output structure edges
     # Subtest: template with only a leading value
     ok 1 - template with only a leading value
       ---
-      duration_ms: 0.58
+      duration_ms: 0.605
       type: 'test'
       ...
     # Subtest: template with only a trailing value
     ok 2 - template with only a trailing value
       ---
-      duration_ms: 0.4056
+      duration_ms: 0.4417
       type: 'test'
       ...
     # Subtest: template with only edge values
     ok 3 - template with only edge values
       ---
-      duration_ms: 0.5633
+      duration_ms: 0.4065
       type: 'test'
       ...
     # Subtest: template with only one value surrounded by nothing
     ok 4 - template with only one value surrounded by nothing
       ---
-      duration_ms: 0.4555
+      duration_ms: 0.4277
       type: 'test'
       ...
     # Subtest: mixed static and dynamic spaces
     ok 5 - mixed static and dynamic spaces
       ---
-      duration_ms: 0.3992
+      duration_ms: 0.5806
       type: 'test'
       ...
     # Subtest: zt.debug() produces expected concatenation
     ok 6 - zt.debug() produces expected concatenation
       ---
-      duration_ms: 0.3212
+      duration_ms: 0.4817
       type: 'test'
       ...
     # Subtest: zt.$n replaces values with $0... placeholders
     ok 7 - zt.$n replaces values with $0... placeholders
       ---
-      duration_ms: 0.3193
+      duration_ms: 0.4643
       type: 'test'
       ...
     # Subtest: zt.atIndex replaces with @0...
     ok 8 - zt.atIndex replaces with @0...
       ---
-      duration_ms: 0.7983
+      duration_ms: 0.4731
       type: 'test'
       ...
     1..8
 ok 32 - Output structure edges
   ---
-  duration_ms: 4.4513
+  duration_ms: 4.5013
   type: 'suite'
   ...
 # Subtest: Pre-compilation guarantees
     # Subtest: nested renderables are compiled only once (immutable strings/values)
     ok 1 - nested renderables are compiled only once (immutable strings/values)
       ---
-      duration_ms: 0.6463
+      duration_ms: 1.2482
       type: 'test'
       ...
     # Subtest: schema of nested renderable is merged into parent at creation time, not render time
     ok 2 - schema of nested renderable is merged into parent at creation time, not render time
       ---
-      duration_ms: 1.9951
+      duration_ms: 1.8308
       type: 'test'
       ...
     1..2
 ok 33 - Pre-compilation guarantees
   ---
-  duration_ms: 3.039
+  duration_ms: 3.712
   type: 'suite'
   ...
 # Subtest: Low-level API
     # Subtest: createRenderable works directly
     ok 1 - createRenderable works directly
       ---
-      duration_ms: 0.603
+      duration_ms: 1.8636
       type: 'test'
       ...
     # Subtest: interpolate can process a renderable with kargs
     ok 2 - interpolate can process a renderable with kargs
       ---
-      duration_ms: 0.6138
+      duration_ms: 0.5475
       type: 'test'
       ...
     # Subtest: createRenderable with schema validates
     ok 3 - createRenderable with schema validates
       ---
-      duration_ms: 3.524
+      duration_ms: 1.5957
       type: 'test'
       ...
     # Subtest: createRenderable with nested renderable pre-compiles
     ok 4 - createRenderable with nested renderable pre-compiles
       ---
-      duration_ms: 1.1508
+      duration_ms: 0.9366
       type: 'test'
       ...
     1..4
 ok 34 - Low-level API
   ---
-  duration_ms: 6.4151
+  duration_ms: 5.5193
   type: 'suite'
   ...
-# 'creating 10k static renderables uses bounded memory': delta 124536 B
-# 'rendering the same template repeatedly does not leak memory': delta 162000 B
-# 'large flat template with 10k values uses memory proportional to output size': growth -64256 B
+# 'creating 10k static renderables uses bounded memory': delta 134040 B
+# 'rendering the same template repeatedly does not leak memory': delta 162696 B
+# 'large flat template with 10k values uses memory proportional to output size': growth -66024 B
 # Subtest: Memory footprint
     # Subtest: creating 10k static renderables uses bounded memory
     ok 1 - creating 10k static renderables uses bounded memory
       ---
-      duration_ms: 566.6717
+      duration_ms: 668.6992
       type: 'test'
       ...
     # Subtest: rendering the same template repeatedly does not leak memory
     ok 2 - rendering the same template repeatedly does not leak memory
       ---
-      duration_ms: 60.2718
+      duration_ms: 69.1494
       type: 'test'
       ...
     # Subtest: large flat template with 10k values uses memory proportional to output size
     ok 3 - large flat template with 10k values uses memory proportional to output size
       ---
-      duration_ms: 441.7097
+      duration_ms: 448.0685
       type: 'test'
       ...
     1..3
 ok 35 - Memory footprint
   ---
-  duration_ms: 1070.8476
+  duration_ms: 1187.9773
   type: 'suite'
   ...
 # Subtest: zt.match - basic routing
     # Subtest: routes to the correct branch based on discriminator
     ok 1 - routes to the correct branch based on discriminator
       ---
-      duration_ms: 12.1733
+      duration_ms: 9.8998
       type: 'test'
       ...
     1..1
 ok 36 - zt.match - basic routing
   ---
-  duration_ms: 14.7945
+  duration_ms: 11.8412
   type: 'suite'
   ...
 # Subtest: zt.match - loose schema allows extra keys
     # Subtest: extra keys from another branch do not cause validation errors
     ok 1 - extra keys from another branch do not cause validation errors
       ---
-      duration_ms: 1.8313
+      duration_ms: 1.9485
       type: 'test'
       ...
     # Subtest: extra key not used by any branch is also allowed (loose)
     ok 2 - extra key not used by any branch is also allowed (loose)
       ---
-      duration_ms: 0.6246
+      duration_ms: 0.6093
       type: 'test'
       ...
     # Subtest: missing required key for selected branch still fails
     ok 3 - missing required key for selected branch still fails
       ---
-      duration_ms: 2.8088
+      duration_ms: 2.8103
       type: 'test'
       ...
     # Subtest: invalid discriminator value fails
     ok 4 - invalid discriminator value fails
       ---
-      duration_ms: 0.9159
+      duration_ms: 0.6925
       type: 'test'
       ...
     1..4
 ok 37 - zt.match - loose schema allows extra keys
   ---
-  duration_ms: 6.6537
+  duration_ms: 6.5236
   type: 'suite'
   ...
 # Subtest: zt.match - direct nesting
     # Subtest: outer discriminator routes to pending
     ok 1 - outer discriminator routes to pending
       ---
-      duration_ms: 1.1922
+      duration_ms: 0.7649
       type: 'test'
       ...
     # Subtest: outer discriminator routes to inner match (paid → cash)
     ok 2 - outer discriminator routes to inner match (paid → cash)
       ---
-      duration_ms: 1.4305
+      duration_ms: 1.6225
       type: 'test'
       ...
     # Subtest: outer discriminator routes to inner match (paid → card) with extra last4
     ok 3 - outer discriminator routes to inner match (paid → card) with extra last4
       ---
-      duration_ms: 1.4163
+      duration_ms: 1.5124
       type: 'test'
       ...
     # Subtest: missing required key for inner branch fails
     ok 4 - missing required key for inner branch fails
       ---
-      duration_ms: 0.8623
+      duration_ms: 1.6036
       type: 'test'
       ...
     1..4
 ok 38 - zt.match - direct nesting
   ---
-  duration_ms: 5.3301
+  duration_ms: 5.932
   type: 'suite'
   ...
 # Subtest: zt.match - varying shapes
     # Subtest: each branch uses only its own kargs
     ok 1 - each branch uses only its own kargs
       ---
-      duration_ms: 5.0914
+      duration_ms: 4.7228
       type: 'test'
       ...
     # Subtest: validation still rejects branch-specific constraints
     ok 2 - validation still rejects branch-specific constraints
       ---
-      duration_ms: 6.5272
+      duration_ms: 0.9551
       type: 'test'
       ...
     # Subtest: branch-specific constraints are not applied to other branches
     ok 3 - branch-specific constraints are not applied to other branches
       ---
-      duration_ms: 1.3242
+      duration_ms: 1.0883
       type: 'test'
       ...
     1..3
 ok 39 - zt.match - varying shapes
   ---
-  duration_ms: 13.3743
+  duration_ms: 10.8796
   type: 'suite'
   ...
 # Subtest: zt.match inside zt.p
     # Subtest: scoped match uses nested kargs
     ok 1 - scoped match uses nested kargs
       ---
-      duration_ms: 2.5536
+      duration_ms: 2.6782
       type: 'test'
       ...
     # Subtest: scoped match with a more complex branch
     ok 2 - scoped match with a more complex branch
       ---
-      duration_ms: 1.7561
+      duration_ms: 1.8934
       type: 'test'
       ...
     # Subtest: scoped match validation failures propagate
     ok 3 - scoped match validation failures propagate
       ---
-      duration_ms: 1.0089
+      duration_ms: 1.2962
       type: 'test'
       ...
     1..3
 ok 40 - zt.match inside zt.p
   ---
-  duration_ms: 5.6648
+  duration_ms: 6.3934
   type: 'suite'
   ...
 # Subtest: zt.match with map/join/if
     # Subtest: map over array of match inputs
     ok 1 - map over array of match inputs
       ---
-      duration_ms: 4.2156
+      duration_ms: 3.7212
       type: 'test'
       ...
     # Subtest: join two match renderables
     ok 2 - join two match renderables
       ---
-      duration_ms: 2.2995
+      duration_ms: 2.3754
       type: 'test'
       ...
     # Subtest: conditional branch returning match renderable
     ok 3 - conditional branch returning match renderable
       ---
-      duration_ms: 1.5295
+      duration_ms: 3.3427
       type: 'test'
       ...
     1..3
 ok 41 - zt.match with map/join/if
   ---
-  duration_ms: 8.3885
+  duration_ms: 9.8743
   type: 'suite'
   ...
 # Subtest: zt.match - error handling
     # Subtest: single branch match works
     ok 1 - single branch match works
       ---
-      duration_ms: 2.5186
+      duration_ms: 5.2281
       type: 'test'
       ...
     # Subtest: discriminator must be present in kargs
     ok 2 - discriminator must be present in kargs
       ---
-      duration_ms: 1.5054
+      duration_ms: 1.4449
       type: 'test'
       ...
     1..2
 ok 42 - zt.match - error handling
   ---
-  duration_ms: 7.6821
+  duration_ms: 6.9602
   type: 'suite'
   ...
 # Subtest: Creation performance
     # Subtest: creates 1000 tiny static renderables < 50ms
     ok 1 - creates 1000 tiny static renderables < 50ms
       ---
-      duration_ms: 11.4143
+      duration_ms: 12.7901
       type: 'test'
       ...
     # Subtest: creates many tiny static renderables quickly (5000x < 50ms)
     ok 2 - creates many tiny static renderables quickly (5000x < 50ms)
       ---
-      duration_ms: 18.849
+      duration_ms: 22.585
       type: 'test'
       ...
     # Subtest: creates renderables with many primitive values (flat, no nesting)
     ok 3 - creates renderables with many primitive values (flat, no nesting)
       ---
-      duration_ms: 3.5173
+      duration_ms: 2.9819
       type: 'test'
       ...
     # Subtest: creates deeply nested static renderables (100 levels) without explosion
     ok 4 - creates deeply nested static renderables (100 levels) without explosion
       ---
-      duration_ms: 10.4591
+      duration_ms: 11.105
       type: 'test'
       ...
     # Subtest: creates deeply nested dynamic renderables (100 levels) without explosion
     ok 5 - creates deeply nested dynamic renderables (100 levels) without explosion
       ---
-      duration_ms: 16.8425
+      duration_ms: 9.2624
       type: 'test'
       ...
     # Subtest: zt.map over 250 items creates quickly (< 50ms
     ok 6 - zt.map over 250 items creates quickly (< 50ms
       ---
-      duration_ms: 33.2852
+      duration_ms: 35.6135
       type: 'test'
       ...
     # Subtest: zt.map over 250 items creates and render quickly (< 50ms
     ok 7 - zt.map over 250 items creates and render quickly (< 50ms
       ---
-      duration_ms: 19.9752
+      duration_ms: 25.2993
       type: 'test'
       ...
     # Subtest: zt.map over 500 items creates quickly (< 50ms
     ok 8 - zt.map over 500 items creates quickly (< 50ms
       ---
-      duration_ms: 36.9011
+      duration_ms: 43.4745
       type: 'test'
       ...
     # Subtest: zt.map over 500 items creates and render quickly (< 100ms
     ok 9 - zt.map over 500 items creates and render quickly (< 100ms
       ---
-      duration_ms: 66.1794
+      duration_ms: 43.367
       type: 'test'
       ...
     1..9
 ok 43 - Creation performance
   ---
-  duration_ms: 220.3423
+  duration_ms: 209.078
   type: 'suite'
   ...
 # Subtest: Rendering performance
     # Subtest: renders a large flat template with many primitive values quickly
     ok 1 - renders a large flat template with many primitive values quickly
       ---
-      duration_ms: 1.4329
+      duration_ms: 4.824
       type: 'test'
       ...
     # Subtest: rendering pre-compiled nested structures is fast (flattened at creation)
     ok 2 - rendering pre-compiled nested structures is fast (flattened at creation)
       ---
-      duration_ms: 19.4804
+      duration_ms: 13.9112
       type: 'test'
       ...
     # Subtest: render performance scales roughly linearly with value count
     ok 3 - render performance scales roughly linearly with value count
       ---
-      duration_ms: 1.8727
+      duration_ms: 1.4645
       type: 'test'
       ...
     # Subtest: repeated renders are stable (no memory leak or degradation)
     ok 4 - repeated renders are stable (no memory leak or degradation)
       ---
-      duration_ms: 14.9312
+      duration_ms: 13.7343
       type: 'test'
       ...
     1..4
 ok 44 - Rendering performance
   ---
-  duration_ms: 38.0678
+  duration_ms: 34.3274
   type: 'suite'
   ...
 # Subtest: Large-data handling
     # Subtest: zt.join with 1000 renderables and separator completes
     ok 1 - zt.join with 1000 renderables and separator completes
       ---
-      duration_ms: 410.5301
+      duration_ms: 500.929
       type: 'test'
       ...
     # Subtest: zt.match with many branches (50) creates and renders quickly
     ok 2 - zt.match with many branches (50) creates and renders quickly
       ---
-      duration_ms: 18.7013
+      duration_ms: 11.3695
       type: 'test'
       ...
     # Subtest: creates renderable with many scoped parameters (zt.p) without slowdown
     ok 3 - creates renderable with many scoped parameters (zt.p) without slowdown
       ---
-      duration_ms: 117.4226
+      duration_ms: 124.1542
       type: 'test'
       ...
     1..3
 ok 45 - Large-data handling
   ---
-  duration_ms: 546.904
+  duration_ms: 636.7014
   type: 'suite'
   ...
 # Subtest: Schema Strategies (strict/strip/loose)
@@ -3703,113 +4517,113 @@ ok 45 - Large-data handling
         # Subtest: rejects extra top-level keys
         ok 1 - rejects extra top-level keys
           ---
-          duration_ms: 6.0723
+          duration_ms: 6.0549
           type: 'test'
           ...
         # Subtest: allows required keys and produces correct output
         ok 2 - allows required keys and produces correct output
           ---
-          duration_ms: 4.1148
+          duration_ms: 2.7941
           type: 'test'
           ...
         # Subtest: rejects missing required keys
         ok 3 - rejects missing required keys
           ---
-          duration_ms: 1.104
+          duration_ms: 12.1308
           type: 'test'
           ...
         1..3
     ok 1 - zt.z.strict
       ---
-      duration_ms: 13.1934
+      duration_ms: 22.6794
       type: 'suite'
       ...
     # Subtest: zt.z.strip
         # Subtest: strips extra keys silently
         ok 1 - strips extra keys silently
           ---
-          duration_ms: 0.7732
+          duration_ms: 2.0376
           type: 'test'
           ...
         # Subtest: required keys still work
         ok 2 - required keys still work
           ---
-          duration_ms: 0.6416
+          duration_ms: 0.3643
           type: 'test'
           ...
         1..2
     ok 2 - zt.z.strip
       ---
-      duration_ms: 1.7114
+      duration_ms: 2.6872
       type: 'suite'
       ...
     # Subtest: zt.z (default loose)
         # Subtest: allows extra keys
         ok 1 - allows extra keys
           ---
-          duration_ms: 1.2611
+          duration_ms: 0.9431
           type: 'test'
           ...
         1..1
     ok 3 - zt.z (default loose)
       ---
-      duration_ms: 1.4701
+      duration_ms: 1.1242
       type: 'suite'
       ...
     # Subtest: with zt.p (scoped)
         # Subtest: strict parent does not interfere with scoped child
         ok 1 - strict parent does not interfere with scoped child
           ---
-          duration_ms: 6.0516
+          duration_ms: 5.4884
           type: 'test'
           ...
         # Subtest: strict scoped child rejects extra keys within its scope
         ok 2 - strict scoped child rejects extra keys within its scope
           ---
-          duration_ms: 2.4457
+          duration_ms: 2.2719
           type: 'test'
           ...
         # Subtest: strip scoped child removes extra keys silently
         ok 3 - strip scoped child removes extra keys silently
           ---
-          duration_ms: 2.2878
+          duration_ms: 1.8017
           type: 'test'
           ...
         1..3
     ok 4 - with zt.p (scoped)
       ---
-      duration_ms: 11.2088
+      duration_ms: 9.9197
       type: 'suite'
       ...
     # Subtest: unscoped composition
         # Subtest: strict parent rejects extra keys even if child is loose
         ok 1 - strict parent rejects extra keys even if child is loose
           ---
-          duration_ms: 1.7989
+          duration_ms: 1.9279
           type: 'test'
           ...
         # Subtest: strip parent strips extra keys from unscoped child
         ok 2 - strip parent strips extra keys from unscoped child
           ---
-          duration_ms: 1.547
+          duration_ms: 1.3177
           type: 'test'
           ...
         # Subtest: loose parent allows extra keys from unscoped child
         ok 3 - loose parent allows extra keys from unscoped child
           ---
-          duration_ms: 1.5868
+          duration_ms: 1.4118
           type: 'test'
           ...
         1..3
     ok 5 - unscoped composition
       ---
-      duration_ms: 5.3044
+      duration_ms: 4.9701
       type: 'suite'
       ...
     1..5
 ok 46 - Schema Strategies (strict/strip/loose)
   ---
-  duration_ms: 35.9324
+  duration_ms: 42.763
   type: 'suite'
   ...
 # Subtest: Advanced Schema Strategies
@@ -3817,710 +4631,996 @@ ok 46 - Schema Strategies (strict/strip/loose)
         # Subtest: strict parent - loose scoped child allows extra keys within scope
         ok 1 - strict parent - loose scoped child allows extra keys within scope
           ---
-          duration_ms: 2.0332
+          duration_ms: 1.9256
           type: 'test'
           ...
         # Subtest: strict parent - strict scoped child rejects extra keys within scope
         ok 2 - strict parent - strict scoped child rejects extra keys within scope
           ---
-          duration_ms: 2.1573
+          duration_ms: 2.039
           type: 'test'
           ...
         # Subtest: loose parent - strict scoped child still rejects extra keys inside scope
         ok 3 - loose parent - strict scoped child still rejects extra keys inside scope
           ---
-          duration_ms: 1.6788
+          duration_ms: 1.5372
           type: 'test'
           ...
         # Subtest: strip parent - scoped child with strip strategy removes extra keys inside scope
         ok 4 - strip parent - scoped child with strip strategy removes extra keys inside scope
           ---
-          duration_ms: 1.3228
+          duration_ms: 1.3342
           type: 'test'
           ...
         1..4
     ok 1 - scoped composition (zt.p)
       ---
-      duration_ms: 7.7123
+      duration_ms: 7.3215
       type: 'suite'
       ...
     # Subtest: unscoped composition (direct nesting)
         # Subtest: strict parent rejects extra keys even if child is loose
         ok 1 - strict parent rejects extra keys even if child is loose
           ---
-          duration_ms: 1.6345
+          duration_ms: 1.5268
           type: 'test'
           ...
         # Subtest: strip parent strips extra keys from unscoped child
         ok 2 - strip parent strips extra keys from unscoped child
           ---
-          duration_ms: 1.1937
+          duration_ms: 1.1131
           type: 'test'
           ...
         # Subtest: loose parent allows extra keys from unscoped strict child
         ok 3 - loose parent allows extra keys from unscoped strict child
           ---
-          duration_ms: 2.6196
+          duration_ms: 1.528
           type: 'test'
           ...
         # Subtest: strict parent with two merged children - merged shape must be satisfied without extras
         ok 4 - strict parent with two merged children - merged shape must be satisfied without extras
           ---
-          duration_ms: 3.3135
+          duration_ms: 3.2466
           type: 'test'
           ...
         1..4
     ok 2 - unscoped composition (direct nesting)
       ---
-      duration_ms: 9.2135
+      duration_ms: 7.8536
       type: 'suite'
       ...
     # Subtest: dynamic selectors
         # Subtest: strict parent rejects extra key from dynamic selector because shape is not known at compile time
         ok 1 - strict parent rejects extra key from dynamic selector because shape is not known at compile time
           ---
-          duration_ms: 2.5933
+          duration_ms: 4.301
           type: 'test'
           ...
         # Subtest: loose parent allows dynamic extra keys from selector
         ok 2 - loose parent allows dynamic extra keys from selector
           ---
-          duration_ms: 2.2905
+          duration_ms: 2.4296
           type: 'test'
           ...
-        # Subtest: strip parent silently removes dynamic keys not in compile‑time shape
-        ok 3 - strip parent silently removes dynamic keys not in compile‑time shape
+        # Subtest: strip parent silently removes dynamic keys not in compile-time shape
+        ok 3 - strip parent silently removes dynamic keys not in compile-time shape
           ---
-          duration_ms: 3.8747
+          duration_ms: 2.6759
           type: 'test'
           ...
         # Subtest: dynamic keys work only when the parent is loose
         ok 4 - dynamic keys work only when the parent is loose
           ---
-          duration_ms: 3.39
+          duration_ms: 2.9797
           type: 'test'
           ...
         1..4
     ok 3 - dynamic selectors
       ---
-      duration_ms: 13.3146
+      duration_ms: 15.1094
       type: 'suite'
       ...
     # Subtest: defaults and optionals
         # Subtest: strict parent applies default and does not consider missing key an extra
         ok 1 - strict parent applies default and does not consider missing key an extra
           ---
-          duration_ms: 8.3818
+          duration_ms: 2.3488
           type: 'test'
           ...
         # Subtest: strict parent allows optional key to be absent
         ok 2 - strict parent allows optional key to be absent
           ---
-          duration_ms: 5.0184
+          duration_ms: 4.9481
           type: 'test'
           ...
         # Subtest: strict parent rejects truly unknown extra key
         ok 3 - strict parent rejects truly unknown extra key
           ---
-          duration_ms: 1.4179
+          duration_ms: 3.3247
           type: 'test'
           ...
         1..3
     ok 4 - defaults and optionals
       ---
-      duration_ms: 15.3488
+      duration_ms: 10.9813
       type: 'suite'
       ...
     # Subtest: mixed strategy nesting
         # Subtest: strict root - scoped child loose - nested unscoped child loose inside scoped
         ok 1 - strict root - scoped child loose - nested unscoped child loose inside scoped
           ---
-          duration_ms: 2.9753
+          duration_ms: 2.9277
           type: 'test'
           ...
         # Subtest: strict root - scoped child strict - extra in scope rejected
         ok 2 - strict root - scoped child strict - extra in scope rejected
           ---
-          duration_ms: 5.3551
+          duration_ms: 4.1908
           type: 'test'
           ...
         # Subtest: chain of strict scopes - all extra keys rejected cascade
         ok 3 - chain of strict scopes - all extra keys rejected cascade
           ---
-          duration_ms: 3.7308
+          duration_ms: 6.1338
           type: 'test'
           ...
         1..3
     ok 5 - mixed strategy nesting
       ---
-      duration_ms: 12.4289
+      duration_ms: 13.5848
       type: 'suite'
       ...
     1..5
 ok 47 - Advanced Schema Strategies
   ---
-  duration_ms: 58.5862
+  duration_ms: 55.4039
+  type: 'suite'
+  ...
+# Subtest: StreamAsync - Basic chunk generation
+    # Subtest: static template yields a single closing chunk
+    ok 1 - static template yields a single closing chunk
+      ---
+      duration_ms: 4.0701
+      type: 'test'
+      ...
+    # Subtest: template with a single primitive value yields two chunks
+    ok 2 - template with a single primitive value yields two chunks
+      ---
+      duration_ms: 2.2244
+      type: 'test'
+      ...
+    # Subtest: template with selectors and async schema works
+    ok 3 - template with selectors and async schema works
+      ---
+      duration_ms: 4.055
+      type: 'test'
+      ...
+    # Subtest: collected async chunks equal renderAsync() output
+    ok 4 - collected async chunks equal renderAsync() output
+      ---
+      duration_ms: 2.2551
+      type: 'test'
+      ...
+    1..4
+ok 48 - StreamAsync - Basic chunk generation
+  ---
+  duration_ms: 14.9556
+  type: 'suite'
+  ...
+# Subtest: StreamAsync - Sync methods reject async schemas
+    # Subtest: sync render() throws for async schema
+    ok 1 - sync render() throws for async schema
+      ---
+      duration_ms: 3.4272
+      type: 'test'
+      ...
+    # Subtest: sync stream() throws for async schema
+    ok 2 - sync stream() throws for async schema
+      ---
+      duration_ms: 1.1201
+      type: 'test'
+      ...
+    1..2
+ok 49 - StreamAsync - Sync methods reject async schemas
+  ---
+  duration_ms: 4.7883
+  type: 'suite'
+  ...
+# Subtest: StreamAsync - Nested renderables
+    # Subtest: sync child inside async parent flattens correctly
+    ok 1 - sync child inside async parent flattens correctly
+      ---
+      duration_ms: 1.766
+      type: 'test'
+      ...
+    # Subtest: async child inside sync parent delegates to async (parent becomes async)
+    ok 2 - async child inside sync parent delegates to async (parent becomes async)
+      ---
+      duration_ms: 2.2449
+      type: 'test'
+      ...
+    # Subtest: deeply nested async structure yields correct chunks
+    ok 3 - deeply nested async structure yields correct chunks
+      ---
+      duration_ms: 1.9016
+      type: 'test'
+      ...
+    1..3
+ok 50 - StreamAsync - Nested renderables
+  ---
+  duration_ms: 6.1633
+  type: 'suite'
+  ...
+# Subtest: StreamAsync - Schema validation & kargs
+    # Subtest: streamAsync with valid kargs succeeds
+    ok 1 - streamAsync with valid kargs succeeds
+      ---
+      duration_ms: 1.1605
+      type: 'test'
+      ...
+    # Subtest: streamAsync with invalid kargs throws at iteration time
+    ok 2 - streamAsync with invalid kargs throws at iteration time
+      ---
+      duration_ms: 2.6839
+      type: 'test'
+      ...
+    # Subtest: streamAsync with missing required kargs throws
+    ok 3 - streamAsync with missing required kargs throws
+      ---
+      duration_ms: 2.1887
+      type: 'test'
+      ...
+    # Subtest: streamAsync with defaults works even when kargs are omitted
+    ok 4 - streamAsync with defaults works even when kargs are omitted
+      ---
+      duration_ms: 1.8405
+      type: 'test'
+      ...
+    1..4
+ok 51 - StreamAsync - Schema validation & kargs
+  ---
+  duration_ms: 8.2822
+  type: 'suite'
+  ...
+# Subtest: StreamAsync - Composition utilities
+    # Subtest: zt.match with async branch streams correctly
+    ok 1 - zt.match with async branch streams correctly
+      ---
+      duration_ms: 13.9935
+      type: 'test'
+      ...
+    # Subtest: zt.map: async streams mapped items with separator
+    ok 2 - zt.map: async streams mapped items with separator
+      ---
+      duration_ms: 9.3253
+      type: 'test'
+      ...
+    # Subtest: zt.join: streams joined renderables with async items
+    ok 3 - zt.join: streams joined renderables with async items
+      ---
+      duration_ms: 2.8571
+      type: 'test'
+      ...
+    # Subtest: zt.bind: async streams pre-bound renderable
+    ok 4 - zt.bind: async streams pre-bound renderable
+      ---
+      duration_ms: 1.8314
+      type: 'test'
+      ...
+    # Subtest: zt.if: conditionally streams async template or identity
+    ok 5 - zt.if: conditionally streams async template or identity
+      ---
+      duration_ms: 1.3673
+      type: 'test'
+      ...
+    # Subtest: zt.opaque preserves async streaming output
+    ok 6 - zt.opaque preserves async streaming output
+      ---
+      duration_ms: 1.295
+      type: 'test'
+      ...
+    1..6
+ok 52 - StreamAsync - Composition utilities
+  ---
+  duration_ms: 31.2984
+  type: 'suite'
+  ...
+# Subtest: StreamAsync - Edge cases
+    # Subtest: zt.unsafe produces no value chunks (even in async context)
+    ok 1 - zt.unsafe produces no value chunks (even in async context)
+      ---
+      duration_ms: 2.3625
+      type: 'test'
+      ...
+    # Subtest: scoped async parameter (zt.p) streams with nested values
+    ok 2 - scoped async parameter (zt.p) streams with nested values
+      ---
+      duration_ms: 2.4408
+      type: 'test'
+      ...
+    # Subtest: streamAsync of empty template yields just empty string
+    ok 3 - streamAsync of empty template yields just empty string
+      ---
+      duration_ms: 0.4159
+      type: 'test'
+      ...
+    # Subtest: streamAsync with deeply conditional content and async
+    ok 4 - streamAsync with deeply conditional content and async
+      ---
+      duration_ms: 2.6661
+      type: 'test'
+      ...
+    # Subtest: streamAsync generator can be partially consumed and continued
+    ok 5 - streamAsync generator can be partially consumed and continued
+      ---
+      duration_ms: 1.8476
+      type: 'test'
+      ...
+    # Subtest: chunks from async stream are frozen
+    ok 6 - chunks from async stream are frozen
+      ---
+      duration_ms: 1.0675
+      type: 'test'
+      ...
+    # Subtest: mixed sync/async siblings produce correct unified async stream
+    ok 7 - mixed sync/async siblings produce correct unified async stream
+      ---
+      duration_ms: 1.4543
+      type: 'test'
+      ...
+    # Subtest: renderAsync on static template returns same as sync render
+    ok 8 - renderAsync on static template returns same as sync render
+      ---
+      duration_ms: 0.3617
+      type: 'test'
+      ...
+    # Subtest: renderAsync on dynamic sync template (no async schema) works identically to sync render
+    ok 9 - renderAsync on dynamic sync template (no async schema) works identically to sync render
+      ---
+      duration_ms: 1.3216
+      type: 'test'
+      ...
+    1..9
+ok 53 - StreamAsync - Edge cases
+  ---
+  duration_ms: 14.7654
+  type: 'suite'
+  ...
+# Subtest: Async Detection & Promise Handling
+    # Subtest: Sync render() on async-detected renderables
+        # Subtest: throws clear error when sync render on AsyncFunction transform
+        ok 1 - throws clear error when sync render on AsyncFunction transform
+          ---
+          duration_ms: 2.2716
+          type: 'test'
+          ...
+        # Subtest: throws clear error when async render on Promise-returning selector
+        ok 2 - throws clear error when async render on Promise-returning selector
+          ---
+          duration_ms: 1.1181
+          type: 'test'
+          ...
+        1..2
+    ok 1 - Sync render() on async-detected renderables
+      ---
+      duration_ms: 3.8603
+      type: 'suite'
+      ...
+    # Subtest: renderAsync() handles async transforms
+        # Subtest: correctly renders Promise transform
+        ok 1 - correctly renders Promise transform
+          ---
+          duration_ms: 3.6432
+          type: 'test'
+          ...
+        # Subtest: correctly renders async transform
+        ok 2 - correctly renders async transform
+          ---
+          duration_ms: 1.1571
+          type: 'test'
+          ...
+        # Subtest: detects nested async schema in object shape
+        ok 3 - detects nested async schema in object shape
+          ---
+          duration_ms: 1.2431
+          type: 'test'
+          ...
+        # Subtest: throws on sync renders for Promise transform
+        ok 4 - throws on sync renders for Promise transform # SKIP
+          ---
+          duration_ms: 0.1778
+          type: 'test'
+          ...
+        # Subtest: throws on sync renders for Promise transform
+        ok 5 - throws on sync renders for Promise transform
+          ---
+          duration_ms: 1.3813
+          type: 'test'
+          ...
+        1..5
+    ok 2 - renderAsync() handles async transforms
+      ---
+      duration_ms: 8.1356
+      type: 'suite'
+      ...
+    # Subtest: Stream API handles async
+        # Subtest: streamAsync() processes async schemas correctly
+        ok 1 - streamAsync() processes async schemas correctly
+          ---
+          duration_ms: 1.0394
+          type: 'test'
+          ...
+        1..1
+    ok 3 - Stream API handles async
+      ---
+      duration_ms: 1.2196
+      type: 'suite'
+      ...
+    1..3
+ok 54 - Async Detection & Promise Handling
+  ---
+  duration_ms: 13.5678
   type: 'suite'
   ...
 # Subtest: Stream API - Basic chunk generation
     # Subtest: static template yields a single closing chunk
     ok 1 - static template yields a single closing chunk
       ---
-      duration_ms: 2.625
+      duration_ms: 3.9224
       type: 'test'
       ...
     # Subtest: template with a single primitive value yields two chunks
     ok 2 - template with a single primitive value yields two chunks
       ---
-      duration_ms: 1.1786
+      duration_ms: 2.0722
       type: 'test'
       ...
     # Subtest: template with multiple values produces correct chunk sequence
     ok 3 - template with multiple values produces correct chunk sequence
       ---
-      duration_ms: 0.5594
+      duration_ms: 1.5283
       type: 'test'
       ...
     # Subtest: adjacent values create empty string boundaries
     ok 4 - adjacent values create empty string boundaries
       ---
-      duration_ms: 0.2808
+      duration_ms: 0.5325
       type: 'test'
       ...
     # Subtest: identity (zt.empty) yields a single empty string chunk
     ok 5 - identity (zt.empty) yields a single empty string chunk
       ---
-      duration_ms: 0.1266
+      duration_ms: 0.1782
       type: 'test'
       ...
     # Subtest: collected chunks equal render() output
     ok 6 - collected chunks equal render() output
       ---
-      duration_ms: 3.4909
+      duration_ms: 6.5178
       type: 'test'
       ...
     1..6
-ok 48 - Stream API - Basic chunk generation
+ok 55 - Stream API - Basic chunk generation
   ---
-  duration_ms: 9.8164
+  duration_ms: 17.5089
   type: 'suite'
   ...
 # Subtest: Stream API - Nested renderables
     # Subtest: flattens nested renderable correctly
     ok 1 - flattens nested renderable correctly
       ---
-      duration_ms: 1.4134
+      duration_ms: 1.9393
       type: 'test'
       ...
     # Subtest: deeply nested structure yields correct chunks
     ok 2 - deeply nested structure yields correct chunks
       ---
-      duration_ms: 2.6781
+      duration_ms: 1.9946
       type: 'test'
       ...
     # Subtest: collected nested chunks equal render() output
     ok 3 - collected nested chunks equal render() output
       ---
-      duration_ms: 1.773
+      duration_ms: 1.2549
       type: 'test'
       ...
     1..3
-ok 49 - Stream API - Nested renderables
+ok 56 - Stream API - Nested renderables
   ---
-  duration_ms: 6.2289
+  duration_ms: 5.4792
   type: 'suite'
   ...
 # Subtest: Stream API - Schema validation & kargs
     # Subtest: stream with valid kargs succeeds
     ok 1 - stream with valid kargs succeeds
       ---
-      duration_ms: 1.2461
+      duration_ms: 0.8297
       type: 'test'
       ...
     # Subtest: stream with invalid kargs throws at iteration time
     ok 2 - stream with invalid kargs throws at iteration time
       ---
-      duration_ms: 5.6414
+      duration_ms: 4.6966
       type: 'test'
       ...
     # Subtest: stream with missing required kargs throws
     ok 3 - stream with missing required kargs throws
       ---
-      duration_ms: 1.3864
+      duration_ms: 1.2831
       type: 'test'
       ...
     # Subtest: stream with defaults works even when kargs are omitted
     ok 4 - stream with defaults works even when kargs are omitted
       ---
-      duration_ms: 1.9948
+      duration_ms: 1.6969
       type: 'test'
       ...
     1..4
-ok 50 - Stream API - Schema validation & kargs
+ok 57 - Stream API - Schema validation & kargs
   ---
-  duration_ms: 10.6779
+  duration_ms: 8.8639
   type: 'suite'
   ...
 # Subtest: Stream API - Composition utilities
     # Subtest: zt.match: branches stream correctly
     ok 1 - zt.match: branches stream correctly
       ---
-      duration_ms: 9.3771
+      duration_ms: 9.1512
       type: 'test'
       ...
     # Subtest: zt.map: streams mapped items with separator
     ok 2 - zt.map: streams mapped items with separator
       ---
-      duration_ms: 2.7332
+      duration_ms: 1.8824
       type: 'test'
       ...
     # Subtest: zt.join: streams joined renderables
     ok 3 - zt.join: streams joined renderables
       ---
-      duration_ms: 0.6019
+      duration_ms: 0.5972
       type: 'test'
       ...
     # Subtest: zt.bind: streams pre-bound renderable
     ok 4 - zt.bind: streams pre-bound renderable
       ---
-      duration_ms: 1.9075
+      duration_ms: 1.5201
       type: 'test'
       ...
     # Subtest: zt.if: conditionally streams template or identity
     ok 5 - zt.if: conditionally streams template or identity
       ---
-      duration_ms: 0.3922
+      duration_ms: 0.4525
       type: 'test'
       ...
     # Subtest: zt.opaque preserves streaming output
     ok 6 - zt.opaque preserves streaming output
       ---
-      duration_ms: 0.8401
+      duration_ms: 1.2909
       type: 'test'
       ...
     1..6
-ok 51 - Stream API - Composition utilities
+ok 58 - Stream API - Composition utilities
   ---
-  duration_ms: 16.393
+  duration_ms: 15.5077
   type: 'suite'
   ...
 # Subtest: Stream API - Edge cases
     # Subtest: zt.unsafe produces no value chunks
     ok 1 - zt.unsafe produces no value chunks
       ---
-      duration_ms: 1.8976
+      duration_ms: 2.0778
       type: 'test'
       ...
     # Subtest: scoped parameter (zt.p) streams with nested values
     ok 2 - scoped parameter (zt.p) streams with nested values
       ---
-      duration_ms: 2.0038
+      duration_ms: 2.2457
       type: 'test'
       ...
     # Subtest: stream of empty template yields just empty string
     ok 3 - stream of empty template yields just empty string
       ---
-      duration_ms: 0.2406
+      duration_ms: 0.3836
       type: 'test'
       ...
     # Subtest: stream with deeply conditional content
     ok 4 - stream with deeply conditional content
       ---
-      duration_ms: 1.0641
+      duration_ms: 1.4386
       type: 'test'
       ...
     # Subtest: stream generator can be partially consumed and continued
     ok 5 - stream generator can be partially consumed and continued
       ---
-      duration_ms: 0.4246
+      duration_ms: 0.5477
       type: 'test'
       ...
     # Subtest: chunks are frozen
     ok 6 - chunks are frozen
       ---
-      duration_ms: 0.4713
+      duration_ms: 0.6769
       type: 'test'
       ...
     1..6
-ok 52 - Stream API - Edge cases
+ok 59 - Stream API - Edge cases
   ---
-  duration_ms: 6.5036
+  duration_ms: 8.0905
   type: 'suite'
   ...
 # Subtest: zt.empty type identity
     # Subtest: is IRenderable<void, []>
     ok 1 - is IRenderable<void, []>
       ---
-      duration_ms: 1.837
+      duration_ms: 2.6847
       type: 'test'
       ...
     # Subtest: left identity: empty · T  ===  T  (preserves Kargs and Output)
     ok 2 - left identity: empty · T  ===  T  (preserves Kargs and Output)
       ---
-      duration_ms: 1.4114
+      duration_ms: 2.381
       type: 'test'
       ...
     # Subtest: right identity: T · empty  ===  T
     ok 3 - right identity: T · empty  ===  T
       ---
-      duration_ms: 2.0657
+      duration_ms: 3.0665
       type: 'test'
       ...
     1..3
-ok 53 - zt.empty type identity
+ok 60 - zt.empty type identity
   ---
-  duration_ms: 7.2762
+  duration_ms: 15.0663
   type: 'suite'
   ...
 # Subtest: zt.bind types
     # Subtest: fully applied renderable is IRenderable<void, O>
     ok 1 - fully applied renderable is IRenderable<void, O>
       ---
-      duration_ms: 0.8574
+      duration_ms: 1.7413
       type: 'test'
       ...
     # Subtest: bind of a bound renderable stays void
     ok 2 - bind of a bound renderable stays void
       ---
-      duration_ms: 0.5212
+      duration_ms: 0.6341
       type: 'test'
       ...
     1..2
-ok 54 - zt.bind types
+ok 61 - zt.bind types
   ---
-  duration_ms: 1.6023
+  duration_ms: 2.6524
   type: 'suite'
   ...
 # Subtest: zt.map types
     # Subtest: map over empty list yields identity type
     ok 1 - map over empty list yields identity type
       ---
-      duration_ms: 0.4513
+      duration_ms: 0.4949
       type: 'test'
       ...
     # Subtest: map with separator and 3 items merges outputs
     ok 2 - map with separator and 3 items merges outputs
       ---
-      duration_ms: 0.8545
+      duration_ms: 1.4152
       type: 'test'
       ...
     # Subtest: map with separator output and 3 items merges outputs with separator
     ok 3 - map with separator output and 3 items merges outputs with separator
       ---
-      duration_ms: 0.4663
+      duration_ms: 1.0376
       type: 'test'
       ...
     1..3
-ok 55 - zt.map types
+ok 62 - zt.map types
   ---
-  duration_ms: 2.1433
+  duration_ms: 3.4931
   type: 'suite'
   ...
 # Subtest: zt.join types
     # Subtest: join of two renderables merges kargs and concatenates outputs
     ok 1 - join of two renderables merges kargs and concatenates outputs
       ---
-      duration_ms: 0.5457
+      duration_ms: 1.0505
       type: 'test'
       ...
     # Subtest: join of empty list is identity type
     ok 2 - join of empty list is identity type
       ---
-      duration_ms: 0.1512
+      duration_ms: 0.2996
       type: 'test'
       ...
     # Subtest: join of single element preserves its types
     ok 3 - join of single element preserves its types
       ---
-      duration_ms: 0.6563
+      duration_ms: 0.7753
       type: 'test'
       ...
     1..3
-ok 56 - zt.join types
+ok 63 - zt.join types
   ---
-  duration_ms: 1.64
+  duration_ms: 2.4599
   type: 'suite'
   ...
 # Subtest: Associativity of composition
     # Subtest: (a · b) · c  types equal  a · (b · c)
     ok 1 - (a · b) · c  types equal  a · (b · c)
       ---
-      duration_ms: 0.7745
+      duration_ms: 0.8568
       type: 'test'
       ...
     # Subtest: (a join b) join c  types equal  a join (b join c)
     ok 2 - (a join b) join c  types equal  a join (b join c)
       ---
-      duration_ms: 0.7861
+      duration_ms: 1.1023
       type: 'test'
       ...
     1..2
-ok 57 - Associativity of composition
+ok 64 - Associativity of composition
   ---
-  duration_ms: 1.7886
+  duration_ms: 2.2841
   type: 'suite'
   ...
 # Subtest: zt.if types
     # Subtest: if(false, t) has void kargs and unionized output
     ok 1 - if(false, t) has void kargs and unionized output
       ---
-      duration_ms: 0.1864
+      duration_ms: 0.4056
       type: 'test'
       ...
     # Subtest: if(true, bind(t, k)) has void kargs and correct output
     ok 2 - if(true, bind(t, k)) has void kargs and correct output
       ---
-      duration_ms: 0.3943
+      duration_ms: 0.9232
       type: 'test'
       ...
     1..2
-ok 58 - zt.if types
+ok 65 - zt.if types
   ---
-  duration_ms: 0.7054
+  duration_ms: 1.5913
   type: 'suite'
   ...
 # Subtest: zt.opaque type erasure
     # Subtest: opaque renders type as IRenderable<K, []>
     ok 1 - opaque renders type as IRenderable<K, []>
       ---
-      duration_ms: 0.151
+      duration_ms: 0.4194
       type: 'test'
       ...
     1..1
-ok 59 - zt.opaque type erasure
+ok 66 - zt.opaque type erasure
   ---
-  duration_ms: 0.2299
+  duration_ms: 0.6092
   type: 'suite'
   ...
 # Subtest: Kargs merge commutativity
     # Subtest: (a then b) merges same as (b then a)
     ok 1 - (a then b) merges same as (b then a)
       ---
-      duration_ms: 0.6973
+      duration_ms: 1.3131
       type: 'test'
       ...
     # Subtest: output order follows template order
     ok 2 - output order follows template order
       ---
-      duration_ms: 0.7411
+      duration_ms: 1.1878
       type: 'test'
       ...
     1..2
-ok 60 - Kargs merge commutativity
+ok 67 - Kargs merge commutativity
   ---
-  duration_ms: 1.5691
+  duration_ms: 2.7244
   type: 'suite'
   ...
 # Subtest: zt.t type inference
     # Subtest: static template infers void kargs and empty output
     ok 1 - static template infers void kargs and empty output
       ---
-      duration_ms: 1.1025
+      duration_ms: 1.9105
       type: 'test'
       ...
     # Subtest: primitives infer void kargs with output tuple
     ok 2 - primitives infer void kargs with output tuple
       ---
-      duration_ms: 0.4638
+      duration_ms: 1.3655
       type: 'test'
       ...
     # Subtest: selector returning primitive infers void kargs
     ok 3 - selector returning primitive infers void kargs
       ---
-      duration_ms: 0.3034
+      duration_ms: 0.5876
       type: 'test'
       ...
     # Subtest: zt.p with schema infers named karg and output
     ok 4 - zt.p with schema infers named karg and output
       ---
-      duration_ms: 0.6525
+      duration_ms: 1.3883
       type: 'test'
       ...
     # Subtest: zt.p with schema + transform infers transformed output type
     ok 5 - zt.p with schema + transform infers transformed output type
       ---
-      duration_ms: 1.8056
+      duration_ms: 3.7138
       type: 'test'
       ...
     # Subtest: multiple zt.p merge kargs and output order
     ok 6 - multiple zt.p merge kargs and output order
       ---
-      duration_ms: 1.6254
+      duration_ms: 2.1918
       type: 'test'
       ...
     # Subtest: inline zod object schema infers kargs from its input
     ok 7 - inline zod object schema infers kargs from its input
       ---
-      duration_ms: 0.6695
+      duration_ms: 1.705
       type: 'test'
       ...
     # Subtest: inline z.codec infers output from decode
     ok 8 - inline z.codec infers output from decode
       ---
-      duration_ms: 2.0621
+      duration_ms: 2.5831
       type: 'test'
       ...
     1..8
-ok 61 - zt.t type inference
+ok 68 - zt.t type inference
   ---
-  duration_ms: 11.1292
+  duration_ms: 19.5938
   type: 'suite'
   ...
 # Subtest: zt.z type inference
     # Subtest: shape kargs are intersected with inline values
     ok 1 - shape kargs are intersected with inline values
       ---
-      duration_ms: 2.0116
+      duration_ms: 2.3632
       type: 'test'
       ...
     # Subtest: shape only, no holes → kargs is shape input
     ok 2 - shape only, no holes → kargs is shape input
       ---
-      duration_ms: 0.8661
+      duration_ms: 0.8155
       type: 'test'
       ...
     1..2
-ok 62 - zt.z type inference
+ok 69 - zt.z type inference
   ---
-  duration_ms: 3.1992
+  duration_ms: 3.4743
   type: 'suite'
   ...
 # Subtest: zt.p with renderable
     # Subtest: scoped renderable infers parent kargs with nested shape
     ok 1 - scoped renderable infers parent kargs with nested shape
       ---
-      duration_ms: 1.2127
+      duration_ms: 1.2643
       type: 'test'
       ...
     # Subtest: multiple scoped renderables merge kargs separately
     ok 2 - multiple scoped renderables merge kargs separately
       ---
-      duration_ms: 1.5672
+      duration_ms: 1.5251
       type: 'test'
       ...
     1..2
-ok 63 - zt.p with renderable
+ok 70 - zt.p with renderable
   ---
-  duration_ms: 3.0275
+  duration_ms: 3.0561
   type: 'suite'
   ...
 # Subtest: nested renderable type inference
     # Subtest: outer infers merged kargs from nested
     ok 1 - outer infers merged kargs from nested
       ---
-      duration_ms: 0.4737
+      duration_ms: 0.8946
       type: 'test'
       ...
     # Subtest: two nested renderables merge shapes
     ok 2 - two nested renderables merge shapes
       ---
-      duration_ms: 2.5432
+      duration_ms: 2.4494
       type: 'test'
       ...
     1..2
-ok 64 - nested renderable type inference
+ok 71 - nested renderable type inference
   ---
-  duration_ms: 3.3224
+  duration_ms: 3.7493
   type: 'suite'
   ...
 # Subtest: zt.bind types
     # Subtest: bind removes kargs
     ok 1 - bind removes kargs
       ---
-      duration_ms: 3.2784
+      duration_ms: 2.7099
       type: 'test'
       ...
     # Subtest: partially bound is not directly possible, but bind then compose
     ok 2 - partially bound is not directly possible, but bind then compose
       ---
-      duration_ms: 0.3105
+      duration_ms: 0.3257
       type: 'test'
       ...
     1..2
-ok 65 - zt.bind types
+ok 72 - zt.bind types
   ---
-  duration_ms: 3.8403
+  duration_ms: 3.2778
   type: 'suite'
   ...
 # Subtest: zt.map types
     # Subtest: list mapped with transform infers output tuple of renderable
     ok 1 - list mapped with transform infers output tuple of renderable
       ---
-      duration_ms: 1.389
+      duration_ms: 2.6426
       type: 'test'
       ...
     # Subtest: list mapped with transform and separator with kargs infers kargs and output tuple of renderable and separator
     ok 2 - list mapped with transform and separator with kargs infers kargs and output tuple of renderable and separator
       ---
-      duration_ms: 2.5993
+      duration_ms: 3.0015
       type: 'test'
       ...
     1..2
-ok 66 - zt.map types
+ok 73 - zt.map types
   ---
-  duration_ms: 4.1825
+  duration_ms: 5.931
   type: 'suite'
   ...
 # Subtest: zt.join types
     # Subtest: join of renderables merges kargs and outputs
     ok 1 - join of renderables merges kargs and outputs
       ---
-      duration_ms: 1.4192
+      duration_ms: 2.4724
       type: 'test'
       ...
     1..1
-ok 67 - zt.join types
+ok 74 - zt.join types
   ---
-  duration_ms: 1.5674
+  duration_ms: 2.6494
   type: 'suite'
   ...
 # Subtest: zt.match types
     # Subtest: inferred kargs is union of possible kargs + discriminator
     ok 1 - inferred kargs is union of possible kargs + discriminator
       ---
-      duration_ms: 0.2154
+      duration_ms: 0.2476
       type: 'test'
       ...
     1..1
-ok 68 - zt.match types
+ok 75 - zt.match types
   ---
-  duration_ms: 0.325
+  duration_ms: 0.3739
   type: 'suite'
   ...
 # Subtest: zt.if types
     # Subtest: if(false, t) returns void kargs, output (union with empty?)
     ok 1 - if(false, t) returns void kargs, output (union with empty?)
       ---
-      duration_ms: 0.291
+      duration_ms: 0.3503
       type: 'test'
       ...
     # Subtest: if(true, t) behaves like t
     ok 2 - if(true, t) behaves like t
       ---
-      duration_ms: 0.4834
+      duration_ms: 0.8477
       type: 'test'
       ...
     1..2
-ok 69 - zt.if types
+ok 76 - zt.if types
   ---
-  duration_ms: 0.9108
+  duration_ms: 1.4025
   type: 'suite'
   ...
-1..69
-# tests 277
-# suites 85
-# pass 277
+1..76
+# tests 315
+# suites 95
+# pass 314
 # fail 0
 # cancelled 0
-# skipped 0
+# skipped 1
 # todo 0
-# duration_ms 2771.7395
+# duration_ms 3219.0546
 # start of coverage report
-# ----------------------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # file                                                  | line % | branch % | funcs % | uncovered lines
-# ----------------------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # dist                                                  |        |          |         | 
-#  main.js                                              |  95.23 |    91.56 |   97.65 | 60-61 87-88 90-91 93-95 227-232 300-305 328-335 501-506
+#  main.js                                              |  95.60 |    92.71 |   97.03 | 77-78 104-105 244-249 357-362 388-395 452-457 520-525 682-687
 # src                                                   |        |          |         | 
 #  __tests__                                            |        |          |         | 
 #   playground                                          |        |          |         | 
@@ -4531,6 +5631,7 @@ ok 69 - zt.if types
 #    user-card.type-test.ts                             |  96.15 |    77.78 |   92.86 | 119-120 132-133 141-142
 #   slop-samples.test.ts                                | 100.00 |   100.00 |  100.00 | 
 #   slop                                                |        |          |         | 
+#    chat-agent.slop-test.ts                            |  98.31 |    89.19 |   90.63 | 100-103 156
 #    code-generator.slop-test.ts                        |  98.98 |    64.91 |   89.29 | 35-37
 #    conditional-validation-boundary.slop-test.ts       | 100.00 |    84.62 |  100.00 | 
 #    email.slop-test.ts                                 |  98.26 |    88.00 |  100.00 | 170-172
@@ -4542,6 +5643,7 @@ ok 69 - zt.if types
 #    pattern-matching-function-definitions.slop-test.ts | 100.00 |    64.38 |  100.00 | 
 #    prompt-2.slop-test.ts                              |  98.14 |    80.00 |  100.00 | 16-17 19
 #    prompt.slop-test.ts                                |  97.37 |    62.50 |  100.00 | 15 19
+#    regulatory-filing.slop-test.ts                     |  97.33 |    85.37 |   86.11 | 290-291 331-332 335-336 564-571 611 629-630 636-637 640-642 647 651-652 658-659 788-791 796-797
 #    repo.slop-test.ts                                  | 100.00 |    85.19 |   97.83 | 
 #    sql-prompt-pipeline.slop-test.ts                   | 100.00 |    79.03 |   89.36 | 
 #    sql-prompt.slop-test.ts                            |  98.65 |    93.48 |   97.44 | 58 326-328 372-374
@@ -4555,12 +5657,13 @@ ok 69 - zt.if types
 #    interpolation-engine.test.ts                       | 100.00 |   100.00 |   97.53 | 
 #    memory.test.ts                                     | 100.00 |    94.12 |   92.31 | 
 #    pattern-matching.test.ts                           | 100.00 |    98.31 |   96.61 | 
-#    performance.test.ts                                | 100.00 |   100.00 |   98.41 | 
+#    performance.test.ts                                | 100.00 |   100.00 |  100.00 | 
 #    schema-strategies.test.ts                          |  99.14 |    96.39 |   89.77 | 239-241
+#    stream-api-async.test.ts                           |  98.22 |    97.44 |   90.00 | 411-418
 #    stream-api.test.ts                                 | 100.00 |   100.00 |   96.00 | 
 #    types-algebraic-properties.test.ts                 | 100.00 |   100.00 |   74.47 | 
 #    types-core-inference.test.ts                       | 100.00 |   100.00 |   52.11 | 
-# ----------------------------------------------------------------------------------------------------------------------------------------------
-# all files                                             |  99.13 |    88.65 |   91.51 | 
-# ----------------------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# all files                                             |  98.88 |    89.27 |   91.13 | 
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # end of coverage report

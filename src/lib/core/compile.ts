@@ -4,8 +4,9 @@ import {
     type IZodTagRenderable,
 } from "./renderable"
 import { compileChunks } from "./compile-chunks";
+import { isAsyncSchema } from "./async";
 
-type CompileResult = [strs: string[], vals: unknown[], schema: z.ZodType | undefined, dynamic: boolean]
+type CompileResult = [strs: string[], vals: unknown[], schema: z.ZodType | undefined, dynamic: boolean, async: boolean]
 
 /**
  * The compile step iterates through each slot preflattening the renderable with each nested renderable found
@@ -22,6 +23,7 @@ export function compile<T extends IRenderable<any, any>>(_renderable: T): Compil
 
     let _schema = schema;
     let _dynamic = !!schema;
+    let _async = isAsyncSchema(schema);
 
     // compile and collect
     const strs: string[] = [];
@@ -34,11 +36,12 @@ export function compile<T extends IRenderable<any, any>>(_renderable: T): Compil
         if (chunk.length === 2) vals.push(chunk[1]);
 
         // Parsed result with schema + flags
-        if (chunk.length === 4) {
+        if (chunk.length === 5) {
             _schema = chunk[2];
             _dynamic = chunk[3];
+            _async = chunk[4];
         }
     }
 
-    return [strs, vals, _schema, _dynamic]
+    return [strs, vals, _schema, _dynamic, _async]
 }

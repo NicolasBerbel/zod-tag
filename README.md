@@ -2,8 +2,6 @@
 
 ## ⚠️ This library is experimental. APIs may change without notice. Use at your own risk!
 
-> The fact is that I've put a loop inside another as they tell us not to do and the resulting is becoming surprisingly fun to experiment with! (Also they were right... I didn't needed the nested one :]). Ok i'm looping my head here!
-
 This is a experimental library that aims to provide templating composition and type/runtime safe interpolation for tagged template literals by leveraging Zod's validation ecosystem.
 
 At definition time this library pre-flattens nested renderable structures and tries to infer the template types for a better DX.
@@ -14,8 +12,6 @@ The core functionality consists in three abilities:
 - Enable composition by nesting other renderables
 - Automatically infer the type of variables your template expects
 - Validate those variables against the zod schemas
-
-> My objective was to implement a api design that came to my mind and experiment with it, dont use this, or do it at your own joy and risk.
 
 # Meet Zod Tag!
 
@@ -749,7 +745,7 @@ greeting.render({
 
 ### Nested templates
 
-Nest your templates and <s>expect</s> hope the merged kargs, output values and schema validations to just work.
+Nest your templates and expect the merged kargs, output values and schema validations to just work.
 
 - Works both with namespaced kargs with `zt.p` or parent scope via `zt.z`
 
@@ -916,7 +912,7 @@ Schema is enforced by the first argument but it's left to userspace to decide wh
 
 ### zt.if(condition: any, template: IRenderable)
 
-Conditional rendering utility, no much better then <code>${e => e.something ? template : zt\`\`}</code>
+Conditional rendering utility: <code>${e => e.something ? template : zt\`\`}</code>
 
 ```ts
 
@@ -1018,7 +1014,7 @@ Rule of thumb:
 > use zt.$n (PostgreSQL) or .join('?') (MySQL) to produce placeholders, keep the values array separate, and validate anything that touches zt.unsafe.
 
 
-## Gotchas to be aware of (AI gen)
+## Gotchas to be aware of
 
 While zod-tag is a fun experiment, its design pushes TypeScript’s type system and runtime validation to their limits. Be aware of these sharp edges before using it in anything serious.
 

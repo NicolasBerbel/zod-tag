@@ -5,27 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.0.8] - 2026-05-05
 
 ### Added
 
+- Support to async schemas with `renderable.renderAsync()` and `renderable.streamAsync()`
+    - **Rules**:
+        1. Selectors must be sync pure functions, no side effects
+        2. Async operations run at the validation pipeline:
+            - schemas with `.transform(async() => {})`: async fn constructor -> detected by the compiler and flags the renderable as async
+            - transforms or refines that returns a promise `.transform(() => new Promise())` -> not detected (cryptic error)
+        3. `isAsyncSchema` utility may be fragile for exotic schemas that dont follow above rules
 - Strict mode for zt.z: `zt.z.strict`, `zt.z.strip` schema strategies complementing default loose strategy
     - **Important limitation**: new kargs that are inserted by dynamic evaluated holes (selectors and schemas) are not collected into strict parent schemas at compile time, this means strict and strip modes have limitations over free composability.
-    - use `zt.p` to scope strict/strip mode schemas and renderables 
     - prefer `strict` and `strip` at leaf renderables that you can scope with `zt.p` or top level renderables with previously known final schemas.
-- Tests covering strict/strip/loose modes edge cases
+    - `zt.p` makes strict composition reliable, use it to scope strict/strip mode schemas and renderables (dynamic rules still apply).
+    - The type system still infer as strict, extra keys aren't allowed even in loose mode.
+- Tests covering:
+    1. strict/strip/loose modes edge cases
+    2. stream/async rendering edge cases
+    3. more slop
 - `zt.empty` singleton for stable reference on empty renderable without schema (zt.t`` === zt.empty)
 - Dedicated paths for static structural renderables without schemas
 - New public API's:
     - `renderable.stream(kargs)`: returns a generator that yields `ZtChunk`'s
     - `zt.collect(stream)`: collects a `Generator<ZtChunk>` into a immutable [string[], ...values] tuple
+    - `renderable.renderAsync(kargs)`: returns a promise of the rendered tuple `Promise<[strs, ...vals]>`'s
+    - `renderable.streamAsync(kargs)`: returns a async generator that yields `Promise<ZtChunk>`'s
 
 ### Changed
 
 - Renamed 'cli' tests directory for more aligned 'playground'
 - Refactor of the interpolation engine from array splice to generator
 - Refactor of the compilation pipeline from array splice to generator
-- `zt.map` over large lists (> 250 length) switches to lazy evaluation of bound renderarables at render time, lists <= 250 length didn't change.
 
 ### Fixed
 

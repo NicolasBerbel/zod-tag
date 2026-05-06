@@ -8,8 +8,10 @@ import {
     type InterpolationOperation,
     InterpolationError,
 } from "./interpolation-error"
-import { staticChildChunks, ZtChunk } from "./chunks";
 import { isSchemaType } from "./schema";
+import { staticChildChunks, ZtChunk } from "./chunks";
+import { isPromise } from "./async";
+
 
 /**
  * Generator that interpolates a renderable given its input kargs
@@ -18,10 +20,10 @@ import { isSchemaType } from "./schema";
  * 
  * ends with tuple with single string, the closing structure: [string]
  */
-export function* interpolateChunks<
+export async function* interpolateChunksAsync<
     R extends IZodTagRenderable<K, any>,
     K extends KargsType
->(renderable: R, input: K): Generator<ZtChunk, void> {
+>(renderable: R, input: K): AsyncGenerator<ZtChunk, void> {
     const {
         strs,
         vals,
@@ -42,17 +44,6 @@ export function* interpolateChunks<
             op: "renderable"
         });
 
-    // Throw on synchronous rendering of async renderable
-    if (__async)
-        throw InterpolationError.for(
-            'async renderables should be rendered asynchronously, check if you called .render()/.renderAsync() properly', {
-            value: renderable,
-            index: -1,
-            strings: strs,
-            renderer: renderable,
-            op: "renderable"
-        });
-
     // Bypass processing for static renderables
     if (!__dynamic) {
         const last = yield* staticChildChunks(renderable)
@@ -63,7 +54,7 @@ export function* interpolateChunks<
     // Validate kargs compiled
     let kargs: K = extractScopedKargs(input, scope);
     if (schema) {
-        const parsed = schema.safeDecode(input)
+        const parsed = await schema.safeDecodeAsync(input)
         if (parsed.error) {
             throw InterpolationError.for(parsed.error, {
                 renderer: renderable,
@@ -87,14 +78,45 @@ export function* interpolateChunks<
             /** Resolve schemas and selectors until they return either a renderable or a primitive */
             while (true) {
                 if (isSchemaType(value)) {
-                    value = value.decode(scopedSchemaKargs(value, kargs));
+                    value = await value.decodeAsync(scopedSchemaKargs(value, kargs));
                     continue;
                 }
+
                 if (typeof value === 'function') {
                     value = value(kargs);
-                    /** Selectors are pure functions, promise is a primitive value */
+                    /**
+                     * Returning a promise on a selector violates a core principle:
+                     * - Selectors must remain pure functions, no side-effects at the render pipeline
+                     * - Use async schema for async operations at the validation pipeline: schema.transform(async () => {})
+                     * 
+                     * Core concept for 'values':
+                     * - selectors = (only validated values in)
+                     * - schemas/renderables = (only validated values out)
+                     * 
+                     * Core concept for 'structure' classification:
+                     * - selectors = (classify validated data into values or structure)
+                     * - schemas/renderables = (classify input data into validated data or structure)
+                     * 
+                     * One design choice: Throw on async selectors
+                     * Other option: as before async/the sync path, Promise's are like number, Date
+                     * or anything else, primitive values.
+                     */
+                    if (isPromise(value)) {
+                        throw InterpolationError.for(
+                            'Async selector violation at the render pipeline! ' +
+                            'for async operations at the validation pipeline ' +
+                            'use Zod transforms with async arrows: schema.transform(async () => {})',
+                            {
+                                index: i,
+                                op: 'selector',
+                                renderer: renderable,
+                                strings: strs,
+                                value,
+                            })
+                    }
                     continue;
                 }
+
                 break;
             }
 
@@ -119,7 +141,7 @@ export function* interpolateChunks<
                 // track child head structure
                 let head = true;
                 const scopedKargs = extractScopedKargs(kargs, value.scope)
-                for (const chunk of interpolateChunks(value, scopedKargs)) {
+                for await (const chunk of interpolateChunksAsync(value, scopedKargs)) {
                     if (head) { buffer += chunk[0]; head = false; }
                     else buffer = chunk[0];
                     if (chunk.length === 2) {

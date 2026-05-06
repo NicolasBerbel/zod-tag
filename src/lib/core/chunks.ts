@@ -31,6 +31,34 @@ export const collectChunkTuple = (
     return Object.freeze([strings, values] as const);
 }
 
+
+/** Iterates a `ZtChunk` generator and returns a immutable interpolation tuple with [strings, ...values] */
+export const collectChunksAsync = async (
+    generator: AsyncGenerator<ZtChunk>
+) => {
+    const [strs, vals] = await collectChunkTupleAsync(generator);
+    return Object.freeze([strs, ...vals] as const);
+}
+
+/** Iterates a `ZtChunk` generator and returns a immutable tuple with [strings: string[], values: unknown[]] */
+export const collectChunkTupleAsync = async (
+    generator: AsyncGenerator<ZtChunk>
+) => {
+    const strings: string[] = [];
+    const values = [] as unknown[];
+
+    for await (const chunk of generator) {
+        strings.push(chunk[0]);
+        if (chunk.length === 2) values.push(chunk[1]);
+    }
+
+    Object.freeze(strings)
+    Object.freeze(values)
+    return Object.freeze([strings, values] as const);
+}
+
+
+
 /**
  * stitch static child strs and values into lead str, yielding tuple pairs of finished [str, val]
  * and returning the remaining tail structure of the renderable

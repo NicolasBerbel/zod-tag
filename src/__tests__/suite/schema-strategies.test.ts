@@ -259,12 +259,12 @@ describe('Advanced Schema Strategies', () => {
             deepEqual(vals, [10]); // loose allows dynamicKey to be present
         });
 
-        it('strip parent silently removes dynamic keys not in compile‑time shape', () => {
+        it('strip parent silently removes dynamic keys not in compile-time shape', () => {
             const hiddenRenderable = zt.z({ dynamicKey: z.number() })`val=${(e: { dynamicKey: number }) => e.dynamicKey}`;
             const tpl = zt.z.strip({ useDynamic: z.boolean() })`
                 ${(e: { useDynamic: boolean }) => (e.useDynamic ? hiddenRenderable : zt.empty)}
             `;
-            // 'dynamicKey' is not in the compile‑time shape, so strip removes it.
+            // 'dynamicKey' is not in the compile-time shape, so strip removes it.
             // The selector then receives kargs without 'dynamicKey', causing the child to fail validation.
             throws(
                 () => render(tpl, { useDynamic: true, dynamicKey: 10 }),
