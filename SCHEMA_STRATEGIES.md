@@ -9,7 +9,7 @@ Every template can define how its keyword arguments (kargs) are validated:
 | Strategy | Behavior | Use Case |
 |----------|----------|----------|
 | `zt.z()` (loose, default) | Allows extra keys | Composable templates, intermediate layers |
-| `zt.z.strict()` | Rejects extra keys | Leaf templates, final entry points |
+| `zt.z.strict()` | Rejects extra keys | Branch templates scoped with zt.p, final entry points |
 | `zt.z.strip()` | Silently removes extra keys | Defensive parsing, legacy data |
 
 ## Quick Examples

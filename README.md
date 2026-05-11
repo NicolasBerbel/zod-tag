@@ -1,5 +1,9 @@
 # Zod Tag
 
+[![npm version](https://img.shields.io/npm/v/zod-tag.svg)](https://www.npmjs.com/package/zod-tag)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/NicolasBerbel/zod-tag)
+
 ## ⚠️ This library is experimental. APIs may change without notice. Use at your own risk!
 
 This is a experimental library that aims to provide templating composition and type/runtime safe interpolation for tagged template literals by leveraging Zod's validation ecosystem.
